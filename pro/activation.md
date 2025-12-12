@@ -100,7 +100,3 @@ Google Play 购买是绑定 Google 账号的，新设备上使用相同 Google �
 如果在激活过程中遇到问题，可以通过以下方式获取帮助：
 
 **Telegram 官方群**: [t.me/+UGFobXqi2bYzMDFl](https://t.me/+UGFobXqi2bYzMDFl)
-
-## 隐私政策
-
-详细信息请参阅 [隐私政策](/privacy)。
