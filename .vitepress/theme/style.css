@@ -1,0 +1,31 @@
+.gh-stars {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 8px;
+  padding: 4px 8px;
+  height: 24px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 999px;
+  font-size: 12px;
+  line-height: 1;
+  color: var(--vp-c-text-1);
+  background-color: transparent;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.gh-stars:hover {
+  border-color: var(--vp-c-brand-1);
+  background-color: var(--vp-c-bg-soft);
+}
+
+.gh-stars__icon {
+  font-size: 12px;
+  color: var(--vp-c-brand-1);
+}
+
+.gh-stars__count,
+.gh-stars__label {
+  font-variant-numeric: tabular-nums;
+}
+
