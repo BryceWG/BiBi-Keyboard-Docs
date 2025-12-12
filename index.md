@@ -15,6 +15,9 @@ hero:
     - theme: alt
       text: Telegram 群
       link: https://t.me/+UGFobXqi2bYzMDFl
+    - theme: alt
+      text: 官方网站
+      link: https://bibi.brycewg.com
 
 features:
   - icon: 🎤
