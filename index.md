@@ -18,6 +18,9 @@ hero:
     - theme: alt
       text: 官方网站
       link: https://bibi.brycewg.com
+    - theme: alt
+      text: 更新日志
+      link: https://bibi.brycewg.com/changelog.html
 
 features:
   - icon: 🎤

@@ -34,6 +34,7 @@ export default defineConfig({
           { text: '首页', link: '/' },
           { text: '文档', link: '/getting-started/installation' },
           { text: 'Pro 版', link: '/pro/features' },
+          { text: '更新日志', link: 'https://bibi.brycewg.com/changelog.html' },
           { text: '官方网站', link: 'https://bibi.brycewg.com' }
         ],
 
@@ -123,6 +124,7 @@ export default defineConfig({
           { text: 'Home', link: '/en/' },
           { text: 'Docs', link: '/en/getting-started/installation' },
           { text: 'Pro', link: '/en/pro/features' },
+          { text: 'Changelog', link: 'https://bibi.brycewg.com/changelog.html' },
           { text: 'Official Website', link: 'https://bibi.brycewg.com' }
         ],
 
