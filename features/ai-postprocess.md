@@ -29,21 +29,22 @@ AI 后处理功能使用大型语言模型（LLM）对 ASR 识别结果进行智
 
 ## 支持的 LLM 供应商
 
-说点啥支持 **11 个** LLM 供应商，所有供应商均使用 OpenAI 兼容的 API 格式：
+说点啥支持 **12 个** LLM 供应商，所有供应商均使用 OpenAI 兼容的 API 格式：
 
-| 供应商                          | 默认模型                | 特点                      | 注册链接                                                 |
-| ------------------------------- | ----------------------- | ------------------------- | -------------------------------------------------------- |
-| **SF_FREE**<br>硅基流动免费服务 | Qwen/Qwen3-8B           | 🆓 免费无需配置           | [立即使用](https://cloud.siliconflow.cn/i/g8thUcWa)      |
-| **DEEPSEEK**<br>深度求索        | deepseek-chat           | 💰 性价比高，支持推理模式 | [注册](https://platform.deepseek.com/)                   |
-| **ZHIPU**<br>智谱               | glm-4.6                 | 🇨🇳 国产模型，支持推理     | [注册](https://bigmodel.cn/usercenter/proj-mgmt/apikeys) |
-| **MOONSHOT**<br>月之暗面        | kimi-k2-0905-preview    | 🧠 长上下文，支持推理     | [注册](https://platform.moonshot.cn/console/api-keys)    |
-| **VOLCENGINE**<br>火山引擎      | doubao-seed-1-6-flash   | 🇨🇳 豆包模型，支持推理     | [注册](https://console.volcengine.com/ark)               |
-| **OPENAI**                      | gpt-4o-mini             | 🌍 ChatGPT 同款           | [注册](https://platform.openai.com/signup)               |
-| **GEMINI**<br>Google            | gemini-2.0-flash        | 🚀 快速响应，支持推理     | [注册](https://aistudio.google.com/apikey)               |
-| **GROQ**                        | llama-3.3-70b-versatile | ⚡ 超快推理速度           | [注册](https://console.groq.com/keys)                    |
-| **CEREBRAS**                    | llama-3.3-70b           | ⚡ 超快推理               | [注册](https://cloud.cerebras.ai/platform)               |
-| **OHMYGPT**                     | gpt-4o-mini             | 🔀 多供应商中继平台       | [注册](https://x.dogenet.win/i/CXuHm49s)                 |
-| **CUSTOM**<br>自定义            | 用户指定                | 🛠️ 任何 OpenAI 兼容 API   | -                                                        |
+| 供应商                          | 注册链接                                                 |
+| ------------------------------- | -------------------------------------------------------- |
+| **SF_FREE**<br>硅基流动免费服务 | [立即使用](https://cloud.siliconflow.cn/i/g8thUcWa)      |
+| **DEEPSEEK**<br>深度求索        | [注册](https://platform.deepseek.com/)                   |
+| **ZHIPU**<br>智谱               | [注册](https://bigmodel.cn/usercenter/proj-mgmt/apikeys) |
+| **MOONSHOT**<br>月之暗面        | [注册](https://platform.moonshot.cn/console/api-keys)    |
+| **VOLCENGINE**<br>火山引擎      | [注册](https://console.volcengine.com/ark)               |
+| **OPENAI**                      | [注册](https://platform.openai.com/signup)               |
+| **GEMINI**<br>Google            | [注册](https://aistudio.google.com/apikey)               |
+| **GROQ**                        | [注册](https://console.groq.com/keys)                    |
+| **CEREBRAS**                    | [注册](https://cloud.cerebras.ai/platform)               |
+| **FIREWORKS**                   | [注册](https://fireworks.ai/)                            |
+| **OHMYGPT**                     | [注册](https://x.dogenet.win/i/CXuHm49s)                 |
+| **CUSTOM**<br>自定义            | -                                                        |
 
 ::: info 推理模式（Reasoning Mode）
 部分供应商支持"推理模式"切换（Thinking/Reasoning），模型会先进行深度思考再输出结果，适合复杂的文本处理任务。推理模式通常会增加处理时间和 Token 消耗。

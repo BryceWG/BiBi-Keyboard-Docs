@@ -29,21 +29,22 @@ Recording → ASR → [AI post-processing] → Insert text
 
 ## Supported LLM Providers
 
-BiBi Keyboard supports **11** LLM providers. All of them use an OpenAI-compatible API format:
+BiBi Keyboard supports **12** LLM providers. All of them use an OpenAI-compatible API format:
 
-| Vendor                             | Default model             | Notes                          | Sign-up link                                                  |
-| ---------------------------------- | ------------------------- | ------------------------------ | ------------------------------------------------------------- |
-| **SF_FREE** (SiliconFlow Free)     | Qwen/Qwen3-8B             | 🆓 free, no config              | https://cloud.siliconflow.cn/i/g8thUcWa                       |
-| **DEEPSEEK**                       | deepseek-chat             | 💰 good value; reasoning mode   | https://platform.deepseek.com/                                |
-| **ZHIPU**                          | glm-4.6                   | 🇨🇳 China-based; reasoning mode  | https://bigmodel.cn/usercenter/proj-mgmt/apikeys              |
-| **MOONSHOT**                       | kimi-k2-0905-preview      | 🧠 long context; reasoning mode | https://platform.moonshot.cn/console/api-keys                 |
-| **VOLCENGINE**                     | doubao-seed-1-6-flash     | 🇨🇳 Doubao; reasoning mode       | https://console.volcengine.com/ark                            |
-| **OPENAI**                         | gpt-4o-mini               | 🌍 OpenAI                       | https://platform.openai.com/signup                            |
-| **GEMINI**                         | gemini-2.0-flash          | 🚀 fast; reasoning supported     | https://aistudio.google.com/apikey                            |
-| **GROQ**                           | llama-3.3-70b-versatile   | ⚡ very fast inference           | https://console.groq.com/keys                                 |
-| **CEREBRAS**                       | llama-3.3-70b             | ⚡ fast inference                | https://cloud.cerebras.ai/platform                            |
-| **OHMYGPT**                        | gpt-4o-mini               | 🔀 multi-vendor relay            | https://x.dogenet.win/i/CXuHm49s                              |
-| **CUSTOM**                         | user-defined              | 🛠️ any OpenAI-compatible API    | -                                                             |
+| Vendor                         | Sign-up link                                     |
+| ------------------------------ | ------------------------------------------------ |
+| **SF_FREE** (SiliconFlow Free) | https://cloud.siliconflow.cn/i/g8thUcWa          |
+| **DEEPSEEK**                   | https://platform.deepseek.com/                   |
+| **ZHIPU**                      | https://bigmodel.cn/usercenter/proj-mgmt/apikeys |
+| **MOONSHOT**                   | https://platform.moonshot.cn/console/api-keys    |
+| **VOLCENGINE**                 | https://console.volcengine.com/ark               |
+| **OPENAI**                     | https://platform.openai.com/signup               |
+| **GEMINI**                     | https://aistudio.google.com/apikey               |
+| **GROQ**                       | https://console.groq.com/keys                    |
+| **CEREBRAS**                   | https://cloud.cerebras.ai/platform               |
+| **FIREWORKS**                  | https://fireworks.ai/                            |
+| **OHMYGPT**                    | https://x.dogenet.win/i/CXuHm49s                 |
+| **CUSTOM**                     | -                                                |
 
 ::: info Reasoning mode
 Some providers expose a "thinking/reasoning" mode. The model reasons before producing output, which can help for complex editing but usually increases latency and token usage.
@@ -55,13 +56,13 @@ BiBi Keyboard includes 5 built-in prompt presets and supports custom ones.
 
 ### Built-in presets
 
-| Preset name               | Use case        | Effect                                                         |
-| ------------------------- | --------------- | -------------------------------------------------------------- |
-| **General post-process**  | daily voice input | remove filler words, fix slips, keep original meaning         |
-| **Basic polishing**       | formal rewrite  | grammar fixes, punctuation, smoother expression                |
-| **Translate to English**  | cross-language  | translate transcript into English                              |
-| **Extract key points**    | meeting notes   | extract key info into a bullet list                            |
-| **Extract to-dos**        | task tracking   | identify tasks and generate a checklist                         |
+| Preset name              | Use case          | Effect                                                |
+| ------------------------ | ----------------- | ----------------------------------------------------- |
+| **General post-process** | daily voice input | remove filler words, fix slips, keep original meaning |
+| **Basic polishing**      | formal rewrite    | grammar fixes, punctuation, smoother expression       |
+| **Translate to English** | cross-language    | translate transcript into English                     |
+| **Extract key points**   | meeting notes     | extract key info into a bullet list                   |
+| **Extract to-dos**       | task tracking     | identify tasks and generate a checklist               |
 
 ### Custom prompts
 
@@ -75,20 +76,20 @@ Go to `Settings → AI Post-processing → Prompt presets`:
 
 ### Basic
 
-| Key                 | Type      | Default      | Description                                   |
-| ------------------ | --------- | ------------ | --------------------------------------------- |
-| `postProcessEnabled` | Boolean   | `false`      | master switch                                 |
-| `llmVendor`          | LlmVendor | `SF_FREE`    | selected LLM vendor                           |
-| `llmEndpoint`        | String    | vendor default | API endpoint (auto for built-in vendors)     |
-| `llmApiKey`          | String    | `""`         | API key (not needed for free service)         |
+| Key                  | Type      | Default        | Description                                   |
+| -------------------- | --------- | -------------- | --------------------------------------------- |
+| `postProcessEnabled` | Boolean   | `false`        | master switch                                 |
+| `llmVendor`          | LlmVendor | `SF_FREE`      | selected LLM vendor                           |
+| `llmEndpoint`        | String    | vendor default | API endpoint (auto for built-in vendors)      |
+| `llmApiKey`          | String    | `""`           | API key (not needed for free service)         |
 | `llmModel`           | String    | vendor default | model name                                    |
-| `llmTemperature`     | Float     | `0.2`        | temperature (0-2; lower = more deterministic) |
+| `llmTemperature`     | Float     | `0.2`          | temperature (0-2; lower = more deterministic) |
 
 ### Advanced
 
-| Key                     | Type   | Default | Description                                              |
-| ---------------------- | ------ | ------- | -------------------------------------------------------- |
-| `postprocSkipUnderChars` | Int    | `0`     | skip AI post-processing if shorter than this (0=disable)  |
+| Key                      | Type   | Default | Description                                              |
+| ------------------------ | ------ | ------- | -------------------------------------------------------- |
+| `postprocSkipUnderChars` | Int    | `0`     | skip AI post-processing if shorter than this (0=disable) |
 | `activePromptId`         | String | `""`    | active prompt preset id                                  |
 | `promptPresetsJson`      | String | `""`    | prompt preset list JSON                                  |
 
@@ -154,17 +155,17 @@ For any OpenAI-compatible API:
 
 Different vendors control reasoning mode in different ways:
 
-| Vendor          | Control method | Supported models                     | Notes                                    |
-| --------------- | -------------- | ------------------------------------ | ---------------------------------------- |
-| **DEEPSEEK**    | model choice   | deepseek-reasoner                    | choose the reasoner model                |
-| **MOONSHOT**    | model choice   | kimi-k2-thinking                     | choose the thinking model                |
-| **SF_FREE**     | toggle param   | Qwen3 series, DeepSeek-V3.1, etc.    | enable "Reasoning mode" in settings      |
-| **GEMINI**      | toggle param   | gemini-2.5-flash+                     | `reasoning_effort` param                 |
-| **GROQ**        | toggle param   | qwen3-32b, gpt-oss series            | `reasoning_effort` param                 |
-| **CEREBRAS**    | toggle param   | gpt-oss-120b                         | `reasoning_effort` param                 |
-| **VOLCENGINE**  | toggle param   | doubao-seed series, deepseek         | `thinking.type` param                    |
-| **ZHIPU**       | toggle param   | glm-4.6, glm-4.5 series              | `thinking.type` param                    |
-| **OHMYGPT**     | toggle param   | gemini-2.5, claude, gpt-5 series     | `reasoning_effort` param                 |
+| Vendor         | Control method | Supported models                  | Notes                               |
+| -------------- | -------------- | --------------------------------- | ----------------------------------- |
+| **DEEPSEEK**   | model choice   | deepseek-reasoner                 | choose the reasoner model           |
+| **MOONSHOT**   | model choice   | kimi-k2-thinking                  | choose the thinking model           |
+| **SF_FREE**    | toggle param   | Qwen3 series, DeepSeek-V3.1, etc. | enable "Reasoning mode" in settings |
+| **GEMINI**     | toggle param   | gemini-2.5-flash+                 | `reasoning_effort` param            |
+| **GROQ**       | toggle param   | qwen3-32b, gpt-oss series         | `reasoning_effort` param            |
+| **CEREBRAS**   | toggle param   | gpt-oss-120b                      | `reasoning_effort` param            |
+| **VOLCENGINE** | toggle param   | doubao-seed series, deepseek      | `thinking.type` param               |
+| **ZHIPU**      | toggle param   | glm-4.6, glm-4.5 series           | `thinking.type` param               |
+| **OHMYGPT**    | toggle param   | gemini-2.5, claude, gpt-5 series  | `reasoning_effort` param            |
 
 ::: info When to use reasoning mode
 
@@ -178,11 +179,11 @@ Different vendors control reasoning mode in different ways:
 
 There are three ways to trigger AI post-processing:
 
-| Trigger                 | Description                                                                 | Best for |
-| ---------------------- | --------------------------------------------------------------------------- | -------- |
-| **Auto post-process**  | runs automatically after each voice input                                   | daily use; output is final |
-| **AI Edit**            | select text and open AI Edit; choose a prompt preset for the edit           | iterative edits / retrying |
-| **Skip short input**   | set a minimum length threshold to skip AI for short phrases                  | avoid overhead on tiny inputs |
+| Trigger               | Description                                                       | Best for                      |
+| --------------------- | ----------------------------------------------------------------- | ----------------------------- |
+| **Auto post-process** | runs automatically after each voice input                         | daily use; output is final    |
+| **AI Edit**           | select text and open AI Edit; choose a prompt preset for the edit | iterative edits / retrying    |
+| **Skip short input**  | set a minimum length threshold to skip AI for short phrases       | avoid overhead on tiny inputs |
 
 ## Troubleshooting
 
@@ -218,4 +219,3 @@ Ideas:
 
 - [Voice Input Basics](./voice-input.md)
 - [Keyboard Layout & Buttons](./keyboard-layout.md#ai-edit-panel)
-
