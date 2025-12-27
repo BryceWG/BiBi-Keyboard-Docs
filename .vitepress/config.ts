@@ -8,11 +8,11 @@ export default defineConfig({
   },
 
   head: [
-    ['link', { rel: 'icon', href: '/favicon.ico' }]
+    ['link', { rel: 'icon', href: '/favicon.ico', sizes: 'any' }]
   ],
 
   themeConfig: {
-    logo: '/logo.png',
+    logo: '/icon_new.svg',
 
     socialLinks: [
       { icon: 'github', link: 'https://github.com/BryceWG/BiBi-Keyboard' }

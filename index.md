@@ -1,10 +1,14 @@
 ---
 layout: home
+title: 「说点啥」使用文档
 
 hero:
   name: 说点啥
   text: BiBi Keyboard
   tagline: 支持 12+ ASR 供应商，本地离线识别，AI 智能后处理
+  image:
+    src: /icon_new.svg
+    alt: 说点啥 Logo
   actions:
     - theme: brand
       text: 快速开始
