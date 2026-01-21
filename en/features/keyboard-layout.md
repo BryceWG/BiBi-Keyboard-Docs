@@ -15,7 +15,7 @@ This page introduces the main keyboard UI, the customizable action row, the AI E
 
 - **Settings (gear)**: open app settings.
 - **Prompt selector (document icon)**: choose an AI post-processing prompt preset.
-- **Switch IME (keyboard icon)**: open system IME picker. If Fcitx5 linking is enabled, it will try to switch back to the previous IME first.
+- **Switch IME (keyboard icon)**: open system IME picker. If Fcitx5 linking is enabled, it will try to switch back to the previous IME first. You can also set a fixed target under `Settings → Input Settings → Switch target IME` (default: previous IME).
 - **Enter**: newline or editor action depending on the target input field.
 
 ### Punctuation & space row
@@ -50,6 +50,22 @@ At the top of the keyboard, there is a row of up to 4 customizable action button
 - **Hide keyboard**: minimize the keyboard
 
 If an action is stateful (e.g. Selection mode or VAD toggle), the icon reflects the current state (highlighted/dimmed).
+
+## IME Switching Tips
+
+### Quick Settings tile
+
+You can add a system Quick Settings tile named "Switch input method":
+
+1. Pull down Quick Settings
+2. Tap Edit (pencil icon)
+3. Find "Switch input method" and add it
+
+Tapping the tile opens the system IME picker.
+
+### Haptic strength
+
+If haptics feel too strong/weak, adjust it under `Settings → Input Settings → Input/tap haptic strength`.
 
 ## AI Edit Panel
 

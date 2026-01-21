@@ -22,7 +22,7 @@ The floating ball is a draggable circular button overlay. It provides:
 
 ## Settings
 
-All options are under `Settings → UI & Interaction → Floating Settings`:
+Basic options are under `Settings → UI & Interaction → Floating Settings`:
 
 | Key                                  | Type    | Default | Description                                 |
 | ------------------------------------ | ------- | ------- | ------------------------------------------- |
@@ -30,7 +30,16 @@ All options are under `Settings → UI & Interaction → Floating Settings`:
 | `floatingSwitcherOnlyWhenImeVisible` | Boolean | `true`  | show only when keyboard is visible          |
 | `floatingSwitcherAlpha`              | Float   | `1.0`   | transparency (0.2-1.0)                      |
 | `floatingBallSizeDp`                 | Int     | `44`    | size (28-96dp)                              |
+| `floatingBallDirectDragEnabled`      | Boolean | `true`  | drag to move without long-press             |
 | `floatingWriteTextCompatEnabled`     | Boolean | `true`  | compatibility mode (select-all + paste)     |
+
+### Stability (Optional)
+
+If your device aggressively kills background services and the floating ball/accessibility gets reclaimed, enable keep-alive under `Settings → Other Settings`:
+
+| Key                    | Type    | Default | Description |
+| ---------------------- | ------- | ------- | ----------- |
+| `floatingKeepAliveEnabled` | Boolean | `false` | keep alive with a foreground service (and request battery whitelist) |
 
 ### Details
 
@@ -129,7 +138,7 @@ BiBi Keyboard's accessibility service is **only used for text insertion**. It do
   - toggle VAD
   - view recognition history
   - upload/pull clipboard (requires clipboard sync enabled)
-- **Drag**: long-press for ~2s until you feel two vibration feedbacks; then drag and release to snap to edge
+- **Drag**: by default you can drag to move directly. If "Drag to move" is disabled, long-press for ~2s (two vibration feedbacks) to enter move mode
 - **Reset**: tap "Reset floating position" in settings
 
 ## Common issues
@@ -142,6 +151,7 @@ Possible causes:
 2. Master switch off (`floatingAsrEnabled`)
 3. "Only show when keyboard is visible" enabled (you need to show keyboard first)
 4. System battery optimization/background restrictions kill the app or its accessibility service
+   - You can enable "Keep alive with a foreground service" under `Settings → Other Settings`, and request battery whitelist
 
 ### Cannot insert text
 

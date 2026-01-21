@@ -4,7 +4,7 @@ Auto-stop on silence (Voice Activity Detection, VAD) can stop recording automati
 
 ## How it works
 
-BiBi Keyboard uses the **Silero VAD** model to detect speech activity in real time:
+BiBi Keyboard uses **Ten VAD (sherpa-onnx)** to detect speech activity in real time:
 
 ```
 Record → analyze audio in real time → detect speech/silence → accumulate silence time → reach threshold → auto stop
@@ -19,9 +19,8 @@ Core logic:
 
 ### VAD model
 
-BiBi Keyboard uses **Silero VAD v5**, which is:
+BiBi Keyboard uses **Ten VAD (sherpa-onnx)**, which is:
 
-- lightweight (~629KB)
 - low-latency (real-time)
 - accurate (better speech vs noise separation)
 - fully offline (runs locally)

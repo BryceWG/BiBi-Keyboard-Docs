@@ -180,8 +180,8 @@ External calls always follow BiBi Keyboard's current settings (ignore SpeechConf
 
 **Local vendors**:
 
-- **Paraformer / Zipformer**: streaming only
-- **SenseVoice / TeleSpeech**: non-streaming file engines (pseudo-streaming is UI-only and not exposed externally)
+- **Paraformer**: streaming only
+- **SenseVoice / FunASR Nano / TeleSpeech**: non-streaming file engines (pseudo-streaming is UI-only and not exposed externally)
 
 ## Result Filters
 

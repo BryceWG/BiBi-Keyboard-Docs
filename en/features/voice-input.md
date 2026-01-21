@@ -32,9 +32,9 @@ BiBi Keyboard supports **12** ASR providers, grouped into cloud and local:
 | Provider         | Streaming | Duration limit (non-streaming) | Notes                                   |
 | ---------------- | --------- | ------------------------------ | --------------------------------------- |
 | **SenseVoice**   | Pseudo ¹  | 5 min                          | Based on sherpa-onnx; multilingual      |
+| **FunASR Nano**  | ❌        | 5 min                          | sherpa-onnx offline recognition (no pseudo-streaming preview) |
 | **TeleSpeech**   | Pseudo ¹  | 5 min                          | Based on sherpa-onnx; optimized for CN  |
 | **Paraformer**   | ✅        | Unlimited ²                    | Pure local streaming recognition        |
-| **Zipformer**    | ✅        | Unlimited ²                    | Pure local streaming recognition        |
 
 ::: info Notes
 ¹ **Pseudo-streaming**: shows partial results based on VAD segmentation, but it is not true real-time streaming.
@@ -76,7 +76,7 @@ For more details on supported models, recommended configs and updated quotas, se
 **Supported engines**:
 
 - Cloud: Volcengine, Soniox, DashScope, ElevenLabs
-- Local: Paraformer, Zipformer
+- Local: Paraformer
 
 ### Non-streaming recognition (file upload)
 
@@ -123,14 +123,30 @@ For non-streaming engines, if a recording exceeds the app's single-segment limit
 | Gemini       | 4 hours     | Official max is ~9.5h; app uses 4h as a safety margin                 |
 | Soniox       | 1 hour      | No strict official max found; app defaults to 1h                      |
 | SenseVoice   | 5 min       | Local performance cap to avoid excessive RAM/time                     |
+| FunASR Nano  | 5 min       | Local performance cap to avoid excessive RAM/time                     |
 | TeleSpeech   | 5 min       | Local performance cap to avoid excessive RAM/time                     |
 
 ::: warning Notes
 
-- Streaming engines (Paraformer, Zipformer, etc.) have **no duration limit**.
+- Streaming engines (Paraformer, etc.) have **no duration limit**.
 - Segmented recording works only in non-streaming mode.
 - Each segment may incur a separate API call cost (for cloud providers).
   :::
+
+## Backup ASR Engine (Parallel Primary/Backup)
+
+If your primary ASR occasionally times out or fails, you can enable a **backup ASR engine**: BiBi Keyboard records only once, then pushes the same audio to both primary and backup. If primary returns a non-empty final result in time, it uses primary; otherwise it falls back to the backup result.
+
+### How to enable
+
+1. Open `Settings → ASR Settings`
+2. Find "Backup speech recognition engine" and enable "Enable backup engine"
+3. Tap "Backup provider" and choose a provider different from your primary one
+4. Make sure the backup provider is also configured (API key / local model files, etc.)
+
+::: warning Notes
+This runs two engines in parallel. Even if the primary result is used, the backup may still trigger an API request/cost (depending on vendor billing and cancellation behavior).
+:::
 
 ## One-tap Setup Options
 
@@ -157,8 +173,24 @@ Using Volcengine as an example:
 3. The app will automatically select **SenseVoice** under `Settings → ASR Settings → Provider`
 
 ::: tip Tip
-First load of local models may take a few seconds. You can enable "Preload model" (SenseVoice / TeleSpeech / Paraformer / Zipformer all support it) so the model is loaded when the keyboard or floating ball is first shown, reducing the first-recognition latency.
+First load of local models may take a few seconds. You can enable "Preload model" (SenseVoice / FunASR Nano / TeleSpeech / Paraformer all support it) so the model is loaded when the keyboard or floating ball is first shown, reducing the first-recognition latency.
 :::
+
+## Local Punctuation (Optional)
+
+TeleSpeech and Paraformer can add punctuation with an extra **shared punctuation model**. If the model is missing, recognition still works, but results may look more "spoken" (less punctuated).
+
+1. Open `Settings → ASR Settings`
+2. Go to the `TeleSpeech` or `Paraformer` section
+3. Under the punctuation model section, tap "Download model" (or import the ZIP)
+
+::: tip Download source
+When downloading local models, you can choose a download source and see latency. Picking a lower-latency source is usually more stable.
+:::
+
+## Recognition Enhancements (Optional)
+
+- **Offline denoise for non-streaming ASR**: `Settings → Input Settings → Offline denoise for non-streaming ASR` (applies to file-mode and local offline recognition)
 
 ## Related
 

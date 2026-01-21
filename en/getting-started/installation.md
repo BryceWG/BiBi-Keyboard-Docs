@@ -112,6 +112,10 @@ The one-tap setup on the home page can help you complete the key permissions qui
 
 If everything works, continue to [First Setup](./first-setup).
 
+## Update checks
+
+OSS updates are distributed via GitHub Releases. By default, BiBi Keyboard checks for updates **once per day** when you first open Settings. You can turn it off under `Settings → About → Auto-check for updates`.
+
 ## FAQ
 
 ### Install failed
@@ -135,4 +139,3 @@ If everything works, continue to [First Setup](./first-setup).
 ## Next
 
 Read [First Setup](./first-setup).
-

@@ -24,6 +24,7 @@ BiBi Keyboard provides two editions: OSS and Pro. This page compares feature dif
 |                | Continuous speaking mode (VAD auto) | ❌ | ✅ |
 | **Text**        | Trailing punctuation trimming    | ✅  | ✅  |
 |                | AI editing                        | ✅  | ✅  |
+|                | App-specific prompt               | ❌  | ✅  |
 |                | Global undo                       | ✅  | ✅  |
 |                | Traditional Chinese conversion    | ❌  | ✅  |
 |                | Regex post-processing             | ❌  | ✅  |
@@ -89,4 +90,3 @@ Quick links:
 
 - https://play.google.com/store/apps/details?id=com.brycewg.asrkb.pro
 - https://t.me/+UGFobXqi2bYzMDFl
-

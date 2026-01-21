@@ -8,6 +8,7 @@ Pro includes these exclusive features:
 
 - **Offline Traditional Chinese conversion**: convert results to Traditional Chinese automatically
 - **Hotwords management**: unified hotword injection across providers to improve recognition for proper nouns
+- **App-specific prompts**: automatically switch AI prompt preset by foreground app
 - **Continuous speaking mode**: VAD auto start/stop without manual control
 - **Omni-direction cursor sliding**: enhanced cursor control with 4-direction sliding
 - **WebDAV auto backup**: cloud sync settings across devices
@@ -50,25 +51,30 @@ Manage custom hotwords to improve recognition of proper nouns, brand names, name
 ### How to use
 
 1. Open BiBi Keyboard Pro settings
-2. Go to `Settings → ASR Settings → Result optimization → Hotwords / common mistakes`
-3. Add one hotword per line
+2. Go to `Settings → ASR Settings → Result Optimization (Pro)`
+3. Add/import hotwords (supports batch import from clipboard)
 4. Save to apply
 
 > Avoid too many hotwords. Per-provider limits apply and excessive lists may hurt performance.
 
+### What’s new (more convenient)
+
+- **Clear all + undo**: clear your hotwords in one tap, with an "Undo" action in the snackbar
+- **Add from selection menu**: select any text in any app, then choose "Add hotword to BiBi Keyboard" to add it instantly
+
 ### Providers that support hotwords
 
-| Provider     | Support | Max count                                  |
-| ----------- | ------- | ------------------------------------------ |
-| Volcengine  | ✅      | 100 tokens (bidirectional streaming) / 5000 |
-| DashScope   | ✅      | 10000 tokens                               |
-| Soniox      | ✅      | 8000 tokens                                |
-| SiliconFlow | ✅      | almost unlimited (SenseVoice/TeleSpeech not supported) |
-| OpenAI      | ✅      | depends on model                           |
-| Gemini      | ✅      | almost unlimited                           |
-| GLM ASR     | ✅      | 100                                        |
-| ElevenLabs  | ❌      | -                                          |
-| Local models| ❌      | -                                          |
+| Provider     | Support | Max count                                              |
+| ------------ | ------- | ------------------------------------------------------ |
+| Volcengine   | ✅      | 100 tokens (bidirectional streaming) / 5000            |
+| DashScope    | ✅      | 10000 tokens                                           |
+| Soniox       | ✅      | 8000 tokens                                            |
+| SiliconFlow  | ✅      | almost unlimited (SenseVoice/TeleSpeech not supported) |
+| OpenAI       | ✅      | depends on model                                       |
+| Gemini       | ✅      | almost unlimited                                       |
+| GLM ASR      | ✅      | 100                                                    |
+| ElevenLabs   | ❌      | -                                                      |
+| Local models | ❌      | -                                                      |
 
 ## Continuous Speaking Mode <Badge type="warning" text="Pro" />
 
@@ -141,21 +147,40 @@ Apply regex rules to recognition results for advanced text transformations.
 
 - **Full Java regex support**
 - **Chained rules**: apply multiple rules in order
-- **Templates**: built-in matching options
+- **Templates**: one-tap common templates with auto-filled notes
+- **Notes**: notes are for display/management only (do not affect matching)
 
 ### How to use
 
 1. Open settings
-2. Go to `Settings → ASR Settings → Result optimization → Regex post-processing`
-3. Enable and tap `Add rule`
+2. Go to `Settings → ASR Settings → Result Optimization (Pro)`
+3. Enable and tap `Add rule` (or use `Templates`)
 4. Fill in:
    - **Pattern**: regex
    - **Replacement**: replacement text (`$1`, `$2`, etc.)
    - **Options**: ignore case, multiline, etc.
+   - **Note**: a label for list display (does not affect behavior)
 5. Save; rules apply sequentially
 
 ::: tip Note
 Regex post-processing runs after AI post-processing. It is useful for normalizing AI output formats.
+:::
+
+## App-specific Prompt <Badge type="warning" text="Pro" />
+
+> This feature is only available in Pro
+
+Assign different AI post-processing prompt presets per app. Example: use "General post-process" for chat apps, "Basic polishing" for notes, and "Extract to-dos" for task tools.
+
+### How to use
+
+1. Open `Settings → AI Post-processing`
+2. Tap "App-specific Prompt (Pro)"
+3. Enable "App-specific Prompt"
+4. Tap "Add app" and select a prompt preset for that app
+
+::: warning Notes
+This requires enabling BiBi Keyboard’s accessibility service to detect the foreground app. It does not read your chat content or screen text.
 :::
 
 ## Advanced UI Theming <Badge type="warning" text="Pro" />
@@ -190,4 +215,3 @@ See:
 
 - [Activation](./activation)
 - [Comparison](./comparison)
-

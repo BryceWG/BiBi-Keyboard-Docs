@@ -37,7 +37,7 @@ features:
 
   - icon: 🌐
     title: 本地离线识别
-    details: 内置 SenseVoice、Telespeech、Paraformer、Zipformer 本地模型，无需网络即可使用，保护隐私安全
+    details: 内置 SenseVoice、FunASR Nano、Telespeech、Paraformer 本地模型，无需网络即可使用，保护隐私安全
 
   - icon: 🎯
     title: 悬浮球输入
@@ -67,7 +67,7 @@ features:
 ### 核心特性
 
 - **12+ ASR 供应商**：火山引擎、硅基流动、OpenAI、Gemini、ElevenLabs、DashScope、Soniox、Zhipu GLM 等
-- **本地离线模型**：SenseVoice、Telespeech、Paraformer、Zipformer，无需网络即可使用
+- **本地离线模型**：SenseVoice、FunASR Nano、Telespeech、Paraformer，无需网络即可使用
 - **AI 后处理**：支持多种大语言模型优化识别结果
 - **多种录音模式**：长按、点按切换
 - **隐私优先**：配置完成后可实现完全离线使用，保护用户隐私

@@ -33,7 +33,7 @@ features:
 
   - icon: 🌐
     title: Local Offline Recognition
-    details: Built-in local models including SenseVoice, TeleSpeech, Paraformer, and Zipformer. Works without network and keeps privacy.
+    details: Built-in local models including SenseVoice, FunASR Nano, TeleSpeech, and Paraformer. Works without network and keeps privacy.
 
   - icon: 🎯
     title: Floating Ball Voice Input
@@ -63,7 +63,7 @@ BiBi Keyboard (说点啥) is a voice-first Android IME. It integrates multiple m
 ### Key Highlights
 
 - **12+ ASR providers**: Volcengine, SiliconFlow, OpenAI, Gemini, ElevenLabs, DashScope, Soniox, Zhipu GLM, and more
-- **Local offline models**: SenseVoice, TeleSpeech, Paraformer, Zipformer (no network required)
+- **Local offline models**: SenseVoice, FunASR Nano, TeleSpeech, Paraformer (no network required)
 - **AI post-processing**: use LLMs to refine recognition results
 - **Multiple recording modes**: press-and-hold, tap-to-toggle
 - **Privacy-first**: can work fully offline once configured
