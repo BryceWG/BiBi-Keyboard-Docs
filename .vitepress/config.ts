@@ -44,7 +44,8 @@ export default defineConfig({
             collapsed: false,
             items: [
               { text: '安装指南', link: '/getting-started/installation' },
-              { text: '首次设置', link: '/getting-started/first-setup' }
+              { text: '首次设置', link: '/getting-started/first-setup' },
+              { text: '语音识别供应商配置', link: '/getting-started/asr-providers' }
             ]
           },
           {
@@ -134,7 +135,8 @@ export default defineConfig({
             collapsed: false,
             items: [
               { text: 'Installation', link: '/en/getting-started/installation' },
-              { text: 'First Setup', link: '/en/getting-started/first-setup' }
+              { text: 'First Setup', link: '/en/getting-started/first-setup' },
+              { text: 'ASR Providers', link: '/en/getting-started/asr-providers' }
             ]
           },
           {

@@ -18,6 +18,8 @@ BiBi Keyboard supports 12+ ASR providers, including cloud services and local mod
 If this is your first time, start with **SiliconFlow**. The app enables the built-in free ASR/LLM by default, so you can try it without signup or API keys.
 :::
 
+For other providers (Volcengine, DashScope, Soniox, Gemini, ElevenLabs, OpenAI, Zhipu, and local models), see [ASR Provider Setup](/en/getting-started/asr-providers).
+
 ## Configure SiliconFlow (Recommended)
 
 Below uses SiliconFlow as an example.
@@ -147,4 +149,3 @@ VAD works best with tap-to-toggle mode. When no speech is detected for a given w
 ## Next
 
 - Explore [Features](../features/voice-input) to understand all capabilities
-
