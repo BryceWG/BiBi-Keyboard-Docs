@@ -88,7 +88,7 @@ The typewriter effect only affects how the streaming preview is displayed. It do
 
 ## Supported LLM Providers
 
-BiBi Keyboard supports **12** LLM providers. All of them use an OpenAI-compatible API format:
+BiBi Keyboard supports **13** LLM providers. All of them use an OpenAI-compatible API format:
 
 | Vendor                         | Sign-up link                                     |
 | ------------------------------ | ------------------------------------------------ |
@@ -97,6 +97,7 @@ BiBi Keyboard supports **12** LLM providers. All of them use an OpenAI-compatibl
 | **ZHIPU**                      | https://bigmodel.cn/usercenter/proj-mgmt/apikeys |
 | **MOONSHOT**                   | https://platform.moonshot.cn/console/api-keys    |
 | **VOLCENGINE**                 | https://console.volcengine.com/ark               |
+| **DASHSCOPE**                  | https://bailian.console.aliyun.com/              |
 | **OPENAI**                     | https://platform.openai.com/signup               |
 | **GEMINI**                     | https://aistudio.google.com/apikey               |
 | **GROQ**                       | https://console.groq.com/keys                    |
@@ -130,6 +131,22 @@ Go to `Settings → AI Post-processing → Prompt presets`:
 1. Tap "Add preset"
 2. Write your prompt (role, task, rules, output format, etc.)
 3. Save and apply quickly in AI Edit
+
+## AI Assistant <Badge type="warning" text="Pro" />
+
+AI Assistant can automatically match preset modes by wake word and keywords, then apply the mapped AI post-processing prompt.
+
+### Highlights
+
+- **Wake-word trigger**: if the transcript starts with a wake word, AI Assistant flow starts automatically
+- **Preset modes**: configure different processing modes for different scenarios and bind each one to a prompt preset
+- **Keyword matching**: selects the most suitable mode based on preset keywords
+- **Fuzzy matching**: supports fuzzy matching for wake words and preset keywords, so natural spoken variants can still trigger
+- **Customizable**: wake words, keywords, and prompt rules for each mode are all customizable
+
+## Hotword Linkage <Badge type="warning" text="Pro" />
+
+When hotwords are injected into AI post-processing, the app uses phoneme-based dynamic filtering to select hotwords relevant to the current transcript before injection. This improves relevance and reduces noise from unrelated hotwords.
 
 ## Configuration
 
@@ -187,6 +204,8 @@ Different vendors control reasoning mode in different ways:
 ## Model Selection & Fetching Model List
 
 In `Settings → AI Post-processing`, you can tap "Fetch model list" to query available models from your vendor and add commonly used ones into the in-app dropdown.
+
+During "Test LLM call", you can cancel the current request at any time to quickly adjust settings and retry.
 
 ::: tip Tip
 For **CUSTOM** vendors, if your backend has a default model, the model field can be left empty. If the test call fails, fill in the required model name as your provider expects.

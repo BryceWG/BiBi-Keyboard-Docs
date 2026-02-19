@@ -1,18 +1,29 @@
-# AIDL Integration (Fcitx Linking)
+# AIDL Integration (Fcitx / Trime Linking)
 
-BiBi Keyboard (asr-keyboard) provides a standard AIDL-compatible service, allowing other apps (e.g. the [modified Fcitx (Little Penguin) IME](https://github.com/BryceWG/fcitx5-android-bibi-keyboard)) to use BiBi Keyboard's speech recognition.
+BiBi Keyboard (asr-keyboard) provides a standard AIDL-compatible service, allowing other apps (e.g. the [modified Fcitx5 IME](https://github.com/BryceWG/fcitx5-android-bibi-keyboard) and [modified Trime IME](https://github.com/BryceWG/trime-bibi-keyboard)) to use BiBi Keyboard's speech recognition.
 
-The server side uses a hand-written Binder protocol, but it is fully compatible with AIDL-generated stubs/proxies. Clients can use `.aidl` generated code, or call it via raw Binder `transact` (as Fcitx does).
+The server side uses a hand-written Binder protocol, but it is fully compatible with AIDL-generated stubs/proxies. Clients can use `.aidl` generated code, or call it via raw Binder `transact` (as Fcitx/Trime do).
 
 ## User Guide
 
-Currently, only the modified Fcitx IME supports this. Steps:
+Currently supported: modified Fcitx5 and modified Trime. Common steps:
 
 1. Install the latest BiBi Keyboard (OSS or Pro; Pro is preferred if installed)
 2. Enable external linking in BiBi Keyboard: `Settings → Input Settings → Allow external IME linking (AIDL)`
-3. Install the modified Fcitx IME
-4. In Fcitx, enable BiBi Keyboard linking: `Settings → Virtual Keyboard → Long-press Space Bar Behavior → Voice Input (AIDL)`
-5. While using Fcitx, long-press Space to start voice input, release to finish
+
+**Fcitx5 Android:**
+
+3. Install the modified Fcitx IME: <https://github.com/BryceWG/fcitx5-android-bibi-keyboard/releases>
+4. In Fcitx, enable: `Settings → Virtual Keyboard → Long-press Space Bar Behavior → Voice Input (AIDL)`
+5. While using Fcitx, long-press Space to start voice input and release to finish
+
+**Trime:**
+
+3. Install the modified Trime IME: <https://github.com/BryceWG/trime-bibi-keyboard/releases>
+4. In Trime, enable: `Settings → General Settings → BiBi AIDL Voice Input`
+5. Usage:
+   - Long-press a key that has `VOICE_ASSIST` to start recording, then release to finish
+   - If your current theme has no `VOICE_ASSIST` long-press entry, enable the "Toolbar microphone button" in Trime settings; tap once to start, tap again to stop and commit
 
 **Package priority** (same as Fcitx implementation):
 
@@ -29,17 +40,17 @@ Clients should try binding in this order and prefer the installed Pro package (s
 
 Transaction codes (match AIDL stub):
 
-| Method            | Transaction code              | Description                       |
-| ---------------- | ----------------------------- | --------------------------------- |
-| `startSession`    | `FIRST_CALL_TRANSACTION + 0` | server-recording session          |
-| `stopSession`     | `FIRST_CALL_TRANSACTION + 1` | stop current session              |
-| `cancelSession`   | `FIRST_CALL_TRANSACTION + 2` | cancel current session            |
-| `isRecording`     | `FIRST_CALL_TRANSACTION + 3` | whether session is recording      |
-| `isAnyRecording`  | `FIRST_CALL_TRANSACTION + 4` | whether any session is recording  |
-| `getVersion`      | `FIRST_CALL_TRANSACTION + 5` | app version name                  |
-| `startPcmSession` | `FIRST_CALL_TRANSACTION + 6` | client-pushed PCM session         |
-| `writePcm`        | `FIRST_CALL_TRANSACTION + 7` | push one PCM frame                |
-| `finishPcm`       | `FIRST_CALL_TRANSACTION + 8` | finish PCM input and process      |
+| Method            | Transaction code             | Description                      |
+| ----------------- | ---------------------------- | -------------------------------- |
+| `startSession`    | `FIRST_CALL_TRANSACTION + 0` | server-recording session         |
+| `stopSession`     | `FIRST_CALL_TRANSACTION + 1` | stop current session             |
+| `cancelSession`   | `FIRST_CALL_TRANSACTION + 2` | cancel current session           |
+| `isRecording`     | `FIRST_CALL_TRANSACTION + 3` | whether session is recording     |
+| `isAnyRecording`  | `FIRST_CALL_TRANSACTION + 4` | whether any session is recording |
+| `getVersion`      | `FIRST_CALL_TRANSACTION + 5` | app version name                 |
+| `startPcmSession` | `FIRST_CALL_TRANSACTION + 6` | client-pushed PCM session        |
+| `writePcm`        | `FIRST_CALL_TRANSACTION + 7` | push one PCM frame               |
+| `finishPcm`       | `FIRST_CALL_TRANSACTION + 8` | finish PCM input and process     |
 
 AIDL signatures:
 
@@ -143,18 +154,18 @@ Returns semantic version name (`BuildConfig.VERSION_NAME`), e.g. `"1.6.0"`.
 
 ### onState: state values
 
-| state (Int) | Meaning          | Common message       |
-| ----------- | ---------------- | -------------------- |
-| `0`         | idle / finished  | `final` / `canceled` |
-| `1`         | recording        | `recording`          |
-| `2`         | processing       | `processing`         |
-| `3`         | error            | error text           |
+| state (Int) | Meaning         | Common message       |
+| ----------- | --------------- | -------------------- |
+| `0`         | idle / finished | `final` / `canceled` |
+| `1`         | recording       | `recording`          |
+| `2`         | processing      | `processing`         |
+| `3`         | error           | error text           |
 
 ### onError: code values
 
 | code  | Meaning                                                     |
 | ----- | ----------------------------------------------------------- |
-| `401` | missing record permission (only possible from startSession)  |
+| `401` | missing record permission (only possible from startSession) |
 | `403` | external linking is disabled                                |
 | `500` | server internal error (engine/network/etc.)                 |
 
@@ -238,4 +249,3 @@ Error handling:
 3. Call `cancelSession(sessionId)` on focus/window changes.
 4. Use `onPartial` for live preview; after `onFinal/onError` you should cleanup/unbind.
 5. If you want the client to control recording (recommended for IME use), prefer pushed PCM mode.
-

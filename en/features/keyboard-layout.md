@@ -83,6 +83,15 @@ AI Edit lets you "rework" existing text (polish, translate, or edit by instructi
 3. Tap mic again or release (depending on recording mode) and wait for ASR + AI to finish.
 4. The result replaces the selection (or the whole text). Use Undo to revert.
 
+To avoid replacing unintended text, it is recommended not to adjust the selection or move the cursor after recording starts. If accidental touches change the replacement range, undo first, reselect the target text, then try again.
+
+### Info bar (top status strip)
+
+- **Idle**: shows operation guidance for the current recording mode (tap to start/stop, or press-and-hold to speak then release).
+- **Recording**: shows "Please speak your editing instruction..." or the real-time recognized instruction text.
+- **Processing**: shows "AI Editing...".
+- **Error**: temporarily shows an error message to help locate the issue quickly.
+
 ### Buttons in the panel
 
 - **Back**: return to main keyboard.
@@ -93,6 +102,7 @@ AI Edit lets you "rework" existing text (polish, translate, or edit by instructi
 - **Select all**
 - **Copy**: copy selection to clipboard and show preview.
 - **Paste**: paste at cursor (undoable).
+- **Space**: insert a space. If recording is in progress (for example, while speaking an edit instruction), tapping space will not insert a space.
 - **Backspace**: same behavior as main keyboard backspace, including swipe-to-clear/undo gestures.
 - **Number keyboard**: open number/symbol keyboard; returning goes back to AI Edit.
 
@@ -120,4 +130,3 @@ For quick input of digits and common symbols.
   - Enter
 
 The symbol style updates immediately when you toggle CN/EN punctuation.
-

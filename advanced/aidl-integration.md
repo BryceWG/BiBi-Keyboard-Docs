@@ -1,18 +1,29 @@
-# AIDL 通信（小企鹅联动）
+# AIDL 通信（小企鹅 / 同文联动）
 
-说点啥（asr-keyboard）提供标准 AIDL 服务，允许其他应用（如[修改版小企鹅输入法](https://github.com/BryceWG/fcitx5-android-bibi-keyboard)）调用说点啥的语音识别能力。
+说点啥（asr-keyboard）提供标准 AIDL 服务，允许其他应用（如[修改版小企鹅输入法](https://github.com/BryceWG/fcitx5-android-bibi-keyboard)、[修改版同文输入法](https://github.com/BryceWG/trime-bibi-keyboard)）调用说点啥的语音识别能力。
 
-服务端为手写 Binder 协议，但与 AIDL 生成的代理完全兼容；客户端可直接使用 `.aidl` 生成的 Stub/Proxy，也可以像小企鹅一样用 `transact` 纯 Binder 调用。
+服务端为手写 Binder 协议，但与 AIDL 生成的代理完全兼容；客户端可直接使用 `.aidl` 生成的 Stub/Proxy，也可以像小企鹅/同文一样用 `transact` 纯 Binder 调用。
 
 ## 用户使用指南
 
-目前仅有说点啥魔改的小企鹅输入法支持该功能，使用步骤如下：
+目前支持修改版小企鹅输入法（Fcitx5）与修改版同文输入法（Trime）。通用步骤如下：
 
 1. 下载并安装说点啥最新版（开源版或 Pro 版均可，优先调用 Pro 版）
-2. 在说点啥中启用外部联动功能：`设置 → 输入设置 → 允许外部输入法联动`，打开开关
-3. 下载并安装修改版小企鹅输入法
-4. 在小企鹅输入法中启用说点啥联动：`设置 → 虚拟键盘 → 空格键长按行为 → 语音输入（AIDL)`
-5. 使用小企鹅输入法时，长按空格键开始语音输入，松手结束
+2. 在说点啥中启用外部联动功能：`设置 → 输入设置 → 允许外部输入法联动（AIDL）`
+
+**Fcitx5（小企鹅）**：
+
+3. 下载并安装修改版小企鹅输入法：<https://github.com/BryceWG/fcitx5-android-bibi-keyboard/releases>
+4. 在小企鹅输入法中启用：`设置 → 虚拟键盘 → 空格键长按行为 → 语音输入（AIDL）`
+5. 长按空格键开始语音输入，松手结束
+
+**Trime（同文）**：
+
+3. 下载并安装修改版同文输入法：<https://github.com/BryceWG/trime-bibi-keyboard/releases>
+4. 在同文输入法中启用：`设置 → 常规设置 → 说点啥 AIDL 语音输入`
+5. 使用方式：
+   - 长按具备 `VOICE_ASSIST` 功能的按键开始录音，松手结束
+   - 如当前主题没有 `VOICE_ASSIST` 长按入口，可在同文设置中开启“工具栏麦克风按钮”，点按开始，再次点按结束并上屏
 
 **包名优先级**（与小企鹅实现一致）：
 

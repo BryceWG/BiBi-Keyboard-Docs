@@ -23,12 +23,13 @@ BiBi Keyboard provides two editions: OSS and Pro. This page compares feature dif
 |                | External AIDL linking            | ✅  | ✅  |
 |                | Continuous speaking mode (VAD auto) | ❌ | ✅ |
 | **Text**        | Trailing punctuation trimming    | ✅  | ✅  |
-|                | AI editing                        | ✅  | ✅  |
-|                | App-specific prompt               | ❌  | ✅  |
+|                | AI editing (basic)                | ✅  | ✅  |
+|                | AI Assistant (voice commands)     | ❌  | ✅  |
 |                | Global undo                       | ✅  | ✅  |
 |                | Traditional Chinese conversion    | ❌  | ✅  |
 |                | Regex post-processing             | ❌  | ✅  |
-| **Advanced**    | Hotwords management               | ❌  | ✅  |
+| **Advanced**    | App-specific Prompt              | ❌  | ✅  |
+|                | Hotwords management (Pro)         | ❌  | ✅  |
 |                | Speech presets                    | ✅  | ✅  |
 |                | Custom punctuation keys           | ✅  | ✅  |
 | **UI**          | Material 3 dynamic color          | ✅  | ✅  |
@@ -43,6 +44,8 @@ BiBi Keyboard provides two editions: OSS and Pro. This page compares feature dif
 |                | Haptic feedback                   | ✅  | ✅  |
 |                | Multi-language support            | ✅  | ✅  |
 |                | Fully open-source code            | ✅  | ❌  |
+
+Note: OSS includes basic AI editing and AI post-processing. `AI Assistant (voice commands)`, `App-specific Prompt`, and `Hotwords management` are Pro-only.
 
 ## Pricing
 

@@ -10,6 +10,8 @@ The floating ball is a draggable circular button overlay. It provides:
 - **Global**: available in any app (settings, browser, chat apps, etc.)
 - **State indicator**: color/animation indicates current status
 - **Free positioning**: drag anywhere; auto snap to screen edge
+- **Edge semi-hidden handle**: when always visible and resting on an edge, it can collapse to an arrow handle to reduce obstruction
+- **Stable across rotation**: remembers edge anchor so portrait/landscape switches keep edge side and relative position as much as possible
 
 ## States
 
@@ -40,6 +42,14 @@ If your device aggressively kills background services and the floating ball/acce
 | Key                    | Type    | Default | Description |
 | ---------------------- | ------- | ------- | ----------- |
 | `floatingKeepAliveEnabled` | Boolean | `false` | keep alive with a foreground service (and request battery whitelist) |
+| `floatingKeepAlivePrivilegedEnabled` | Boolean | `false` | enhanced keep-alive via Shizuku / Root (requires foreground keep-alive enabled first) |
+
+- **Foreground keep-alive (recommended first)**: suitable for most users. It shows a persistent notification and improves background survival.
+- **Shizuku / Root enhanced keep-alive (advanced)**: for devices that still kill the service even after foreground keep-alive. Prerequisites: foreground keep-alive is already enabled, and Shizuku authorization or a root environment is available.
+
+::: warning Keep-alive risk note
+Enhanced keep-alive depends on privileged capabilities (Shizuku or root). Enable it only if your device/security policy allows it. Some systems or enterprise policies may restrict this and it may increase battery usage.
+:::
 
 ### Details
 
@@ -71,6 +81,12 @@ If your device aggressively kills background services and the floating ball/acce
 - Behavior:
   - On (default): uses "Select-all + Paste" strategy for better compatibility
   - Off: uses standard Accessibility APIs (faster, but may not work in some apps)
+
+#### 6. Edge semi-hidden and anchor positioning
+
+- Behavior:
+  - After snapping to the left/right edge and staying idle, the floating ball can enter a semi-hidden state and show only an arrow handle; tap or drag the handle to expand quickly
+  - On portrait/landscape rotation, it tries to keep the original edge side and relative height to reduce unexpected jumps to center
 
 ::: tip About compatibility mode
 Accessibility does not provide a true IME-style "insert text" API. Some apps (e.g. WeChat, QQ, some games) may restrict accessibility text input, causing insertion failure. Compatibility mode can mitigate such cases, but it is not perfect.
@@ -166,4 +182,3 @@ Possible causes:
 - [Recording Modes](./recording-modes.md)
 - [AI Post-processing](./ai-postprocess.md)
 - [Auto-stop on Silence (VAD)](./vad.md)
-

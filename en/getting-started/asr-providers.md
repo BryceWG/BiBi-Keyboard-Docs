@@ -163,10 +163,14 @@ Local models are ideal for offline usage and privacy. Each model trades off spee
 
 ![Download local models in-app](/images/getting-started/asr-providers/local-models-download.png)
 
+### Import from local files (optional)
+
+If you prefer adding models from local files, download the ZIP first, then choose "Import from local" in the model manager.
+
 ### Direct download links (GitHub Releases)
 
 ::: info Direct links
-The links below point to `BiBi-Keyboard` model ZIPs. If any link returns 404, use the models page:
+The links below point to `BiBi-Keyboard` model ZIPs. If you see 404 or slow downloads, use the models page (Releases: models) or a GitHub mirror site.
 
 - https://github.com/BryceWG/BiBi-Keyboard/releases/tag/models
   :::

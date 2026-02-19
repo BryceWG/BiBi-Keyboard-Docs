@@ -8,6 +8,8 @@ Pro includes these exclusive features:
 
 - **Offline Traditional Chinese conversion**: convert results to Traditional Chinese automatically
 - **Hotwords management**: unified hotword injection across providers to improve recognition for proper nouns
+- **Hotword stats**: view trigger frequency and hit stats to keep improving your hotword list
+- **AI Assistant**: trigger voice commands with wake words, preset keywords, and fuzzy matching
 - **App-specific prompts**: automatically switch AI prompt preset by foreground app
 - **Continuous speaking mode**: VAD auto start/stop without manual control
 - **Omni-direction cursor sliding**: enhanced cursor control with 4-direction sliding
@@ -45,8 +47,10 @@ Manage custom hotwords to improve recognition of proper nouns, brand names, name
 ### Highlights
 
 - **Multi-provider support**: auto-adapts hotword formats per ASR provider (local models and ElevenLabs are not supported)
-- **Inject into AI prompts**: one-tap inject hotwords into selected AI post-processing prompts
+- **Smart injection into post-processing prompts**: when injecting into AI post-processing, relevant hotwords are dynamically filtered with phoneme-based matching
 - **Unified adaptation**: for providers without native hotword support, hotwords are structured and injected into recognition prompt parameters
+- **Hotword stats**: view trigger frequency and hit stats to iteratively tune your hotword list
+- **Linked with AI Assistant**: AI Assistant keywords can be auto-synced into the hotword list to reduce duplicate maintenance
 
 ### How to use
 
@@ -54,6 +58,7 @@ Manage custom hotwords to improve recognition of proper nouns, brand names, name
 2. Go to `Settings → ASR Settings → Result Optimization (Pro)`
 3. Add/import hotwords (supports batch import from clipboard)
 4. Save to apply
+5. Open the hotword management page to review trigger frequency/hit stats and refine your list based on results
 
 > Avoid too many hotwords. Per-provider limits apply and excessive lists may hurt performance.
 
@@ -75,6 +80,24 @@ Manage custom hotwords to improve recognition of proper nouns, brand names, name
 | GLM ASR      | ✅      | 100                                                    |
 | ElevenLabs   | ❌      | -                                                      |
 | Local models | ❌      | -                                                      |
+
+## AI Assistant <Badge type="warning" text="Pro" />
+
+Trigger voice commands with a wake word, so AI can directly handle translation, writing, editing, summarization, and more.
+
+### Highlights
+
+- **Wake-word trigger**: say the wake word at the beginning of speech to enter AI Assistant flow
+- **Preset modes**: enable multiple presets at once (for example translation/writing/editing), then match by keywords
+- **Fuzzy matching**: wake words and preset keywords support fuzzy matching to reduce trigger failures caused by minor slips
+- **Customizable**: customize wake words, keywords, and prompts
+
+### How to use
+
+1. Open `Settings → AI Post-processing`
+2. Enable `AI Assistant (Pro)`
+3. Configure wake words and preset keywords
+4. Speak in the form of "wake word + command" to trigger (for example: "Dian Dian, translate this into English")
 
 ## Continuous Speaking Mode <Badge type="warning" text="Pro" />
 
@@ -196,6 +219,7 @@ OSS:
 Pro adds:
 
 - **Built-in theme colors**: pick theme colors independent of system wallpaper
+- **Pure black/white themes**: supports pure black and pure white styles for users who prefer a minimal visual look
 
 ### How to use
 

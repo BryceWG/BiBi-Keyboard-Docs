@@ -192,10 +192,25 @@ When downloading local models, you can choose a download source and see latency.
 
 - **Offline denoise for non-streaming ASR**: `Settings → Input Settings → Offline denoise for non-streaming ASR` (applies to file-mode and local offline recognition)
 
+## Recognition History & Metrics
+
+You can view history records in `Settings Home → Recognition History`. History sources include:
+
+- **Keyboard input**
+- **Floating ball input**
+- **External input** (for example, via external AIDL integration)
+
+Each record shows basic info (provider, source, AI processing status, word count, audio duration). When available, it also shows these elapsed-time metrics:
+
+- **Total elapsed time**: end-to-end time from recording start to final text commit.
+- **Recognition elapsed time**: ASR-stage processing time.
+- **AI post-processing elapsed time**: shown when AI post-processing is enabled and attempted.
+
+Older records may not include some timing fields, which is expected.
+
 ## Related
 
 - [Floating Ball](./floating-ball.md) - voice input anywhere
 - [AI Post-processing](./ai-postprocess.md) - refine transcripts with LLM
 - [Recording Modes](./recording-modes.md) - press-and-hold vs tap-to-toggle
 - [Auto-stop on Silence (VAD)](./vad.md) - stop recording automatically
-

@@ -88,7 +88,7 @@ AI 后处理功能使用大型语言模型（LLM）对 ASR 识别结果进行智
 
 ## 支持的 LLM 供应商
 
-说点啥支持 **12 个** LLM 供应商，所有供应商均使用 OpenAI 兼容的 API 格式：
+说点啥支持 **13 个** LLM 供应商，所有供应商均使用 OpenAI 兼容的 API 格式：
 
 | 供应商                          | 注册链接                                                 |
 | ------------------------------- | -------------------------------------------------------- |
@@ -97,6 +97,7 @@ AI 后处理功能使用大型语言模型（LLM）对 ASR 识别结果进行智
 | **ZHIPU**<br>智谱               | [注册](https://bigmodel.cn/usercenter/proj-mgmt/apikeys) |
 | **MOONSHOT**<br>月之暗面        | [注册](https://platform.moonshot.cn/console/api-keys)    |
 | **VOLCENGINE**<br>火山引擎      | [注册](https://console.volcengine.com/ark)               |
+| **DASHSCOPE**<br>阿里云百炼     | [注册](https://bailian.console.aliyun.com/)              |
 | **OPENAI**                      | [注册](https://platform.openai.com/signup)               |
 | **GEMINI**<br>Google            | [注册](https://aistudio.google.com/apikey)               |
 | **GROQ**                        | [注册](https://console.groq.com/keys)                    |
@@ -130,6 +131,22 @@ AI 后处理功能使用大型语言模型（LLM）对 ASR 识别结果进行智
 1. 点击"添加预设"创建新 Prompt
 2. 编写 Prompt 内容（建议包含角色、任务、规则、输出要求）
 3. 保存并在 AI 编辑面板中快速应用
+
+## AI 助手 <Badge type="warning" text="Pro" />
+
+AI 助手可根据唤醒词和关键词自动匹配预设模式，并应用对应的 AI 后处理 Prompt。
+
+### 功能说明
+
+- **唤醒词触发**：识别文本句首匹配唤醒词时自动进入 AI 助手流程
+- **预设模式**：可为不同场景配置不同处理模式并绑定 Prompt 预设
+- **关键词匹配**：按预设关键词自动选择最合适的处理模式
+- **模糊匹配**：支持唤醒词与预设关键词的模糊匹配，口语化表达也能触发
+- **可自定义**：支持自定义唤醒词、关键词和各模式对应的 Prompt 规则
+
+## 热词联动 <Badge type="warning" text="Pro" />
+
+将热词注入 AI 后处理时，系统会按音素匹配动态筛选当前识别文本相关的热词，再注入到后处理上下文中，提升相关性并减少无关热词干扰。
 
 ## 配置选项
 
@@ -187,6 +204,8 @@ AI 后处理功能使用大型语言模型（LLM）对 ASR 识别结果进行智
 ## 模型选择与获取模型列表
 
 在 `设置 → AI 后处理` 中，您可以通过「获取模型列表」从供应商拉取可用模型，并将常用模型添加到应用内的下拉选择中。
+
+在「测试 LLM 调用」过程中可随时取消当前请求，便于快速调整配置并重新测试。
 
 ::: tip 提示
 对于 **CUSTOM（自定义）** 供应商，如果您的服务端有默认模型，也可以不填写模型名；若测试调用失败，再按服务商要求填写即可。
