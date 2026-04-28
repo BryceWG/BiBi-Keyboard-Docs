@@ -12,7 +12,7 @@
 
 ## 支持的 ASR 供应商
 
-说点啥支持 **12 个** ASR 供应商，分为云端和本地两大类：
+说点啥支持 **15 个** ASR 供应商，分为云端和本地两大类：
 
 ### 云端识别引擎
 
@@ -21,10 +21,11 @@
 | **Volcengine**<br>火山引擎  | ✅       | 1 小时             | 新用户通常赠送 20 小时免费额度，支持双向流式                                                   |
 | **SiliconFlow**<br>硅基流动 | ❌       | 20 分钟            | 内置免费 ASR 服务（SenseVoiceSmall / TeleSpeechASR），支持 Qwen3-Omni 多模态转写（需自有 Key） |
 | **ElevenLabs**              | ✅       | 20 分钟            | 高精度英文识别，支持文件与流式                                                                 |
-| **OpenAI**                  | ❌       | 20 分钟            | 默认 `gpt-4o-mini-transcribe`，可填写任意兼容 OpenAI Audio Transcriptions 的模型               |
-| **DashScope**<br>阿里云百炼 | ✅       | 3 分钟             | qwen3-asr-flash，支持流式与非流式                                                              |
+| **OpenAI**                  | ✅       | 20 分钟            | 默认 `gpt-4o-mini-transcribe`，支持多渠道配置与 Realtime 流式识别                              |
+| **DashScope**<br>阿里云百炼 | ✅       | 3 分钟             | qwen3-asr-flash / Qwen3.5-Omni，支持流式与非流式                                                |
 | **Gemini**<br>Google        | ❌       | 4 小时             | 基于文件的多模态语音理解                                                                       |
 | **Soniox**                  | ✅       | 1 小时             | 支持多语言提示，流式与文件双模式                                                               |
+| **StepAudio**               | ❌       | 20 分钟            | StepAudio 2.5 在线 ASR，支持中文、英文与 ITN                                                    |
 | **Zhipu**<br>智谱           | ❌       | 20 分钟            | GLM-ASR，支持上下文提示参数                                                                    |
 
 ### 本地识别引擎（离线）
@@ -32,8 +33,10 @@
 | 供应商         | 流式模式 | 时长限制（非流式） | 特点                                 |
 | -------------- | -------- | ------------------ | ------------------------------------ |
 | **SenseVoice** | 伪流式 ¹ | 5 分钟             | 基于 sherpa-onnx，支持多语言离线识别 |
-| **FunASR Nano** | ❌      | 5 分钟             | 基于 sherpa-onnx，离线整段识别（不支持伪流式预览） |
-| **Telespeech** | 伪流式 ¹ | 5 分钟             | 基于 sherpa-onnx，中文和方言优化     |
+| **FunASR Nano** | ❌      | 5 分钟             | 离线整段识别，支持语言选择、原生 ITN 与 MLT Nano 多语言变体 |
+| **Qwen3-ASR** | ❌       | 5 分钟             | 本地 0.6B 模型，中文识别与数字格式化表现较好 |
+| **Parakeet** | ❌       | 5 分钟             | 本地英语 / 欧洲语言识别模型 |
+| **FireRedASR V2** | 伪流式 ¹ | 5 分钟             | 替代 TeleSpeech 的中英本地识别引擎 |
 | **Paraformer** | ✅       | 无限制 ²           | 纯流式本地识别                       |
 
 ::: info 注释说明
@@ -75,7 +78,7 @@
 
 **支持的引擎**：
 
-- 云端：Volcengine、Soniox、DashScope、ElevenLabs
+- 云端：Volcengine、Soniox、DashScope、ElevenLabs、OpenAI Realtime
 - 本地：Paraformer
 
 ### 非流式识别（文件上传）
@@ -122,9 +125,12 @@
 | DashScope   | 3 分钟   | 默认采用 qwen3-asr-flash，应用内单段上限为 3 分钟                   |
 | Gemini      | 4 小时   | 官方单次最长约 9.5 小时，这里预留安全边距，仅在应用内限制为 4 小时  |
 | Soniox      | 1 小时   | 未查到严格官方上限，应用内默认限制为 1 小时                         |
+| StepAudio   | 20 分钟  | 应用内默认单段上限为 20 分钟，适合中短语音识别                      |
 | SenseVoice  | 5 分钟   | 本地模型性能限制，避免超长推理占用过多内存与时间                    |
 | FunASR Nano | 5 分钟   | 本地模型性能限制，避免超长推理占用过多内存与时间                    |
-| Telespeech  | 5 分钟   | 本地模型性能限制，避免超长推理占用过多内存与时间                    |
+| Qwen3-ASR   | 5 分钟   | 本地模型性能限制，避免超长推理占用过多内存与时间                    |
+| Parakeet    | 5 分钟   | 本地模型性能限制，避免超长推理占用过多内存与时间                    |
+| FireRedASR V2 | 5 分钟 | 本地模型性能限制，避免超长推理占用过多内存与时间                    |
 
 ::: warning 注意
 
@@ -143,6 +149,7 @@
 2. 找到「备用语音识别引擎」，开启「启用备用引擎」
 3. 点击「备用服务商」，选择一个与主用不同的供应商
 4. 确保备用供应商也已完成配置（API Key / 模型文件等）
+5. 如果主用是本地模型或响应较慢的模型，可调整「备用引擎超时阈值敏感度」，让系统更早或更晚切到备用结果
 
 ::: warning 注意
 启用后会并行运行两个引擎。即使最终采用主用结果，备用引擎也可能已产生一次请求/费用（取决于供应商计费方式与取消策略）。
@@ -155,7 +162,7 @@
 无需配置，开箱即用：
 
 1. 打开应用，默认使用 **SiliconFlow 免费服务**
-2. 可在 `设置 → 语音识别设置 → SiliconFlow` 中在免费可用的两个模型（`FunAudioLLM/SenseVoiceSmall`、`TeleAI/TeleSpeechASR`）之间切换
+2. 可在 `设置 → 语音识别设置 → SiliconFlow` 中在免费可用模型（如 `FunAudioLLM/SenseVoiceSmall`、`TeleAI/TeleSpeechASR`）之间切换，也可使用自有 Key 选择 Qwen3-Omni 多模态模型
 
 ### 2. 配置云端供应商
 
@@ -173,15 +180,15 @@
 3. 自动在 `设置 → 语音识别设置 → 供应商` 中选择 **SenseVoice**
 
 ::: tip 提示
-本地模型首次加载可能需要几秒钟，可启用“预加载模型”选项（SenseVoice / FunASR Nano / TeleSpeech / Paraformer 均可配置），在键盘或悬浮球首次显示时提前加载模型，从而减小首次识别时的等待时间。
+本地模型首次加载可能需要几秒钟，可启用“预加载模型”选项（SenseVoice / FunASR Nano / Qwen3-ASR / Parakeet / FireRedASR V2 / Paraformer 均可配置），在键盘或悬浮球首次显示时提前加载模型，从而减小首次识别时的等待时间。
 :::
 
 ## 本地模型标点（可选）
 
-TeleSpeech 和 Paraformer 支持使用额外的「通用标点模型」为离线识别结果自动补全标点（模型缺失时不影响识别，只是结果可能更“口语化”）。
+FireRedASR V2 和 Paraformer 支持使用额外的「通用标点模型」为离线识别结果自动补全标点（模型缺失时不影响识别，只是结果可能更“口语化”）。
 
 1. 打开 `设置 → 语音识别设置`
-2. 进入 `TeleSpeech` 或 `Paraformer` 的设置区域
+2. 进入 `FireRedASR V2` 或 `Paraformer` 的设置区域
 3. 在「通用标点模型」中点击「下载模型」（或导入 ZIP）
 
 ::: tip 下载源选择

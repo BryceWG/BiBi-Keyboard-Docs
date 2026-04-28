@@ -192,7 +192,7 @@ fun onAmplitude(sessionId: Int, amplitude: Float)
 **本地供应商**：
 
 - **Paraformer**：固定流式
-- **SenseVoice / FunASR Nano / Telespeech**：固定非流式文件引擎（伪流式仅用于说点啥自身 UI，不暴露给外部）
+- **SenseVoice / FunASR Nano / Qwen3-ASR / Parakeet / FireRedASR V2**：固定非流式文件引擎（伪流式仅用于说点啥自身 UI，不暴露给外部）
 
 ## 结果过滤
 

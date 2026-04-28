@@ -1,10 +1,10 @@
 # First Setup
 
-After installing BiBi Keyboard (说点啥), you need to configure an ASR provider before you can start using voice recognition. New users will see 3 recommended options on first launch. This page covers the full setup flow and some common tweaks.
+After installing BiBi Keyboard (说点啥), you need to configure an ASR provider before you can start using voice recognition. New users will see a basic onboarding guide and recommended setup options on first launch. This page covers the full setup flow and some common tweaks.
 
 ## Choose an ASR Provider
 
-BiBi Keyboard supports 12+ ASR providers, including cloud services and local models. For the first setup, these are recommended:
+BiBi Keyboard supports 15 ASR providers, including cloud services and local models. For the first setup, these are recommended:
 
 ### Recommended Options
 
@@ -18,7 +18,11 @@ BiBi Keyboard supports 12+ ASR providers, including cloud services and local mod
 If this is your first time, start with **SiliconFlow**. The app enables the built-in free ASR/LLM by default, so you can try it without signup or API keys.
 :::
 
-For other providers (Volcengine, DashScope, Soniox, Gemini, ElevenLabs, OpenAI, Zhipu, and local models), see [ASR Provider Setup](/en/getting-started/asr-providers).
+For other providers (Volcengine, DashScope, Soniox, Gemini, ElevenLabs, OpenAI, StepAudio, Zhipu, and local models), see [ASR Provider Setup](/en/getting-started/asr-providers).
+
+::: tip Provider grouping
+In ASR and AI post-processing settings, providers are grouped by "configured" and "not configured". Providers with valid keys or installed local models appear first, making daily switching easier.
+:::
 
 ## Configure SiliconFlow (Recommended)
 
@@ -143,7 +147,7 @@ VAD works best with tap-to-toggle mode. When no speech is detected for a given w
 ### Quota exceeded / rate limited
 
 1. Check quota and billing rules in the provider console
-2. To reduce costs, switch to the built-in free option (e.g. SiliconFlow free service) or local models (SenseVoice/Paraformer/etc.)
+2. To reduce costs, switch to the built-in free option (e.g. SiliconFlow free service) or local models (SenseVoice/FunASR Nano/Qwen3-ASR/Paraformer/etc.)
 3. To keep using the same cloud provider, upgrade plan or recharge per console guidance
 
 ## Next

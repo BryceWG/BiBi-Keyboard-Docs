@@ -2,6 +2,8 @@
 
 剪贴板同步功能基于 [SyncClipboard](https://github.com/Jeric-X/SyncClipboard) 项目协议实现。说点啥作为 SyncClipboard 客户端，通过访问服务端的 `SyncClipboard.json`（以及可选的 `/file/` 目录）来同步剪贴板内容，实现多设备间的剪贴板实时互通。
 
+当前版本兼容新版 SyncClipboard（3.11.1 及以上）的文本同步协议；如果你同时使用桌面端，建议保持桌面端与服务端为较新的版本。
+
 你可以使用以下任意一种后端作为“服务器”：
 
 - **SyncClipboard 独立服务器**（SyncClipboard.Server）

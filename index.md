@@ -5,7 +5,7 @@ title: 「说点啥」使用文档
 hero:
   name: 说点啥
   text: BiBi Keyboard
-  tagline: 支持 12+ ASR 供应商，本地离线识别，AI 智能后处理
+  tagline: 支持 15 个 ASR 供应商，本地离线识别，AI 智能后处理
   image:
     src: /icon_new.svg
     alt: 说点啥 Logo
@@ -29,7 +29,7 @@ hero:
 features:
   - icon: 🎤
     title: 多供应商支持
-    details: 支持火山引擎、硅基流动、OpenAI、Gemini 等 12+ ASR 供应商，可随时切换，灵活选择最适合的语音识别服务
+    details: 支持火山引擎、硅基流动、OpenAI、StepAudio、Gemini 等 15 个 ASR 供应商，可随时切换，灵活选择最适合的语音识别服务
 
   - icon: 🤖
     title: AI 智能后处理
@@ -37,7 +37,7 @@ features:
 
   - icon: 🌐
     title: 本地离线识别
-    details: 内置 SenseVoice、FunASR Nano、Telespeech、Paraformer 本地模型，无需网络即可使用，保护隐私安全
+    details: 支持 SenseVoice、FunASR Nano、Qwen3-ASR、Parakeet、FireRedASR V2、Paraformer 等本地模型，无需网络即可使用，保护隐私安全
 
   - icon: 🎯
     title: 悬浮球输入
@@ -66,8 +66,8 @@ features:
 
 ### 核心特性
 
-- **12+ ASR 供应商**：火山引擎、硅基流动、OpenAI、Gemini、ElevenLabs、DashScope、Soniox、Zhipu GLM 等
-- **本地离线模型**：SenseVoice、FunASR Nano、Telespeech、Paraformer，无需网络即可使用
+- **15 个 ASR 供应商**：火山引擎、硅基流动、OpenAI、StepAudio、Gemini、ElevenLabs、DashScope、Soniox、Zhipu GLM 等
+- **本地离线模型**：SenseVoice、FunASR Nano、Qwen3-ASR、Parakeet、FireRedASR V2、Paraformer，无需网络即可使用
 - **AI 后处理**：支持多种大语言模型优化识别结果
 - **多种录音模式**：长按、点按切换
 - **隐私优先**：配置完成后可实现完全离线使用，保护用户隐私
@@ -80,7 +80,7 @@ features:
 
 ### 系统要求
 
-- **Android 版本**：Android 10 (API 29) 及以上
+- **Android 版本**：Android 8.0 (API 26) 及以上
 - **CPU 架构**：arm64-v8a（仅支持 64 位设备）
 - **内存**：使用本地模型推荐 12GB 及以上内存设备
 - **存储空间**：至少 50 MB（使用本地模型需额外 100MB-1GB）

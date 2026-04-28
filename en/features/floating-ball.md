@@ -45,6 +45,7 @@ If your device aggressively kills background services and the floating ball/acce
 | `floatingKeepAlivePrivilegedEnabled` | Boolean | `false` | enhanced keep-alive via Shizuku / Root (requires foreground keep-alive enabled first) |
 
 - **Foreground keep-alive (recommended first)**: suitable for most users. It shows a persistent notification and improves background survival.
+- **Persistent notification status**: after foreground keep-alive is enabled, the notification refreshes basic floating-service status so you can confirm it is still working.
 - **Shizuku / Root enhanced keep-alive (advanced)**: for devices that still kill the service even after foreground keep-alive. Prerequisites: foreground keep-alive is already enabled, and Shizuku authorization or a root environment is available.
 
 ::: warning Keep-alive risk note

@@ -2,6 +2,10 @@
 
 This page introduces the main keyboard UI, the customizable action row, the AI Edit panel, and the number/symbol keyboard.
 
+::: tip Long-press hints
+Main keyboard buttons and AI Edit panel buttons support long-press hints. If you are unsure what an icon does, long-press it first to check.
+:::
+
 ## Main Keyboard Buttons
 
 ### Top row

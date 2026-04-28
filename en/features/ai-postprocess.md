@@ -90,6 +90,8 @@ The typewriter effect only affects how the streaming preview is displayed. It do
 
 BiBi Keyboard supports **13** LLM providers. All of them use an OpenAI-compatible API format:
 
+When choosing an LLM provider in settings, configured/available providers are grouped before unconfigured ones, making daily switching quicker.
+
 | Vendor                         | Sign-up link                                     |
 | ------------------------------ | ------------------------------------------------ |
 | **SF_FREE** (SiliconFlow Free) | https://cloud.siliconflow.cn/i/g8thUcWa          |

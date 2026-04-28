@@ -46,7 +46,7 @@ Manage custom hotwords to improve recognition of proper nouns, brand names, name
 
 ### Highlights
 
-- **Multi-provider support**: auto-adapts hotword formats per ASR provider (local models and ElevenLabs are not supported)
+- **Multi-provider support**: auto-adapts hotword formats per ASR provider; selected local models now support hotwords too
 - **Smart injection into post-processing prompts**: when injecting into AI post-processing, relevant hotwords are dynamically filtered with phoneme-based matching
 - **Unified adaptation**: for providers without native hotword support, hotwords are structured and injected into recognition prompt parameters
 - **Hotword stats**: view trigger frequency and hit stats to iteratively tune your hotword list
@@ -75,11 +75,18 @@ Manage custom hotwords to improve recognition of proper nouns, brand names, name
 | DashScope    | ✅      | 10000 tokens                                           |
 | Soniox       | ✅      | 8000 tokens                                            |
 | SiliconFlow  | ✅      | almost unlimited (SenseVoice/TeleSpeech not supported) |
+| StepAudio    | ✅      | hotword array only; no extra context injection         |
 | OpenAI       | ✅      | depends on model                                       |
 | Gemini       | ✅      | almost unlimited                                       |
 | GLM ASR      | ✅      | 100                                                    |
 | ElevenLabs   | ❌      | -                                                      |
-| Local models | ❌      | -                                                      |
+| Qwen3-ASR    | ✅      | suggested limit: 100                                   |
+| FunASR Nano  | ✅      | suggested limit: 100                                   |
+| Other local models | ❌/depends on engine | depends on engine capability            |
+
+::: info Local hotwords
+When using Qwen3-ASR or FunASR Nano, changing hotwords may require the local model to be prepared again before the new list fully takes effect.
+:::
 
 ## AI Assistant <Badge type="warning" text="Pro" />
 

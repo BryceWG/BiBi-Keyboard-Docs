@@ -2,6 +2,8 @@
 
 Clipboard sync is based on the [SyncClipboard](https://github.com/Jeric-X/SyncClipboard) protocol. BiBi Keyboard acts as a SyncClipboard client: it syncs clipboard content by accessing the server's `SyncClipboard.json` (and optionally the `/file/` directory).
 
+The current version is compatible with the newer SyncClipboard text-sync protocol (3.11.1 and above). If you also use the desktop client, keeping the desktop client and server reasonably up to date is recommended.
+
 You can use any of the following backends as a "server":
 
 - **SyncClipboard dedicated server** (SyncClipboard.Server)
@@ -192,4 +194,3 @@ Fix:
 - enable auto pull and shorten interval
 - disable battery optimization for the app
 - manually trigger sync ("Sync now" button in settings)
-

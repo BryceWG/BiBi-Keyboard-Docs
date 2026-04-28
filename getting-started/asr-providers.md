@@ -14,17 +14,18 @@ API Key / Access Token 属于敏感信息，请勿截图公开或分享给他人
 
 ## 供应商一览
 
-| 供应商 | 类型 | 流式支持 | 适合场景 |
-| ------ | ---- | -------- | -------- |
-| **Volcengine**<br>火山引擎 | 云端 | ✅ | 追求低延迟与流式实时出字 |
-| **SiliconFlow**<br>硅基流动 | 云端 | ❌ | 新手开箱即用 / 低成本 |
-| **DashScope**<br>阿里云百炼（Qwen） | 云端 | ✅ | 性价比与识别效果均衡 |
-| **Soniox** | 云端 | ✅ | 海外服务、流式稳定性较好 |
-| **Gemini** | 云端 | ❌ | 小用量体验 / 文件识别 |
-| **ElevenLabs** | 云端 | ✅/❌ | 识别精度高，按模型区分流式 |
-| **OpenAI**（兼容接口） | 云端 | ❌ | 使用 OpenAI/兼容端点的文件识别 |
-| **Zhipu**<br>智谱 GLM | 云端 | ❌ | 低成本、简单接入 |
-| **本地模型**（SenseVoice / Paraformer / FunASR Nano / TeleSpeech） | 本地 | 部分 ✅ | 隐私优先、离线可用 |
+| 供应商                                                                                       | 类型 | 流式支持 | 适合场景                                           |
+| -------------------------------------------------------------------------------------------- | ---- | -------- | -------------------------------------------------- |
+| **Volcengine**<br>火山引擎                                                                   | 云端 | ✅       | 追求低延迟与流式实时出字                           |
+| **SiliconFlow**<br>硅基流动                                                                  | 云端 | ❌       | 新手开箱即用 / 低成本                              |
+| **DashScope**<br>阿里云百炼（Qwen）                                                          | 云端 | ✅       | 性价比与识别效果均衡                               |
+| **Soniox**                                                                                   | 云端 | ✅       | 海外服务、流式稳定性较好                           |
+| **Gemini**                                                                                   | 云端 | ❌       | 小用量体验 / 文件识别                              |
+| **ElevenLabs**                                                                               | 云端 | ✅/❌    | 识别精度高，按模型区分流式                         |
+| **OpenAI**（兼容接口）                                                                       | 云端 | ✅/❌    | 使用 OpenAI/兼容端点，支持文件识别与 Realtime 流式 |
+| **StepAudio**                                                                                | 云端 | ❌       | 阶跃星辰在线 ASR，支持中英文与 ITN                 |
+| **Zhipu**<br>智谱 GLM                                                                        | 云端 | ❌       | 低成本、简单接入                                   |
+| **本地模型**（SenseVoice / FunASR Nano / Qwen3-ASR / Parakeet / FireRedASR V2 / Paraformer） | 本地 | 部分 ✅  | 隐私优先、离线可用                                 |
 
 ## 火山引擎（Volcengine）
 
@@ -93,6 +94,11 @@ API Key / Access Token 属于敏感信息，请勿截图公开或分享给他人
 
 1. 打开 `设置 → 语音识别设置`，选择 **DashScope（阿里云百炼）**
 2. 填入 API Key 并保存
+3. 根据需要选择模型：`Qwen3-ASR-Flash`、`Qwen3.5-Omni-Flash`、`Qwen3.5-Omni-Plus` 或流式模型
+
+::: tip 模型选择
+`Qwen3.5-Omni` 适合非流式多模态转写；流式识别默认使用 `qwen3-asr-flash-realtime-2026-02-10`，也可切换到 `fun-asr-realtime`。
+:::
 
 ## Soniox
 
@@ -131,15 +137,26 @@ ElevenLabs 的 `scribe_v1` 仅支持非流式，`scribe_v2` 仅支持流式。
 
 ## OpenAI（兼容接口）
 
-OpenAI 渠道支持使用 OpenAI 格式的 ASR 端点（也可填写兼容 OpenAI Audio Transcriptions 的第三方端点）。
+OpenAI 渠道支持使用 OpenAI 格式的 ASR 端点（也可填写兼容 OpenAI Audio Transcriptions 或 Realtime 的第三方端点）。
 
 1. 在 `设置 → 语音识别设置` 选择 **OpenAI**
-2. 填写：
+2. 通过「添加渠道」建立一个或多个 OpenAI ASR 配置，用于区分官方接口、代理接口或不同模型
+3. 填写：
    - `ASR 端点`（如 `https://api.openai.com/v1/audio/transcriptions` 或兼容端点）
    - `API Key`（Bearer）
    - `模型名称`（如 `gpt-4o-mini-transcribe` / `whisper-1`）
+4. 如果端点支持 Realtime API，可开启「启用流式识别（Realtime）」以边说边显示结果
 
 ![OpenAI 配置示例](/images/getting-started/asr-providers/openai-settings.png)
+
+## StepAudio
+
+StepAudio 是阶跃星辰提供的在线 ASR 服务，目前在说点啥中以非流式方式使用。
+
+1. 进入阶跃星辰开放平台并创建 API Key：[StepFun 控制台](https://platform.stepfun.com/)
+2. 在 `设置 → 语音识别设置` 中选择 **StepAudio**
+3. 填入 `StepFun API Key`
+4. 选择识别语言（中文 / 英文 / 自动）并按需开启 ITN
 
 ## 智谱 GLM
 
@@ -155,9 +172,11 @@ OpenAI 渠道支持使用 OpenAI 格式的 ASR 端点（也可填写兼容 OpenA
 ### 模型选择建议
 
 - **SenseVoice**：非流式；速度快、均衡；支持语言设置
-- **FunASR Nano**：非流式；速度较慢但效果好
+- **FunASR Nano**：非流式；支持语言选择、原生 ITN，并提供 MLT Nano 多语言变体
+- **Qwen3-ASR**：非流式；本地 0.6B 模型，中文效果较好
+- **Parakeet**：非流式；V3 适合多种欧洲语言，V2 适合英语
+- **FireRedASR V2**：非流式 / 伪流式；替代旧版 TeleSpeech，支持中英本地识别
 - **Paraformer**：支持流式；效果次优
-- **TeleSpeech**：非流式；方言支持稍好
 
 ### 在应用内下载（推荐）
 
@@ -185,14 +204,23 @@ OpenAI 渠道支持使用 OpenAI 格式的 ASR 端点（也可填写兼容 OpenA
 - 三语言（中/粤/英，约 974MB）：[sherpa-onnx-streaming-paraformer-trilingual-zh-cantonese-en.zip](https://github.com/BryceWG/BiBi-Keyboard/releases/download/models/sherpa-onnx-streaming-paraformer-trilingual-zh-cantonese-en.zip)
 - 双语言（中/英，约 973MB）：[sherpa-onnx-streaming-paraformer-bilingual-zh-en.zip](https://github.com/BryceWG/BiBi-Keyboard/releases/download/models/sherpa-onnx-streaming-paraformer-bilingual-zh-en.zip)
 
-#### TeleSpeech（非流）
+#### FireRedASR V2（非流 / 伪流）
 
-- int8（约 180MB）：[sherpa-onnx-telespeech-ctc-int8-zh-2024-06-04.zip](https://github.com/BryceWG/BiBi-Keyboard/releases/download/models/sherpa-onnx-telespeech-ctc-int8-zh-2024-06-04.zip)
-- fp32（约 715MB）：[sherpa-onnx-telespeech-ctc-zh-2024-06-04.zip](https://github.com/BryceWG/BiBi-Keyboard/releases/download/models/sherpa-onnx-telespeech-ctc-zh-2024-06-04.zip)
+- Zh + En CTC int8（约 740MB）：[sherpa-onnx-fire-red-asr2-ctc-zh_en-int8-2026-02-25.zip](https://github.com/BryceWG/BiBi-Keyboard/releases/download/models/sherpa-onnx-fire-red-asr2-ctc-zh_en-int8-2026-02-25.zip)
 
 #### FunASR Nano（非流）
 
 - int8（约 690MB）：[sherpa-onnx-funasr-nano-int8-2025-12-30.zip](https://github.com/BryceWG/BiBi-Keyboard/releases/download/models/sherpa-onnx-funasr-nano-int8-2025-12-30.zip)
+- MLT Nano int8（约 690MB）：[sherpa-onnx-funasr-mlt-nano-int8-2026-03-21.zip](https://github.com/BryceWG/BiBi-Keyboard/releases/download/models/sherpa-onnx-funasr-mlt-nano-int8-2026-03-21.zip)
+
+#### Qwen3-ASR（非流）
+
+- 0.6B int8（约 806MB）：[sherpa-onnx-qwen3-asr-0.6B-int8-2026-03-25.zip](https://github.com/BryceWG/BiBi-Keyboard/releases/download/models/sherpa-onnx-qwen3-asr-0.6B-int8-2026-03-25.zip)
+
+#### Parakeet（非流）
+
+- 0.6B V3 int8（约 456MB）：[sherpa-onnx-nemo-parakeet-tdt-0.6b-v3-int8.zip](https://github.com/BryceWG/BiBi-Keyboard/releases/download/models/sherpa-onnx-nemo-parakeet-tdt-0.6b-v3-int8.zip)
+- 0.6B V2 int8（约 451MB）：[sherpa-onnx-nemo-parakeet-tdt-0.6b-v2-int8.zip](https://github.com/BryceWG/BiBi-Keyboard/releases/download/models/sherpa-onnx-nemo-parakeet-tdt-0.6b-v2-int8.zip)
 
 #### 通用标点模型（可选）
 

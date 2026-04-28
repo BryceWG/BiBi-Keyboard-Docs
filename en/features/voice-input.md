@@ -12,7 +12,7 @@ Voice input has three stages:
 
 ## Supported ASR Providers
 
-BiBi Keyboard supports **12** ASR providers, grouped into cloud and local:
+BiBi Keyboard supports **15** ASR providers, grouped into cloud and local:
 
 ### Cloud ASR
 
@@ -21,10 +21,11 @@ BiBi Keyboard supports **12** ASR providers, grouped into cloud and local:
 | **Volcengine**                    | ✅        | 1 hour                         | New users often get free quota; supports bidirectional streaming                                      |
 | **SiliconFlow**                   | ❌        | 20 min                         | Built-in free ASR (SenseVoiceSmall / TeleSpeechASR); supports Qwen3-Omni transcription (own key)     |
 | **ElevenLabs**                    | ✅        | 20 min                         | High-accuracy English; supports both file and streaming                                               |
-| **OpenAI**                        | ❌        | 20 min                         | Default `gpt-4o-mini-transcribe`; you can use any compatible Audio Transcriptions model               |
-| **DashScope (Alibaba)**           | ✅        | 3 min                          | qwen3-asr-flash; supports streaming and non-streaming                                                 |
+| **OpenAI**                        | ✅        | 20 min                         | Default `gpt-4o-mini-transcribe`; supports multiple channels and Realtime streaming                    |
+| **DashScope (Alibaba)**           | ✅        | 3 min                          | qwen3-asr-flash / Qwen3.5-Omni; supports streaming and non-streaming                                  |
 | **Gemini (Google)**               | ❌        | 4 hours                        | File-based multimodal speech understanding                                                            |
 | **Soniox**                        | ✅        | 1 hour                         | Supports multi-language prompts; both streaming and file modes                                         |
+| **StepAudio**                     | ❌        | 20 min                         | StepAudio 2.5 online ASR with Chinese/English and ITN                                                  |
 | **Zhipu (GLM)**                   | ❌        | 20 min                         | GLM-ASR; supports context prompt parameters                                                            |
 
 ### Local ASR (Offline)
@@ -32,8 +33,10 @@ BiBi Keyboard supports **12** ASR providers, grouped into cloud and local:
 | Provider         | Streaming | Duration limit (non-streaming) | Notes                                   |
 | ---------------- | --------- | ------------------------------ | --------------------------------------- |
 | **SenseVoice**   | Pseudo ¹  | 5 min                          | Based on sherpa-onnx; multilingual      |
-| **FunASR Nano**  | ❌        | 5 min                          | sherpa-onnx offline recognition (no pseudo-streaming preview) |
-| **TeleSpeech**   | Pseudo ¹  | 5 min                          | Based on sherpa-onnx; optimized for CN  |
+| **FunASR Nano**  | ❌        | 5 min                          | Offline recognition with language selection, native ITN, and MLT Nano multilingual variant |
+| **Qwen3-ASR**    | ❌        | 5 min                          | Local 0.6B model, strong Chinese recognition and numeric formatting |
+| **Parakeet**     | ❌        | 5 min                          | Local English / European-language recognition |
+| **FireRedASR V2** | Pseudo ¹ | 5 min                          | Replaces the old TeleSpeech local engine |
 | **Paraformer**   | ✅        | Unlimited ²                    | Pure local streaming recognition        |
 
 ::: info Notes
@@ -75,7 +78,7 @@ For more details on supported models, recommended configs and updated quotas, se
 
 **Supported engines**:
 
-- Cloud: Volcengine, Soniox, DashScope, ElevenLabs
+- Cloud: Volcengine, Soniox, DashScope, ElevenLabs, OpenAI Realtime
 - Local: Paraformer
 
 ### Non-streaming recognition (file upload)
@@ -122,9 +125,12 @@ For non-streaming engines, if a recording exceeds the app's single-segment limit
 | DashScope    | 3 min       | Default qwen3-asr-flash; app segment cap is 3 min                     |
 | Gemini       | 4 hours     | Official max is ~9.5h; app uses 4h as a safety margin                 |
 | Soniox       | 1 hour      | No strict official max found; app defaults to 1h                      |
+| StepAudio    | 20 min      | App default, suitable for short and medium dictation                  |
 | SenseVoice   | 5 min       | Local performance cap to avoid excessive RAM/time                     |
 | FunASR Nano  | 5 min       | Local performance cap to avoid excessive RAM/time                     |
-| TeleSpeech   | 5 min       | Local performance cap to avoid excessive RAM/time                     |
+| Qwen3-ASR    | 5 min       | Local performance cap to avoid excessive RAM/time                     |
+| Parakeet     | 5 min       | Local performance cap to avoid excessive RAM/time                     |
+| FireRedASR V2 | 5 min      | Local performance cap to avoid excessive RAM/time                     |
 
 ::: warning Notes
 
@@ -143,6 +149,7 @@ If your primary ASR occasionally times out or fails, you can enable a **backup A
 2. Find "Backup speech recognition engine" and enable "Enable backup engine"
 3. Tap "Backup provider" and choose a provider different from your primary one
 4. Make sure the backup provider is also configured (API key / local model files, etc.)
+5. If your primary provider is a local or slower model, tune "backup timeout sensitivity" to switch to backup results earlier or later
 
 ::: warning Notes
 This runs two engines in parallel. Even if the primary result is used, the backup may still trigger an API request/cost (depending on vendor billing and cancellation behavior).
@@ -155,7 +162,7 @@ This runs two engines in parallel. Even if the primary result is used, the backu
 No config needed:
 
 1. Open the app; it defaults to **SiliconFlow free service**
-2. Under `Settings → ASR Settings → SiliconFlow`, switch between the two free models (`FunAudioLLM/SenseVoiceSmall` and `TeleAI/TeleSpeechASR`)
+2. Under `Settings → ASR Settings → SiliconFlow`, switch between free models such as `FunAudioLLM/SenseVoiceSmall` and `TeleAI/TeleSpeechASR`; with your own key, you can also choose Qwen3-Omni multimodal models
 
 ### 2. Configure a cloud provider
 
@@ -173,15 +180,15 @@ Using Volcengine as an example:
 3. The app will automatically select **SenseVoice** under `Settings → ASR Settings → Provider`
 
 ::: tip Tip
-First load of local models may take a few seconds. You can enable "Preload model" (SenseVoice / FunASR Nano / TeleSpeech / Paraformer all support it) so the model is loaded when the keyboard or floating ball is first shown, reducing the first-recognition latency.
+First load of local models may take a few seconds. You can enable "Preload model" (SenseVoice / FunASR Nano / Qwen3-ASR / Parakeet / FireRedASR V2 / Paraformer all support it) so the model is loaded when the keyboard or floating ball is first shown, reducing the first-recognition latency.
 :::
 
 ## Local Punctuation (Optional)
 
-TeleSpeech and Paraformer can add punctuation with an extra **shared punctuation model**. If the model is missing, recognition still works, but results may look more "spoken" (less punctuated).
+FireRedASR V2 and Paraformer can add punctuation with an extra **shared punctuation model**. If the model is missing, recognition still works, but results may look more "spoken" (less punctuated).
 
 1. Open `Settings → ASR Settings`
-2. Go to the `TeleSpeech` or `Paraformer` section
+2. Go to the `FireRedASR V2` or `Paraformer` section
 3. Under the punctuation model section, tap "Download model" (or import the ZIP)
 
 ::: tip Download source

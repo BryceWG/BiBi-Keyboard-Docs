@@ -12,7 +12,7 @@ BiBi Keyboard provides two editions: OSS and Pro. This page compares feature dif
 | Category        | Feature                          | OSS | Pro |
 | -------------- | -------------------------------- | --- | --- |
 | **Core**        | Speech recognition (ASR)         | ✅  | ✅  |
-|                | 12 ASR providers                 | ✅  | ✅  |
+|                | 15 ASR providers                 | ✅  | ✅  |
 |                | Streaming recognition            | ✅  | ✅  |
 |                | Segmented recording              | ✅  | ✅  |
 |                | Local offline models             | ✅  | ✅  |
@@ -45,7 +45,7 @@ BiBi Keyboard provides two editions: OSS and Pro. This page compares feature dif
 |                | Multi-language support            | ✅  | ✅  |
 |                | Fully open-source code            | ✅  | ❌  |
 
-Note: OSS includes basic AI editing and AI post-processing. `AI Assistant (voice commands)`, `App-specific Prompt`, and `Hotwords management` are Pro-only.
+Note: OSS includes basic AI editing and AI post-processing. `AI Assistant (voice commands)`, `App-specific Prompt`, and `Hotwords management` are Pro-only. Pro hotwords cover multiple online ASR providers and selected local engines such as Qwen3-ASR and FunASR Nano; StepAudio supports hotword-array injection too.
 
 ## Pricing
 

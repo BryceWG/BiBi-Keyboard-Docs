@@ -192,7 +192,7 @@ External calls always follow BiBi Keyboard's current settings (ignore SpeechConf
 **Local vendors**:
 
 - **Paraformer**: streaming only
-- **SenseVoice / FunASR Nano / TeleSpeech**: non-streaming file engines (pseudo-streaming is UI-only and not exposed externally)
+- **SenseVoice / FunASR Nano / Qwen3-ASR / Parakeet / FireRedASR V2**: non-streaming file engines (pseudo-streaming is UI-only and not exposed externally)
 
 ## Result Filters
 

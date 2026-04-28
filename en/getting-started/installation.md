@@ -8,7 +8,7 @@ Before installing, make sure your device meets the following:
 
 | Item             | Requirement                 |
 | ---------------- | --------------------------- |
-| **Android**      | Android 10 (API 29) and up  |
+| **Android**      | Android 8.0 (API 26) and up |
 | **CPU ABI**      | arm64-v8a (64-bit only)     |
 | **Storage**      | at least 50 MB free space   |
 | **Network**      | required for cloud ASR      |

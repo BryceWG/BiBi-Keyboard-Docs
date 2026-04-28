@@ -14,17 +14,18 @@ API keys and access tokens are sensitive. Do not share them publicly. If you sus
 
 ## Provider overview
 
-| Provider                                                              | Type  | Streaming  | Best for                              |
-| --------------------------------------------------------------------- | ----- | ---------- | ------------------------------------- |
-| **Volcengine**                                                        | Cloud | ✅         | Low-latency, real-time streaming      |
-| **SiliconFlow**                                                       | Cloud | ❌         | Beginner-friendly, low cost           |
-| **DashScope (Alibaba)**                                               | Cloud | ✅         | Balanced accuracy and cost            |
-| **Soniox**                                                            | Cloud | ✅         | Stable streaming, international usage |
-| **Gemini**                                                            | Cloud | ❌         | Small usage / file-based recognition  |
-| **ElevenLabs**                                                        | Cloud | ✅/❌      | High accuracy (model-dependent)       |
-| **OpenAI** (compatible)                                               | Cloud | ❌         | OpenAI/compatible file transcription  |
-| **Zhipu GLM**                                                         | Cloud | ❌         | Simple integration, lower cost        |
-| **Local models** (SenseVoice / Paraformer / FunASR Nano / TeleSpeech) | Local | Partial ✅ | Privacy-first, offline usage          |
+| Provider                                                                                        | Type  | Streaming  | Best for                                         |
+| ----------------------------------------------------------------------------------------------- | ----- | ---------- | ------------------------------------------------ |
+| **Volcengine**                                                                                  | Cloud | ✅         | Low-latency, real-time streaming                 |
+| **SiliconFlow**                                                                                 | Cloud | ❌         | Beginner-friendly, low cost                      |
+| **DashScope (Alibaba)**                                                                         | Cloud | ✅         | Balanced accuracy and cost                       |
+| **Soniox**                                                                                      | Cloud | ✅         | Stable streaming, international usage            |
+| **Gemini**                                                                                      | Cloud | ❌         | Small usage / file-based recognition             |
+| **ElevenLabs**                                                                                  | Cloud | ✅/❌      | High accuracy (model-dependent)                  |
+| **OpenAI** (compatible)                                                                         | Cloud | ✅/❌      | OpenAI/compatible file or Realtime transcription |
+| **StepAudio**                                                                                   | Cloud | ❌         | StepFun online ASR, Chinese/English and ITN      |
+| **Zhipu GLM**                                                                                   | Cloud | ❌         | Simple integration, lower cost                   |
+| **Local models** (SenseVoice / FunASR Nano / Qwen3-ASR / Parakeet / FireRedASR V2 / Paraformer) | Local | Partial ✅ | Privacy-first, offline usage                     |
 
 ## Volcengine
 
@@ -93,6 +94,11 @@ DashScope offers good accuracy and cost efficiency, with partial streaming suppo
 
 1. Open `Settings → ASR Settings` and select **DashScope**
 2. Paste the API key and save
+3. Choose a model as needed: `Qwen3-ASR-Flash`, `Qwen3.5-Omni-Flash`, `Qwen3.5-Omni-Plus`, or a streaming model
+
+::: tip Model choice
+`Qwen3.5-Omni` is for non-streaming multimodal transcription. Streaming defaults to `qwen3-asr-flash-realtime-2026-02-10`, and you can also switch to `fun-asr-realtime`.
+:::
 
 ## Soniox
 
@@ -127,15 +133,26 @@ ElevenLabs `scribe_v1` is non-streaming only; `scribe_v2` is streaming only.
 
 ## OpenAI (compatible endpoints)
 
-The OpenAI provider supports OpenAI-format transcription endpoints (and compatible third-party endpoints).
+The OpenAI provider supports OpenAI-format transcription endpoints, plus compatible third-party Audio Transcriptions or Realtime endpoints.
 
 1. In `Settings → ASR Settings`, select **OpenAI**
-2. Fill in:
+2. Add one or more OpenAI ASR channels to separate official endpoints, proxy endpoints, or different models
+3. Fill in:
    - `ASR Endpoint` (e.g. `https://api.openai.com/v1/audio/transcriptions` or a compatible endpoint)
    - `API Key` (Bearer)
    - `Model name` (e.g. `gpt-4o-mini-transcribe` / `whisper-1`)
+4. If the endpoint supports the Realtime API, enable "Streaming (Realtime)" for live partial results
 
 ![OpenAI settings example](/images/getting-started/asr-providers/openai-settings.png)
+
+## StepAudio
+
+StepAudio is StepFun's online ASR service. In BiBi Keyboard it is currently used in non-streaming mode.
+
+1. Create an API key in the StepFun console: https://platform.stepfun.com/
+2. In `Settings → ASR Settings`, select **StepAudio**
+3. Paste the `StepFun API Key`
+4. Choose language (Chinese / English / Auto) and enable ITN if needed
 
 ## Zhipu GLM
 
@@ -151,9 +168,11 @@ Local models are ideal for offline usage and privacy. Each model trades off spee
 ### Model selection tips
 
 - **SenseVoice**: non-streaming; fast and balanced; supports language settings
-- **FunASR Nano**: non-streaming; slower but often higher quality
+- **FunASR Nano**: non-streaming; language selection, native ITN, and MLT Nano multilingual variant
+- **Qwen3-ASR**: non-streaming; local 0.6B model, good Chinese recognition, optional rule-based ITN
+- **Parakeet**: non-streaming; V3 for several European languages, V2 for English
+- **FireRedASR V2**: non-streaming / pseudo-streaming; replaces the old TeleSpeech local engine
 - **Paraformer**: streaming supported; decent quality
-- **TeleSpeech**: non-streaming; slightly better dialect support
 
 ### Download in-app (recommended)
 
@@ -185,14 +204,23 @@ The links below point to `BiBi-Keyboard` model ZIPs. If you see 404 or slow down
 - Trilingual (ZH/Cantonese/EN, ~974MB): [sherpa-onnx-streaming-paraformer-trilingual-zh-cantonese-en.zip](https://github.com/BryceWG/BiBi-Keyboard/releases/download/models/sherpa-onnx-streaming-paraformer-trilingual-zh-cantonese-en.zip)
 - Bilingual (ZH/EN, ~973MB): [sherpa-onnx-streaming-paraformer-bilingual-zh-en.zip](https://github.com/BryceWG/BiBi-Keyboard/releases/download/models/sherpa-onnx-streaming-paraformer-bilingual-zh-en.zip)
 
-#### TeleSpeech (non-streaming)
+#### FireRedASR V2 (non-streaming / pseudo-streaming)
 
-- int8 (~180MB): [sherpa-onnx-telespeech-ctc-int8-zh-2024-06-04.zip](https://github.com/BryceWG/BiBi-Keyboard/releases/download/models/sherpa-onnx-telespeech-ctc-int8-zh-2024-06-04.zip)
-- fp32 (~715MB): [sherpa-onnx-telespeech-ctc-zh-2024-06-04.zip](https://github.com/BryceWG/BiBi-Keyboard/releases/download/models/sherpa-onnx-telespeech-ctc-zh-2024-06-04.zip)
+- Zh + En CTC int8 (~740MB): [sherpa-onnx-fire-red-asr2-ctc-zh_en-int8-2026-02-25.zip](https://github.com/BryceWG/BiBi-Keyboard/releases/download/models/sherpa-onnx-fire-red-asr2-ctc-zh_en-int8-2026-02-25.zip)
 
 #### FunASR Nano (non-streaming)
 
 - int8 (~690MB): [sherpa-onnx-funasr-nano-int8-2025-12-30.zip](https://github.com/BryceWG/BiBi-Keyboard/releases/download/models/sherpa-onnx-funasr-nano-int8-2025-12-30.zip)
+- MLT Nano int8 (~690MB): [sherpa-onnx-funasr-mlt-nano-int8-2026-03-21.zip](https://github.com/BryceWG/BiBi-Keyboard/releases/download/models/sherpa-onnx-funasr-mlt-nano-int8-2026-03-21.zip)
+
+#### Qwen3-ASR (non-streaming)
+
+- 0.6B int8 (~806MB): [sherpa-onnx-qwen3-asr-0.6B-int8-2026-03-25.zip](https://github.com/BryceWG/BiBi-Keyboard/releases/download/models/sherpa-onnx-qwen3-asr-0.6B-int8-2026-03-25.zip)
+
+#### Parakeet (non-streaming)
+
+- 0.6B V3 int8 (~456MB): [sherpa-onnx-nemo-parakeet-tdt-0.6b-v3-int8.zip](https://github.com/BryceWG/BiBi-Keyboard/releases/download/models/sherpa-onnx-nemo-parakeet-tdt-0.6b-v3-int8.zip)
+- 0.6B V2 int8 (~451MB): [sherpa-onnx-nemo-parakeet-tdt-0.6b-v2-int8.zip](https://github.com/BryceWG/BiBi-Keyboard/releases/download/models/sherpa-onnx-nemo-parakeet-tdt-0.6b-v2-int8.zip)
 
 #### Universal punctuation model (optional)
 
