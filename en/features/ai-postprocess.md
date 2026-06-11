@@ -146,9 +146,19 @@ AI Assistant can automatically match preset modes by wake word and keywords, the
 - **Fuzzy matching**: supports fuzzy matching for wake words and preset keywords, so natural spoken variants can still trigger
 - **Customizable**: wake words, keywords, and prompt rules for each mode are all customizable
 
-## Hotword Linkage <Badge type="warning" text="Pro" />
+## Input Field Context <Badge type="warning" text="Pro" />
 
-When hotwords are injected into AI post-processing, the app uses phoneme-based dynamic filtering to select hotwords relevant to the current transcript before injection. This improves relevance and reduces noise from unrelated hotwords.
+When recording from the main keyboard, Pro can send text around the cursor as reference for AI post-processing. This helps the model keep continuity, terminology, and tone consistent with the surrounding text.
+
+::: warning Privacy
+Input field context is sent only as reference for AI post-processing. Enable it only when you trust the selected LLM provider. The final AI output should still contain only the processed text for the current ASR result.
+:::
+
+## Hotword Enhancement <Badge type="warning" text="Pro" />
+
+Pro hotwords can participate before recognition according to the selected provider's hotword support. When "Hotword enhanced replacement" is enabled, Pro also runs a phoneme-similarity fallback after recognition. The target word always acts as one alias, and you can add two more aliases; the target word and aliases all participate in phoneme matching, then matches are replaced with the target word.
+
+Example: target word `音素` can have aliases `因素` and `严肃`; if the transcript contains `因素`, it is replaced with `音素`. You can also set the target word to `xxxx@qq.com` and alias to `primary email` for shortcut phrase input.
 
 ## Configuration
 

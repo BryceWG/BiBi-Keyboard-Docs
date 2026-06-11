@@ -9,12 +9,12 @@ Before installing, make sure your device meets the following:
 | Item             | Requirement                 |
 | ---------------- | --------------------------- |
 | **Android**      | Android 8.0 (API 26) and up |
-| **CPU ABI**      | arm64-v8a (64-bit only)     |
+| **CPU ABI**      | arm64-v8a / armeabi-v7a (choose for your device) |
 | **Storage**      | at least 50 MB free space   |
 | **Network**      | required for cloud ASR      |
 
 ::: info About CPU ABI
-BiBi Keyboard only provides an arm64-v8a build. 32-bit devices (armeabi-v7a) and x86 are not supported. Most devices released after 2018 support 64-bit.
+BiBi Keyboard provides arm64-v8a and armeabi-v7a APKs. Most devices released after 2018 should use arm64-v8a; older 32-bit devices can try armeabi-v7a. x86 is not supported.
 :::
 
 ## Download Channels
@@ -124,7 +124,7 @@ OSS updates are distributed via GitHub Releases. By default, BiBi Keyboard check
 
 **Fix**:
 
-1. Confirm your device supports arm64-v8a
+1. Confirm that you downloaded the APK matching your device ABI (arm64-v8a or armeabi-v7a)
 2. Check you have enough free storage
 
 ### Permission prompt did not show

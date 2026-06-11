@@ -4,7 +4,7 @@ layout: home
 hero:
   name: BiBi Keyboard
   text: 说点啥
-  tagline: 15 ASR providers, local offline recognition, AI post-processing
+  tagline: 17 ASR providers, local offline recognition, AI post-processing
   actions:
     - theme: brand
       text: Get Started
@@ -25,7 +25,7 @@ hero:
 features:
   - icon: 🎤
     title: Multiple ASR Providers
-    details: Supports 15 ASR providers like Volcengine, SiliconFlow, OpenAI, StepAudio, Gemini and more. Switch anytime and choose what works best.
+    details: Supports 17 ASR providers like Volcengine, SiliconFlow, OpenAI, OpenRouter, MiMo, Gemini and more. Switch anytime and choose what works best.
 
   - icon: 🤖
     title: AI Post-processing
@@ -33,7 +33,7 @@ features:
 
   - icon: 🌐
     title: Local Offline Recognition
-    details: Local models including SenseVoice, FunASR Nano, Qwen3-ASR, Parakeet, FireRedASR V2, and Paraformer. Works without network and keeps privacy.
+    details: Local models including SenseVoice, FunASR Nano, Qwen3-ASR, Parakeet, FireRedASR V2, and X-ASR. Works without network and keeps privacy.
 
   - icon: 🎯
     title: Floating Ball Voice Input
@@ -62,8 +62,8 @@ BiBi Keyboard (说点啥) is a voice-first Android IME. It integrates multiple m
 
 ### Key Highlights
 
-- **15 ASR providers**: Volcengine, SiliconFlow, OpenAI, StepAudio, Gemini, ElevenLabs, DashScope, Soniox, Zhipu GLM, and more
-- **Local offline models**: SenseVoice, FunASR Nano, Qwen3-ASR, Parakeet, FireRedASR V2, Paraformer (no network required)
+- **17 ASR providers**: Volcengine, SiliconFlow, OpenAI, OpenRouter, MiMo, StepAudio, Gemini, ElevenLabs, DashScope, Soniox, Zhipu GLM, and more
+- **Local offline models**: SenseVoice, FunASR Nano, Qwen3-ASR, Parakeet, FireRedASR V2, X-ASR (no network required)
 - **AI post-processing**: use LLMs to refine recognition results
 - **Multiple recording modes**: press-and-hold, tap-to-toggle
 - **Privacy-first**: can work fully offline once configured
@@ -77,7 +77,7 @@ BiBi Keyboard (说点啥) is a voice-first Android IME. It integrates multiple m
 ### System Requirements
 
 - **Android**: Android 8.0 (API 26) and above
-- **CPU ABI**: arm64-v8a (64-bit devices only)
+- **CPU ABI**: arm64-v8a / armeabi-v7a (limited local models support)
 - **RAM**: 12GB+ recommended for local models
 - **Storage**: at least 50MB (local models require extra 100MB-1GB)
 - **Network**: required for cloud ASR; local models can work offline

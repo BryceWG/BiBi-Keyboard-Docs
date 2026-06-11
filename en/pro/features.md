@@ -7,9 +7,11 @@ BiBi Keyboard Pro builds on the OSS version with more advanced capabilities for 
 Pro includes these exclusive features:
 
 - **Offline Traditional Chinese conversion**: convert results to Traditional Chinese automatically
-- **Hotwords management**: unified hotword injection across providers to improve recognition for proper nouns
+- **Hotwords management**: provider-aware hotword adaptation to improve recognition for proper nouns
+- **Hotword enhanced replacement**: replace similar-sounding fragments with target hotwords via phoneme matching
 - **Hotword stats**: view trigger frequency and hit stats to keep improving your hotword list
 - **AI Assistant**: trigger voice commands with wake words, preset keywords, and fuzzy matching
+- **Input field context**: AI post-processing can reference nearby text around the cursor for better continuity
 - **App-specific prompts**: automatically switch AI prompt preset by foreground app
 - **Continuous speaking mode**: VAD auto start/stop without manual control
 - **Omni-direction cursor sliding**: enhanced cursor control with 4-direction sliding
@@ -47,7 +49,9 @@ Manage custom hotwords to improve recognition of proper nouns, brand names, name
 ### Highlights
 
 - **Multi-provider support**: auto-adapts hotword formats per ASR provider; selected local models now support hotwords too
-- **Smart injection into post-processing prompts**: when injecting into AI post-processing, relevant hotwords are dynamically filtered with phoneme-based matching
+- **Before + after recognition**: hotwords first participate in recognition according to provider support; when enhancement is enabled, Pro also runs a pronunciation-similarity fallback after recognition
+- **Target word + aliases**: each hotword has up to 3 alias slots. The target word always occupies the first alias slot, and you can add 2 extra aliases
+- **Aliases participate in phoneme matching**: both the target word and extra aliases are matched after recognition; matches are replaced with the target word
 - **Unified adaptation**: for providers without native hotword support, hotwords are structured and injected into recognition prompt parameters
 - **Hotword stats**: view trigger frequency and hit stats to iteratively tune your hotword list
 - **Linked with AI Assistant**: AI Assistant keywords can be auto-synced into the hotword list to reduce duplicate maintenance
@@ -57,10 +61,28 @@ Manage custom hotwords to improve recognition of proper nouns, brand names, name
 1. Open BiBi Keyboard Pro settings
 2. Go to `Settings → ASR Settings → Result Optimization (Pro)`
 3. Add/import hotwords (supports batch import from clipboard)
-4. Save to apply
-5. Open the hotword management page to review trigger frequency/hit stats and refine your list based on results
+4. Long-press a hotword chip to edit aliases (`target | alias 2 | alias 3`)
+5. Enable `Hotword enhanced replacement` if needed
+6. Save to apply
+7. Open the hotword management page to review trigger frequency/hit stats and refine your list based on results
 
 > Avoid too many hotwords. Per-provider limits apply and excessive lists may hurt performance.
+
+### How it takes effect
+
+| Mode | Before recognition | After recognition |
+| ---- | ------------------ | ----------------- |
+| Enhanced replacement off | Hotwords participate according to the provider's hotword support; quality depends on the provider | No phoneme fallback replacement |
+| Enhanced replacement on | Hotwords still participate according to provider support | Target word and aliases join phoneme matching, then matches are replaced with the target word |
+
+### Alias examples
+
+- **Fix similar-sounding words**: target word `音素`, extra aliases `因素` and `严肃`. If the transcript contains `因素`, it is replaced with `音素`.
+- **Shortcut phrase input**: target word `xxxx@qq.com`, extra alias `primary email`. When you say "primary email" and it is recognized, it is replaced with the real email address.
+
+::: warning Suggestion
+Enhanced replacement is best for proper nouns and frequent misrecognitions. Adding too many common words may cause unwanted replacements for similar-sounding text.
+:::
 
 ### What’s new (more convenient)
 
@@ -79,6 +101,7 @@ Manage custom hotwords to improve recognition of proper nouns, brand names, name
 | OpenAI       | ✅      | depends on model                                       |
 | Gemini       | ✅      | almost unlimited                                       |
 | GLM ASR      | ✅      | 100                                                    |
+| MiMo         | ✅      | supports context injection                             |
 | ElevenLabs   | ❌      | -                                                      |
 | Qwen3-ASR    | ✅      | suggested limit: 100                                   |
 | FunASR Nano  | ✅      | suggested limit: 100                                   |
@@ -87,6 +110,24 @@ Manage custom hotwords to improve recognition of proper nouns, brand names, name
 ::: info Local hotwords
 When using Qwen3-ASR or FunASR Nano, changing hotwords may require the local model to be prepared again before the new list fully takes effect.
 :::
+
+## Input Field Context <Badge type="warning" text="Pro" />
+
+When using AI post-processing from the main keyboard, Pro can send text around the cursor as reference to the LLM. This helps the model understand continuity, terminology, and tone.
+
+### How to use
+
+1. Open `Settings → AI Post-processing`
+2. Enable `Use input field context (Pro)`
+3. Dictate from the main keyboard with AI post-processing enabled
+
+::: warning Privacy
+This sends nearby input-field text to the selected LLM provider as reference. Enable it only when you trust that provider and the current content is appropriate to send.
+:::
+
+### Scope
+
+Input field context applies to AI post-processing after main-keyboard dictation. MiMo multimodal ASR can also use Pro context information to improve proper nouns and scene-specific terms.
 
 ## AI Assistant <Badge type="warning" text="Pro" />
 
@@ -120,7 +161,7 @@ Based on VAD (Voice Activity Detection): automatically starts on speech and stop
 ### How to use
 
 1. Open the BiBi Keyboard Pro panel
-2. Add the continuous mode button under Settings → Input Settings → Custom action buttons, then toggle it on the keyboard
+2. Add the continuous mode button under `Settings → Input Settings → Custom keyboard layout`, then toggle it on the keyboard
 3. Start speaking
 4. Tune VAD parameters:
    - **Silence window**: 0.5-3s (default 1.5s)
@@ -193,7 +234,7 @@ Apply regex rules to recognition results for advanced text transformations.
 5. Save; rules apply sequentially
 
 ::: tip Note
-Regex post-processing runs after AI post-processing. It is useful for normalizing AI output formats.
+By default, regex post-processing runs after AI post-processing. If you enable "Run regex before AI post-processing", the regex-processed text becomes the AI input, which is useful when you want to clean fixed noise before asking AI to rewrite it.
 :::
 
 ## App-specific Prompt <Badge type="warning" text="Pro" />
@@ -226,16 +267,22 @@ OSS:
 Pro adds:
 
 - **Built-in theme colors**: pick theme colors independent of system wallpaper
-- **Pure black/white themes**: supports pure black and pure white styles for users who prefer a minimal visual look
+- **AMOLED black mode**: use a deeper black background in dark mode
+- **Monet toggle**: choose whether to follow wallpaper dynamic colors
+- **Key color customization**: choose default, built-in, or custom colors as the theme seed
 
 ### How to use
 
 1. Open settings
-2. Go to `Settings → Other settings → Custom colors`
-3. Choose a theme color
+2. Go to `Settings → Theme mode (Pro)`
+3. Configure:
+   - **Appearance**: system / light / dark / AMOLED black
+   - **Monet**: whether to use wallpaper dynamic color
+   - **Key color**: default, built-in color, or custom color
+   - **Color style / spec**: adjust the generated theme palette
 
 ::: info Note
-Custom colors override Material 3 dynamic colors. Select the first option to restore default behavior.
+Choosing a custom key color overrides pure Material 3 dynamic color behavior. Restore the default key color to return to the default theme behavior.
 :::
 
 ## Get Pro

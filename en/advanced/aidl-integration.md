@@ -187,11 +187,11 @@ External calls always follow BiBi Keyboard's current settings (ignore SpeechConf
 - **DashScope**: `prefs.dashStreamingEnabled`
 - **Soniox**: `prefs.sonioxStreamingEnabled`
 - **ElevenLabs**: `prefs.elevenStreamingEnabled`
-- **OpenAI / Gemini / SiliconFlow / Zhipu**: fixed non-streaming file engines
+- **OpenAI / Gemini / SiliconFlow / Zhipu / OpenRouter / MiMo / StepAudio**: fixed non-streaming file engines
 
 **Local vendors**:
 
-- **Paraformer**: streaming only
+- **X-ASR**: streaming only
 - **SenseVoice / FunASR Nano / Qwen3-ASR / Parakeet / FireRedASR V2**: non-streaming file engines (pseudo-streaming is UI-only and not exposed externally)
 
 ## Result Filters

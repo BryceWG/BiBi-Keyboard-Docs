@@ -34,6 +34,8 @@ All options are under `Settings → ASR Settings → Auto-stop on silence`:
 | `autoStopOnSilenceEnabled` | Boolean | -         | `false`  | master switch                               |
 | `autoStopSilenceWindowMs`  | Int     | 500-3000  | `1200`   | silence window threshold (ms)               |
 | `autoStopSilenceSensitivity` | Int   | 1-10      | `4`      | sensitivity (1=conservative, 10=sensitive)  |
+| `skipEmptyAudioEnabled`    | Boolean | -         | `false`  | skip empty audio before non-streaming recognition |
+| `autoFilterSilentAudioSegments` | Boolean | -   | `false`  | remove silent parts before non-streaming recognition |
 
 ### 1. Enable switch
 
@@ -63,6 +65,17 @@ Suggested presets:
 | **1-3 Conservative** | stop only when it is very confident         | noisy environments; quiet voice; frequent pauses |
 | **4-6 Balanced**     | balanced accuracy and responsiveness         | daily use |
 | **7-10 Sensitive**   | quick response; small pauses may trigger stop | quiet environment; fast input |
+
+### 4. Empty audio and silent-part filtering
+
+These options affect only non-streaming recognition (file upload or local full-audio inference). They do not change real-time streaming upload.
+
+- **Skip empty audio**: after recording stops, local VAD checks whether the audio contains almost no speech. If it is considered empty, ASR is not called.
+- **Auto filter silent parts**: removes long silent parts before recognition to shorten uploaded audio. It is useful for long recordings with obvious pauses.
+
+::: warning Note
+Both options are off by default. In noisy environments, with quiet speech, or when you pause for a long time, enable them carefully to avoid skipping or trimming useful speech.
+:::
 
 ## Suggested configs
 

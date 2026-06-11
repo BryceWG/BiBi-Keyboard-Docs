@@ -1,6 +1,6 @@
 # Keyboard Layout & Buttons
 
-This page introduces the main keyboard UI, the customizable action row, the AI Edit panel, and the number/symbol keyboard.
+This page introduces the main keyboard UI, the visual layout editor, the customizable action row, the AI Edit panel, and the number/symbol keyboard.
 
 ::: tip Long-press hints
 Main keyboard buttons and AI Edit panel buttons support long-press hints. If you are unsure what an icon does, long-press it first to check.
@@ -34,12 +34,13 @@ Main keyboard buttons and AI Edit panel buttons support long-press hints. If you
 
 ## Custom Action Row
 
-At the top of the keyboard, there is a row of up to 4 customizable action buttons (default: Undo, Select All, Copy, Hide keyboard).
+At the top of the keyboard, there is a row of up to 4 customizable action buttons (default: Undo, Select All, Copy, Hide keyboard). The newer settings UI also includes a visual keyboard layout editor, so you can adjust buttons directly on a canvas.
 
 ### Where to configure
 
-- Path: `Settings → Input Settings → Custom action buttons`
-- Choose up to 4 actions; order maps left-to-right.
+- Path: `Settings → Input Settings → Custom keyboard layout`
+- Select a button position in the editor, then assign an action or restore the default layout.
+- If you only want to change the top row, edit just the action-row area.
 
 ### Example actions
 
@@ -51,9 +52,23 @@ At the top of the keyboard, there is a row of up to 4 customizable action button
 - **Cursor left / right**: move by one character; long-press to repeat
 - **Move to start / end**: jump to start/end of text
 - **VAD toggle**: quickly enable/disable auto-stop on silence
+- **Recording mode switch**: quickly switch between press-and-hold and tap-to-toggle recording
 - **Hide keyboard**: minimize the keyboard
 
 If an action is stateful (e.g. Selection mode or VAD toggle), the icon reflects the current state (highlighted/dimmed).
+
+### Visual layout editor
+
+Custom keyboard layout is useful if you want frequently used buttons in fixed positions, or want to hide actions you rarely use.
+
+1. Open `Settings → Input Settings → Custom keyboard layout`
+2. Tap a button block on the canvas
+3. Choose a new action from the action list
+4. Save and return to the keyboard to check the result
+
+::: tip Suggestion
+When trying it for the first time, change only the top action row or a few buttons. If the layout does not feel right, restore the default layout in the editor.
+:::
 
 ## IME Switching Tips
 

@@ -25,7 +25,9 @@ API Key / Access Token 属于敏感信息，请勿截图公开或分享给他人
 | **OpenAI**（兼容接口）                                                                       | 云端 | ✅/❌    | 使用 OpenAI/兼容端点，支持文件识别与 Realtime 流式 |
 | **StepAudio**                                                                                | 云端 | ❌       | 阶跃星辰在线 ASR，支持中英文与 ITN                 |
 | **Zhipu**<br>智谱 GLM                                                                        | 云端 | ❌       | 低成本、简单接入                                   |
-| **本地模型**（SenseVoice / FunASR Nano / Qwen3-ASR / Parakeet / FireRedASR V2 / Paraformer） | 本地 | 部分 ✅  | 隐私优先、离线可用                                 |
+| **OpenRouter**                                                                               | 云端 | ❌       | 使用 OpenRouter API Key 调用兼容 ASR 模型          |
+| **MiMo**<br>小米                                                                              | 云端 | ❌       | MiMo v2.5 ASR / 音频理解模型                       |
+| **本地模型**（SenseVoice / FunASR Nano / Qwen3-ASR / Parakeet / FireRedASR V2 / X-ASR）      | 本地 | 部分 ✅  | 隐私优先、离线可用                                 |
 
 ## 火山引擎（Volcengine）
 
@@ -137,17 +139,47 @@ ElevenLabs 的 `scribe_v1` 仅支持非流式，`scribe_v2` 仅支持流式。
 
 ## OpenAI（兼容接口）
 
-OpenAI 渠道支持使用 OpenAI 格式的 ASR 端点（也可填写兼容 OpenAI Audio Transcriptions 或 Realtime 的第三方端点）。
+OpenAI 渠道支持使用 OpenAI 格式的 ASR 端点（也可填写兼容 OpenAI Audio Transcriptions、Chat Completions 或 Realtime 的第三方端点）。
 
 1. 在 `设置 → 语音识别设置` 选择 **OpenAI**
 2. 通过「添加渠道」建立一个或多个 OpenAI ASR 配置，用于区分官方接口、代理接口或不同模型
 3. 填写：
-   - `ASR 端点`（如 `https://api.openai.com/v1/audio/transcriptions` 或兼容端点）
+   - `ASR 端点`（如 `https://api.openai.com/v1/audio/transcriptions`、`https://api.openai.com/v1/chat/completions` 或兼容端点）
    - `API Key`（Bearer）
    - `模型名称`（如 `gpt-4o-mini-transcribe` / `whisper-1`）
-4. 如果端点支持 Realtime API，可开启「启用流式识别（Realtime）」以边说边显示结果
+4. 如果端点是多模态 Chat Completions 接口，开启「使用 Completions 接口」，并按需填写自定义 Prompt
+5. 如果端点支持 Realtime API，可开启「启用流式识别（Realtime）」以边说边显示结果
 
 ![OpenAI 配置示例](/images/getting-started/asr-providers/openai-settings.png)
+
+::: tip 选择哪种 OpenAI 接口
+`audio/transcriptions` 适合标准转写模型；`chat/completions` 适合支持音频输入的多模态模型；Realtime 适合需要边说边出字的流式体验。需要确认你的 OpenAI 渠道支持哪种调用方式。
+:::
+
+## OpenRouter
+
+OpenRouter 渠道用于通过 OpenRouter 调用兼容的 ASR / 多模态转写模型，目前以非流式方式使用。
+
+1. 进入 OpenRouter 控制台创建 API Key：[OpenRouter Keys](https://openrouter.ai/settings/keys)
+2. 在 `设置 → 语音识别设置` 中选择 **OpenRouter**
+3. 填写：
+   - `ASR Endpoint`（通常保持默认或填写兼容的 `/audio/transcriptions` 端点）
+   - `OpenRouter API Key`
+   - `模型`（例如 `qwen/qwen3-asr-flash-2026-02-10`）
+4. 保存后可先到 `设置首页 → 录音测试` 验证是否可用
+
+## MiMo（小米）
+
+MiMo 渠道支持 `mimo-v2.5-asr` 与 `mimo-v2.5` 音频理解模型，适合希望尝试小米 MiMo 转写效果的用户。
+
+1. 准备 MiMo API Key
+2. 在 `设置 → 语音识别设置` 中选择 **MiMo**
+3. 选择请求端点：
+   - Token Plan（中国大陆 / 新加坡 / 欧洲）
+   - 按量付费
+   - 自定义端点
+4. 选择模型、识别语言（自动 / 中文 / 英文）
+5. 使用 `mimo-v2.5` 音频理解模型时，可填写 System Prompt；如不需要推理过程，可开启「禁用推理」
 
 ## StepAudio
 
@@ -176,11 +208,11 @@ StepAudio 是阶跃星辰提供的在线 ASR 服务，目前在说点啥中以�
 - **Qwen3-ASR**：非流式；本地 0.6B 模型，中文效果较好
 - **Parakeet**：非流式；V3 适合多种欧洲语言，V2 适合英语
 - **FireRedASR V2**：非流式 / 伪流式；替代旧版 TeleSpeech，支持中英本地识别
-- **Paraformer**：支持流式；效果次优
+- **X-ASR**：本地流式；中英 480ms 模型，支持线程数、模型卸载策略与可选 ITN
 
 ### 在应用内下载（推荐）
 
-1. 选择本地模型供应商（如 SenseVoice / Paraformer）
+1. 选择本地模型供应商（如 SenseVoice / X-ASR）
 2. 在模型管理页选择版本并点击下载
 3. 如已授予通知权限，可在通知栏查看下载与解压进度
 
@@ -199,10 +231,9 @@ StepAudio 是阶跃星辰提供的在线 ASR 服务，目前在说点啥中以�
 - small-int8（约 153MB）：[sherpa-onnx-sense-voice-zh-en-ja-ko-yue-int8-2024-07-17.zip](https://github.com/BryceWG/BiBi-Keyboard/releases/download/models/sherpa-onnx-sense-voice-zh-en-ja-ko-yue-int8-2024-07-17.zip)
 - small-fp32（约 980MB）：[sherpa-onnx-sense-voice-zh-en-ja-ko-yue-2024-07-17.zip](https://github.com/BryceWG/BiBi-Keyboard/releases/download/models/sherpa-onnx-sense-voice-zh-en-ja-ko-yue-2024-07-17.zip)
 
-#### Paraformer（流式）
+#### X-ASR（流式）
 
-- 三语言（中/粤/英，约 974MB）：[sherpa-onnx-streaming-paraformer-trilingual-zh-cantonese-en.zip](https://github.com/BryceWG/BiBi-Keyboard/releases/download/models/sherpa-onnx-streaming-paraformer-trilingual-zh-cantonese-en.zip)
-- 双语言（中/英，约 973MB）：[sherpa-onnx-streaming-paraformer-bilingual-zh-en.zip](https://github.com/BryceWG/BiBi-Keyboard/releases/download/models/sherpa-onnx-streaming-paraformer-bilingual-zh-en.zip)
+- 中英 480ms（约 530MB）：[sherpa-onnx-streaming-x-asr-480ms-zh-en.zip](https://github.com/BryceWG/BiBi-Keyboard/releases/download/models/sherpa-onnx-streaming-x-asr-480ms-zh-en.zip)
 
 #### FireRedASR V2（非流 / 伪流）
 

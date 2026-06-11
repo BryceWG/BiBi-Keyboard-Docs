@@ -12,7 +12,7 @@ Voice input has three stages:
 
 ## Supported ASR Providers
 
-BiBi Keyboard supports **15** ASR providers, grouped into cloud and local:
+BiBi Keyboard supports **17** ASR providers, grouped into cloud and local:
 
 ### Cloud ASR
 
@@ -27,6 +27,8 @@ BiBi Keyboard supports **15** ASR providers, grouped into cloud and local:
 | **Soniox**                        | ✅        | 1 hour                         | Supports multi-language prompts; both streaming and file modes                                         |
 | **StepAudio**                     | ❌        | 20 min                         | StepAudio 2.5 online ASR with Chinese/English and ITN                                                  |
 | **Zhipu (GLM)**                   | ❌        | 20 min                         | GLM-ASR; supports context prompt parameters                                                            |
+| **OpenRouter**                    | ❌        | 20 min                         | Calls compatible ASR / multimodal transcription models through OpenRouter                              |
+| **MiMo (Xiaomi)**                 | ❌        | 20 min                         | MiMo v2.5 ASR / audio-understanding models with language selection and System Prompt                    |
 
 ### Local ASR (Offline)
 
@@ -37,7 +39,7 @@ BiBi Keyboard supports **15** ASR providers, grouped into cloud and local:
 | **Qwen3-ASR**    | ❌        | 5 min                          | Local 0.6B model, strong Chinese recognition and numeric formatting |
 | **Parakeet**     | ❌        | 5 min                          | Local English / European-language recognition |
 | **FireRedASR V2** | Pseudo ¹ | 5 min                          | Replaces the old TeleSpeech local engine |
-| **Paraformer**   | ✅        | Unlimited ²                    | Pure local streaming recognition        |
+| **X-ASR**        | ✅        | Unlimited ²                    | Local streaming recognition with a Chinese/English 480ms model and optional ITN |
 
 ::: info Notes
 ¹ **Pseudo-streaming**: shows partial results based on VAD segmentation, but it is not true real-time streaming.
@@ -79,7 +81,7 @@ For more details on supported models, recommended configs and updated quotas, se
 **Supported engines**:
 
 - Cloud: Volcengine, Soniox, DashScope, ElevenLabs, OpenAI Realtime
-- Local: Paraformer
+- Local: X-ASR
 
 ### Non-streaming recognition (file upload)
 
@@ -126,6 +128,8 @@ For non-streaming engines, if a recording exceeds the app's single-segment limit
 | Gemini       | 4 hours     | Official max is ~9.5h; app uses 4h as a safety margin                 |
 | Soniox       | 1 hour      | No strict official max found; app defaults to 1h                      |
 | StepAudio    | 20 min      | App default, suitable for short and medium dictation                  |
+| OpenRouter   | 20 min      | App default for compatible file-transcription models                  |
+| MiMo         | 20 min      | App default for short/medium speech and audio-understanding models    |
 | SenseVoice   | 5 min       | Local performance cap to avoid excessive RAM/time                     |
 | FunASR Nano  | 5 min       | Local performance cap to avoid excessive RAM/time                     |
 | Qwen3-ASR    | 5 min       | Local performance cap to avoid excessive RAM/time                     |
@@ -134,7 +138,7 @@ For non-streaming engines, if a recording exceeds the app's single-segment limit
 
 ::: warning Notes
 
-- Streaming engines (Paraformer, etc.) have **no duration limit**.
+- Streaming engines (X-ASR, etc.) have **no duration limit**.
 - Segmented recording works only in non-streaming mode.
 - Each segment may incur a separate API call cost (for cloud providers).
   :::
@@ -180,15 +184,15 @@ Using Volcengine as an example:
 3. The app will automatically select **SenseVoice** under `Settings → ASR Settings → Provider`
 
 ::: tip Tip
-First load of local models may take a few seconds. You can enable "Preload model" (SenseVoice / FunASR Nano / Qwen3-ASR / Parakeet / FireRedASR V2 / Paraformer all support it) so the model is loaded when the keyboard or floating ball is first shown, reducing the first-recognition latency.
+First load of local models may take a few seconds. You can enable "Preload model" (SenseVoice / FunASR Nano / Qwen3-ASR / Parakeet / FireRedASR V2 / X-ASR all support it) so the model is loaded when the keyboard or floating ball is first shown, reducing the first-recognition latency.
 :::
 
 ## Local Punctuation (Optional)
 
-FireRedASR V2 and Paraformer can add punctuation with an extra **shared punctuation model**. If the model is missing, recognition still works, but results may look more "spoken" (less punctuated).
+FireRedASR V2 can add punctuation with an extra **shared punctuation model**. If the model is missing, recognition still works, but results may look more "spoken" (less punctuated).
 
 1. Open `Settings → ASR Settings`
-2. Go to the `FireRedASR V2` or `Paraformer` section
+2. Go to the `FireRedASR V2` section
 3. Under the punctuation model section, tap "Download model" (or import the ZIP)
 
 ::: tip Download source
@@ -198,6 +202,8 @@ When downloading local models, you can choose a download source and see latency.
 ## Recognition Enhancements (Optional)
 
 - **Offline denoise for non-streaming ASR**: `Settings → Input Settings → Offline denoise for non-streaming ASR` (applies to file-mode and local offline recognition)
+- **Compress audio before upload**: `Settings → ASR Settings → Compress audio before upload`. For supported online non-streaming providers, audio is encoded as M4A/AAC, OGG Opus, or WAV before upload to reduce request size and waiting time.
+- **Remove trailing punctuation and emoji**: `Settings → Input Settings → Remove trailing punctuation and emoji`. Set a word/character threshold so short results drop trailing punctuation/emoji while longer text keeps its ending.
 
 ## Recognition History & Metrics
 
@@ -214,6 +220,8 @@ Each record shows basic info (provider, source, AI processing status, word count
 - **AI post-processing elapsed time**: shown when AI post-processing is enabled and attempted.
 
 Older records may not include some timing fields, which is expected.
+
+Recognition History also links to [API Log and Recording Test](/en/advanced/diagnostics), where you can inspect ASR / LLM call summaries, local model loading records, and current recording-test results.
 
 ## Related
 

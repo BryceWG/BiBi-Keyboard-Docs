@@ -69,6 +69,7 @@ export default defineConfig({
             items: [
               { text: 'AIDL 通信（小企鹅联动）', link: '/advanced/aidl-integration' },
               { text: '剪贴板同步', link: '/advanced/clipboard-sync' },
+              { text: '识别历史与诊断', link: '/advanced/diagnostics' },
               { text: '备份与恢复', link: '/advanced/backup-restore' }
             ]
           },
@@ -161,6 +162,7 @@ export default defineConfig({
             items: [
               { text: 'AIDL Integration (Fcitx)', link: '/en/advanced/aidl-integration' },
               { text: 'Clipboard Sync', link: '/en/advanced/clipboard-sync' },
+              { text: 'History & Diagnostics', link: '/en/advanced/diagnostics' },
               { text: 'Backup & Restore', link: '/en/advanced/backup-restore' }
             ]
           },

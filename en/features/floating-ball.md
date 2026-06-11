@@ -15,33 +15,33 @@ The floating ball is a draggable circular button overlay. It provides:
 
 ## States
 
-| State        | Description                                 |
-| ------------ | ------------------------------------------- |
-| **Idle**     | waiting; tap/hold to start recording        |
-| **Recording**| recording audio with waveform animation     |
-| **Processing** | recognizing; spinner while waiting         |
-| **Done**     | checkmark; result has been inserted         |
+| State          | Description                             |
+| -------------- | --------------------------------------- |
+| **Idle**       | waiting; tap/hold to start recording    |
+| **Recording**  | recording audio with waveform animation |
+| **Processing** | recognizing; spinner while waiting      |
+| **Done**       | checkmark; result has been inserted     |
 
 ## Settings
 
 Basic options are under `Settings → UI & Interaction → Floating Settings`:
 
-| Key                                  | Type    | Default | Description                                 |
-| ------------------------------------ | ------- | ------- | ------------------------------------------- |
-| `floatingAsrEnabled`                 | Boolean | `true`  | enable floating ball voice recognition      |
-| `floatingSwitcherOnlyWhenImeVisible` | Boolean | `true`  | show only when keyboard is visible          |
-| `floatingSwitcherAlpha`              | Float   | `1.0`   | transparency (0.2-1.0)                      |
-| `floatingBallSizeDp`                 | Int     | `44`    | size (28-96dp)                              |
-| `floatingBallDirectDragEnabled`      | Boolean | `true`  | drag to move without long-press             |
-| `floatingWriteTextCompatEnabled`     | Boolean | `true`  | compatibility mode (select-all + paste)     |
+| Key                                  | Type    | Default | Description                             |
+| ------------------------------------ | ------- | ------- | --------------------------------------- |
+| `floatingAsrEnabled`                 | Boolean | `true`  | enable floating ball voice recognition  |
+| `floatingSwitcherOnlyWhenImeVisible` | Boolean | `true`  | show only when keyboard is visible      |
+| `floatingSwitcherAlpha`              | Float   | `1.0`   | transparency (0.2-1.0)                  |
+| `floatingBallSizeDp`                 | Int     | `44`    | size (28-96dp)                          |
+| `floatingBallDirectDragEnabled`      | Boolean | `true`  | drag to move without long-press         |
+| `floatingWriteTextCompatEnabled`     | Boolean | `true`  | compatibility mode (select-all + paste) |
 
 ### Stability (Optional)
 
 If your device aggressively kills background services and the floating ball/accessibility gets reclaimed, enable keep-alive under `Settings → Other Settings`:
 
-| Key                    | Type    | Default | Description |
-| ---------------------- | ------- | ------- | ----------- |
-| `floatingKeepAliveEnabled` | Boolean | `false` | keep alive with a foreground service (and request battery whitelist) |
+| Key                                  | Type    | Default | Description                                                                           |
+| ------------------------------------ | ------- | ------- | ------------------------------------------------------------------------------------- |
+| `floatingKeepAliveEnabled`           | Boolean | `false` | keep alive with a foreground service (and request battery whitelist)                  |
 | `floatingKeepAlivePrivilegedEnabled` | Boolean | `false` | enhanced keep-alive via Shizuku / Root (requires foreground keep-alive enabled first) |
 
 - **Foreground keep-alive (recommended first)**: suitable for most users. It shows a persistent notification and improves background survival.
@@ -157,6 +157,25 @@ BiBi Keyboard's accessibility service is **only used for text insertion**. It do
   - upload/pull clipboard (requires clipboard sync enabled)
 - **Drag**: by default you can drag to move directly. If "Drag to move" is disabled, long-press for ~2s (two vibration feedbacks) to enter move mode
 - **Reset**: tap "Reset floating position" in settings
+
+## Volume Key Recording
+
+If you prefer physical buttons, you can use volume keys to start or stop voice recognition while the keyboard is visible.
+
+### How to enable
+
+1. Open `Settings → Interface & interaction → More input methods`
+2. In "Volume Key Recording Mode", enable "Use volume keys for voice recognition"
+3. Choose an action mode:
+   - Volume+ starts / stops recording
+   - Volume- starts / stops recording
+   - Volume+ starts, Volume- stops
+   - Volume- starts, Volume+ stops
+4. Optionally enable "Recording status reminder" and "Stop recording when keyboard disappears"
+
+::: warning Permission note
+Volume key recording uses the Accessibility Service to detect keyboard visibility and volume-key clicks.
+:::
 
 ## Common issues
 

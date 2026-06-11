@@ -84,6 +84,15 @@ BiBi Keyboard provides two recording modes to fit different workflows.
 - record while doing other actions
 - combine with VAD auto-stop
 
+## Quick Switch Button
+
+If you often switch between short messages and long dictation, add the "Recording mode switch" action to your keyboard layout:
+
+1. Open `Settings → Input Settings → Custom keyboard layout`
+2. Pick an action-row or keyboard button position
+3. Set its action to `Recording mode switch`
+4. Return to the keyboard and tap it to switch between press-and-hold and tap-to-toggle recording
+
 ## Works best with VAD
 
 Tap-to-toggle + auto-stop on silence (VAD) gives an experience close to continuous conversation:

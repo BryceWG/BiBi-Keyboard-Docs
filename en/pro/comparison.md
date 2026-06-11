@@ -9,56 +9,59 @@ BiBi Keyboard provides two editions: OSS and Pro. This page compares feature dif
 
 ## Full feature table
 
-| Category        | Feature                          | OSS | Pro |
-| -------------- | -------------------------------- | --- | --- |
-| **Core**        | Speech recognition (ASR)         | ✅  | ✅  |
-|                | 15 ASR providers                 | ✅  | ✅  |
-|                | Streaming recognition            | ✅  | ✅  |
-|                | Segmented recording              | ✅  | ✅  |
-|                | Local offline models             | ✅  | ✅  |
-|                | AI post-processing (LLM)         | ✅  | ✅  |
-|                | Auto-stop on silence (VAD)       | ✅  | ✅  |
-| **Input**       | Press-and-hold / Tap-to-toggle   | ✅  | ✅  |
-|                | Floating ball voice input        | ✅  | ✅  |
-|                | External AIDL linking            | ✅  | ✅  |
-|                | Continuous speaking mode (VAD auto) | ❌ | ✅ |
-| **Text**        | Trailing punctuation trimming    | ✅  | ✅  |
-|                | AI editing (basic)                | ✅  | ✅  |
-|                | AI Assistant (voice commands)     | ❌  | ✅  |
-|                | Global undo                       | ✅  | ✅  |
-|                | Traditional Chinese conversion    | ❌  | ✅  |
-|                | Regex post-processing             | ❌  | ✅  |
-| **Advanced**    | App-specific Prompt              | ❌  | ✅  |
-|                | Hotwords management (Pro)         | ❌  | ✅  |
-|                | Speech presets                    | ✅  | ✅  |
-|                | Custom punctuation keys           | ✅  | ✅  |
-| **UI**          | Material 3 dynamic color          | ✅  | ✅  |
-|                | Keyboard height tuning            | ✅  | ✅  |
-|                | System bar color sync             | ✅  | ✅  |
-|                | Omni-direction cursor sliding     | ❌  | ✅  |
-|                | Advanced UI theming               | ❌  | ✅  |
-| **Data**        | Import/export settings            | ✅  | ✅  |
-|                | Export logs                       | ✅  | ✅  |
-|                | WebDAV auto backup                | ❌  | ✅  |
-| **Other**       | Clipboard sync                    | ✅  | ✅  |
-|                | Haptic feedback                   | ✅  | ✅  |
-|                | Multi-language support            | ✅  | ✅  |
-|                | Fully open-source code            | ✅  | ❌  |
+| Category     | Feature                                     | OSS | Pro |
+| ------------ | ------------------------------------------- | --- | --- |
+| **Core**     | Speech recognition (ASR)                    | ✅  | ✅  |
+|              | 17 ASR providers                            | ✅  | ✅  |
+|              | Streaming recognition                       | ✅  | ✅  |
+|              | Segmented recording                         | ✅  | ✅  |
+|              | Local offline models                        | ✅  | ✅  |
+|              | X-ASR local streaming                       | ✅  | ✅  |
+|              | AI post-processing (LLM)                    | ✅  | ✅  |
+|              | Auto-stop on silence (VAD)                  | ✅  | ✅  |
+| **Input**    | Press-and-hold / Tap-to-toggle              | ✅  | ✅  |
+|              | Volume key recording                        | ✅  | ✅  |
+|              | Floating ball voice input                   | ✅  | ✅  |
+|              | External AIDL linking                       | ✅  | ✅  |
+|              | Continuous speaking mode (VAD auto)         | ❌  | ✅  |
+| **Text**     | Trailing punctuation trimming               | ✅  | ✅  |
+|              | Remove trailing punctuation and emoji       | ✅  | ✅  |
+|              | AI editing (basic)                          | ✅  | ✅  |
+|              | AI post-processing input context            | ❌  | ✅  |
+|              | AI Assistant (voice commands)               | ❌  | ✅  |
+|              | Global undo                                 | ✅  | ✅  |
+|              | Traditional Chinese conversion              | ❌  | ✅  |
+|              | Regex post-processing and order             | ❌  | ✅  |
+| **Advanced** | App-specific Prompt                         | ❌  | ✅  |
+|              | Hotwords management and phoneme enhancement | ❌  | ✅  |
+|              | Speech presets                              | ✅  | ✅  |
+|              | Custom punctuation keys                     | ✅  | ✅  |
+|              | Visual keyboard layout editor               | ✅  | ✅  |
+|              | API Log / Recording Test                    | ✅  | ✅  |
+| **UI**       | Material 3 dynamic color                    | ✅  | ✅  |
+|              | Keyboard height tuning                      | ✅  | ✅  |
+|              | System bar color sync                       | ✅  | ✅  |
+|              | Omni-direction cursor sliding               | ❌  | ✅  |
+|              | AMOLED / Monet / Key color                  | ❌  | ✅  |
+| **Data**     | Import/export settings                      | ✅  | ✅  |
+|              | Export logs                                 | ✅  | ✅  |
+|              | WebDAV auto backup                          | ❌  | ✅  |
+| **Other**    | Clipboard sync                              | ✅  | ✅  |
+|              | Haptic feedback                             | ✅  | ✅  |
+|              | Multi-language support                      | ✅  | ✅  |
+|              | Fully open-source code                      | ✅  | ❌  |
 
-Note: OSS includes basic AI editing and AI post-processing. `AI Assistant (voice commands)`, `App-specific Prompt`, and `Hotwords management` are Pro-only. Pro hotwords cover multiple online ASR providers and selected local engines such as Qwen3-ASR and FunASR Nano; StepAudio supports hotword-array injection too.
+::: info Pro hotwords support details
+Pro hotwords cover multiple online ASR providers and selected local engines such as Qwen3-ASR and FunASR Nano.
+Hotword enhanced replacement support all models.
+:::
 
 ## Pricing
 
-| Edition | Price         |
-| ------ | ------------- |
-| OSS    | Free          |
-| Pro    | $4.49 / ¥32    |
-
-::: tip Value
-
-- **OSS**: free and powerful enough for most users
-- **Pro**: one-time purchase; great value if you need advanced features
-  :::
+| Edition | Price       |
+| ------- | ----------- |
+| OSS     | Free        |
+| Pro     | $4.49 / ¥32 |
 
 ## FAQ
 

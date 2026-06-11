@@ -4,7 +4,7 @@ After installing BiBi Keyboard (说点啥), you need to configure an ASR provide
 
 ## Choose an ASR Provider
 
-BiBi Keyboard supports 15 ASR providers, including cloud services and local models. For the first setup, these are recommended:
+BiBi Keyboard supports 17 ASR providers, including cloud services and local models. For the first setup, these are recommended:
 
 ### Recommended Options
 
@@ -147,7 +147,7 @@ VAD works best with tap-to-toggle mode. When no speech is detected for a given w
 ### Quota exceeded / rate limited
 
 1. Check quota and billing rules in the provider console
-2. To reduce costs, switch to the built-in free option (e.g. SiliconFlow free service) or local models (SenseVoice/FunASR Nano/Qwen3-ASR/Paraformer/etc.)
+2. To reduce costs, switch to the built-in free option (e.g. SiliconFlow free service) or local models (SenseVoice/FunASR Nano/Qwen3-ASR/X-ASR/etc.)
 3. To keep using the same cloud provider, upgrade plan or recharge per console guidance
 
 ## Next

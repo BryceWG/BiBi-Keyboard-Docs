@@ -14,18 +14,20 @@ API keys and access tokens are sensitive. Do not share them publicly. If you sus
 
 ## Provider overview
 
-| Provider                                                                                        | Type  | Streaming  | Best for                                         |
-| ----------------------------------------------------------------------------------------------- | ----- | ---------- | ------------------------------------------------ |
-| **Volcengine**                                                                                  | Cloud | ✅         | Low-latency, real-time streaming                 |
-| **SiliconFlow**                                                                                 | Cloud | ❌         | Beginner-friendly, low cost                      |
-| **DashScope (Alibaba)**                                                                         | Cloud | ✅         | Balanced accuracy and cost                       |
-| **Soniox**                                                                                      | Cloud | ✅         | Stable streaming, international usage            |
-| **Gemini**                                                                                      | Cloud | ❌         | Small usage / file-based recognition             |
-| **ElevenLabs**                                                                                  | Cloud | ✅/❌      | High accuracy (model-dependent)                  |
-| **OpenAI** (compatible)                                                                         | Cloud | ✅/❌      | OpenAI/compatible file or Realtime transcription |
-| **StepAudio**                                                                                   | Cloud | ❌         | StepFun online ASR, Chinese/English and ITN      |
-| **Zhipu GLM**                                                                                   | Cloud | ❌         | Simple integration, lower cost                   |
-| **Local models** (SenseVoice / FunASR Nano / Qwen3-ASR / Parakeet / FireRedASR V2 / Paraformer) | Local | Partial ✅ | Privacy-first, offline usage                     |
+| Provider                                                                                   | Type  | Streaming  | Best for                                             |
+| ------------------------------------------------------------------------------------------ | ----- | ---------- | ---------------------------------------------------- |
+| **Volcengine**                                                                             | Cloud | ✅         | Low-latency, real-time streaming                     |
+| **SiliconFlow**                                                                            | Cloud | ❌         | Beginner-friendly, low cost                          |
+| **DashScope (Alibaba)**                                                                    | Cloud | ✅         | Balanced accuracy and cost                           |
+| **Soniox**                                                                                 | Cloud | ✅         | Stable streaming, international usage                |
+| **Gemini**                                                                                 | Cloud | ❌         | Small usage / file-based recognition                 |
+| **ElevenLabs**                                                                             | Cloud | ✅/❌      | High accuracy (model-dependent)                      |
+| **OpenAI** (compatible)                                                                    | Cloud | ✅/❌      | OpenAI/compatible file or Realtime transcription     |
+| **StepAudio**                                                                              | Cloud | ❌         | StepFun online ASR, Chinese/English and ITN          |
+| **Zhipu GLM**                                                                              | Cloud | ❌         | Simple integration, lower cost                       |
+| **OpenRouter**                                                                             | Cloud | ❌         | Use an OpenRouter API key with compatible ASR models |
+| **MiMo (Xiaomi)**                                                                          | Cloud | ❌         | MiMo v2.5 ASR / audio-understanding models           |
+| **Local models** (SenseVoice / FunASR Nano / Qwen3-ASR / Parakeet / FireRedASR V2 / X-ASR) | Local | Partial ✅ | Privacy-first, offline usage                         |
 
 ## Volcengine
 
@@ -133,17 +135,47 @@ ElevenLabs `scribe_v1` is non-streaming only; `scribe_v2` is streaming only.
 
 ## OpenAI (compatible endpoints)
 
-The OpenAI provider supports OpenAI-format transcription endpoints, plus compatible third-party Audio Transcriptions or Realtime endpoints.
+The OpenAI provider supports OpenAI-format transcription endpoints, plus compatible third-party Audio Transcriptions, Chat Completions, or Realtime endpoints.
 
 1. In `Settings → ASR Settings`, select **OpenAI**
 2. Add one or more OpenAI ASR channels to separate official endpoints, proxy endpoints, or different models
 3. Fill in:
-   - `ASR Endpoint` (e.g. `https://api.openai.com/v1/audio/transcriptions` or a compatible endpoint)
+   - `ASR Endpoint` (e.g. `https://api.openai.com/v1/audio/transcriptions`, `https://api.openai.com/v1/chat/completions`, or a compatible endpoint)
    - `API Key` (Bearer)
    - `Model name` (e.g. `gpt-4o-mini-transcribe` / `whisper-1`)
-4. If the endpoint supports the Realtime API, enable "Streaming (Realtime)" for live partial results
+4. If the endpoint is a multimodal Chat Completions API, enable `Use Completions API` and optionally fill in a custom prompt
+5. If the endpoint supports the Realtime API, enable "Streaming (Realtime)" for live partial results
 
 ![OpenAI settings example](/images/getting-started/asr-providers/openai-settings.png)
+
+::: tip Which OpenAI API should I use?
+Use `audio/transcriptions` for standard transcription models, `chat/completions` for multimodal models that accept audio input, and Realtime when you need live partial results. You should check the API format with your OpenAI provider.
+:::
+
+## OpenRouter
+
+OpenRouter lets BiBi Keyboard call compatible ASR / multimodal transcription models through OpenRouter. It is currently used in non-streaming mode.
+
+1. Create an API key in [OpenRouter Keys](https://openrouter.ai/settings/keys)
+2. In `Settings → ASR Settings`, select **OpenRouter**
+3. Fill in:
+   - `ASR Endpoint` (usually keep the default or use a compatible `/audio/transcriptions` endpoint)
+   - `OpenRouter API Key`
+   - `Model` (for example `qwen/qwen3-asr-flash-2026-02-10`)
+4. Save, then use `Settings Home → Recording Test` to verify the setup
+
+## MiMo (Xiaomi)
+
+MiMo supports `mimo-v2.5-asr` and `mimo-v2.5` audio-understanding models.
+
+1. Prepare a MiMo API key
+2. In `Settings → ASR Settings`, select **MiMo**
+3. Choose an endpoint preset:
+   - Token Plan (Mainland China / Singapore / Europe)
+   - Pay-as-you-go
+   - Custom endpoint
+4. Choose a model and recognition language (Auto / Chinese / English)
+5. For the `mimo-v2.5` audio-understanding model, you can fill in a System Prompt; enable "Disable thinking" if you do not need reasoning output
 
 ## StepAudio
 
@@ -172,11 +204,11 @@ Local models are ideal for offline usage and privacy. Each model trades off spee
 - **Qwen3-ASR**: non-streaming; local 0.6B model, good Chinese recognition, optional rule-based ITN
 - **Parakeet**: non-streaming; V3 for several European languages, V2 for English
 - **FireRedASR V2**: non-streaming / pseudo-streaming; replaces the old TeleSpeech local engine
-- **Paraformer**: streaming supported; decent quality
+- **X-ASR**: local streaming; Chinese/English 480ms model with thread count, unload policy, and optional ITN
 
 ### Download in-app (recommended)
 
-1. Select a local provider (e.g. SenseVoice / Paraformer)
+1. Select a local provider (e.g. SenseVoice / X-ASR)
 2. In the model manager, choose a variant and download
 3. If notification permission is granted, you can track download/unzip progress in notifications
 
@@ -199,10 +231,9 @@ The links below point to `BiBi-Keyboard` model ZIPs. If you see 404 or slow down
 - small-int8 (~153MB): [sherpa-onnx-sense-voice-zh-en-ja-ko-yue-int8-2024-07-17.zip](https://github.com/BryceWG/BiBi-Keyboard/releases/download/models/sherpa-onnx-sense-voice-zh-en-ja-ko-yue-int8-2024-07-17.zip)
 - small-fp32 (~980MB): [sherpa-onnx-sense-voice-zh-en-ja-ko-yue-2024-07-17.zip](https://github.com/BryceWG/BiBi-Keyboard/releases/download/models/sherpa-onnx-sense-voice-zh-en-ja-ko-yue-2024-07-17.zip)
 
-#### Paraformer (streaming)
+#### X-ASR (streaming)
 
-- Trilingual (ZH/Cantonese/EN, ~974MB): [sherpa-onnx-streaming-paraformer-trilingual-zh-cantonese-en.zip](https://github.com/BryceWG/BiBi-Keyboard/releases/download/models/sherpa-onnx-streaming-paraformer-trilingual-zh-cantonese-en.zip)
-- Bilingual (ZH/EN, ~973MB): [sherpa-onnx-streaming-paraformer-bilingual-zh-en.zip](https://github.com/BryceWG/BiBi-Keyboard/releases/download/models/sherpa-onnx-streaming-paraformer-bilingual-zh-en.zip)
+- Chinese/English 480ms (~530MB): [sherpa-onnx-streaming-x-asr-480ms-zh-en.zip](https://github.com/BryceWG/BiBi-Keyboard/releases/download/models/sherpa-onnx-streaming-x-asr-480ms-zh-en.zip)
 
 #### FireRedASR V2 (non-streaming / pseudo-streaming)
 
