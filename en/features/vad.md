@@ -31,18 +31,26 @@ All options are under `Settings → ASR Settings → Auto-stop on silence`:
 
 | Key                         | Type    | Range     | Default  | Description                                 |
 | -------------------------- | ------- | --------- | -------- | ------------------------------------------- |
+| `recordingAutoStopMode`    | String  | manual / silence / max_duration | `manual` | recording auto-stop mode                    |
 | `autoStopOnSilenceEnabled` | Boolean | -         | `false`  | master switch                               |
 | `autoStopSilenceWindowMs`  | Int     | 500-3000  | `1200`   | silence window threshold (ms)               |
 | `autoStopSilenceSensitivity` | Int   | 1-10      | `4`      | sensitivity (1=conservative, 10=sensitive)  |
+| `recordingMaxDurationMs`   | Int     | seconds slider | depends on setting | maximum duration for timeout stop          |
 | `skipEmptyAudioEnabled`    | Boolean | -         | `false`  | skip empty audio before non-streaming recognition |
 | `autoFilterSilentAudioSegments` | Boolean | -   | `false`  | remove silent parts before non-streaming recognition |
 
-### 1. Enable switch
+### 1. Recording auto-stop mode
+
+- Key: `recordingAutoStopMode`
+- Path: `Settings → ASR Settings → Recording auto-stop`
+- Behavior: choose "Manual stop", "Stop on silence", or "Timeout stop". "Stop on silence" uses the VAD parameters on this page; "Timeout stop" uses "Maximum recording duration".
+
+### 2. Enable switch
 
 - Key: `autoStopOnSilenceEnabled`
 - Default: off
 
-### 2. Silence window
+### 3. Silence window
 
 - Key: `autoStopSilenceWindowMs`
 - Range: 500ms - 3000ms
@@ -54,7 +62,7 @@ Suggested presets:
 - **Balanced**: 1200ms (default)
 - **Relaxed**: 2000ms (long sentences with pauses)
 
-### 3. Sensitivity
+### 4. Sensitivity
 
 - Key: `autoStopSilenceSensitivity`
 - Range: 1 - 10
@@ -66,7 +74,13 @@ Suggested presets:
 | **4-6 Balanced**     | balanced accuracy and responsiveness         | daily use |
 | **7-10 Sensitive**   | quick response; small pauses may trigger stop | quiet environment; fast input |
 
-### 4. Empty audio and silent-part filtering
+### 5. Maximum recording duration
+
+- Key: `recordingMaxDurationMs`
+- Path: `Settings → ASR Settings → Recording auto-stop → Timeout stop → Maximum recording duration`
+- Behavior: when auto-stop mode is "Timeout stop", recording ends after this duration. It does not use VAD and is useful when you may forget to stop tap-to-toggle recording.
+
+### 6. Empty audio and silent-part filtering
 
 These options affect only non-streaming recognition (file upload or local full-audio inference). They do not change real-time streaming upload.
 

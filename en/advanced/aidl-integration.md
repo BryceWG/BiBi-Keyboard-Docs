@@ -32,6 +32,10 @@ Currently supported: modified Fcitx5 and modified Trime. Common steps:
 
 Clients should try binding in this order and prefer the installed Pro package (same interface and behavior).
 
+::: tip AIDL vs floating-ball IME bridge
+AIDL linking is for modified IMEs such as Fcitx/Trime to actively call BiBi Keyboard recognition. Floating-ball "IME bridge mode" is different: BiBi Keyboard's floating ball sends final text to the current third-party keyboard for insertion. They serve different setups; most users only need the one that matches their IME workflow.
+:::
+
 ## Developer Guide
 
 ### Service interface (IExternalSpeechService)

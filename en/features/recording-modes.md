@@ -1,6 +1,6 @@
 # Recording Modes
 
-BiBi Keyboard provides two recording modes to fit different workflows.
+BiBi Keyboard provides two microphone trigger modes, plus optional auto-stop behavior for different workflows.
 
 ## Overview
 
@@ -83,6 +83,26 @@ BiBi Keyboard provides two recording modes to fit different workflows.
 - meeting notes
 - record while doing other actions
 - combine with VAD auto-stop
+
+## Auto-stop Behavior
+
+Under `Settings → ASR Settings → Recording auto-stop`, choose when recording should end automatically:
+
+| Mode | Description | Best for |
+| ---- | ----------- | -------- |
+| **Manual stop** | release the mic or tap it again to stop | precise manual control |
+| **Stop on silence** | stop after you stop speaking for a while | daily input, short messages, chat |
+| **Timeout stop** | stop when "Maximum recording duration" is reached | avoiding forgotten tap-to-toggle recordings |
+
+"Timeout stop" does not detect speech; it only stops by duration. Use [Auto-stop on Silence (VAD)](./vad.md) when you want recording to stop based on pauses.
+
+## Continuous Recording While Visible
+
+To make mic starts feel faster, enable `Settings → Input Settings → Continuous recording while visible`. When enabled, BiBi Keyboard records locally while the keyboard or floating ball is visible. Audio before you press the mic is not uploaded; it is used only to reduce startup latency after you trigger recognition.
+
+::: warning Note
+This keeps the microphone listening locally while the keyboard or floating ball is visible, which may increase battery usage. Keep it off if you are sensitive to privacy or power consumption.
+:::
 
 ## Quick Switch Button
 

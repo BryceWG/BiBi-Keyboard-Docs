@@ -134,6 +134,12 @@ Go to `Settings → AI Post-processing → Prompt presets`:
 2. Write your prompt (role, task, rules, output format, etc.)
 3. Save and apply quickly in AI Edit
 
+### AI Edit system prompt
+
+The AI Edit panel uses a separate system prompt to understand the "edit the current text according to my instruction" task. Customize it under `Settings → AI Post-processing → AI edit system prompt`; leave it empty to use the built-in default.
+
+Use this for long-term role/rule/output-format constraints. One-off edit instructions (for example, "translate to English and simplify") should still be spoken in the AI Edit panel.
+
 ## AI Assistant <Badge type="warning" text="Pro" />
 
 AI Assistant can automatically match preset modes by wake word and keywords, then apply the mapped AI post-processing prompt.
@@ -179,6 +185,7 @@ Example: target word `音素` can have aliases `因素` and `严肃`; if the tra
 | Key                      | Type   | Default | Description                                              |
 | ------------------------ | ------ | ------- | -------------------------------------------------------- |
 | `postprocSkipUnderChars` | Int    | `0`     | skip AI post-processing if shorter than this (0=disable) |
+| `aiEditSystemPrompt`     | String | default | system prompt used by AI Edit; empty means built-in default |
 | `activePromptId`         | String | `""`    | active prompt preset id                                  |
 | `promptPresetsJson`      | String | `""`    | prompt preset list JSON                                  |
 

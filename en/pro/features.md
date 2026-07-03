@@ -171,7 +171,7 @@ Based on VAD (Voice Activity Detection): automatically starts on speech and stop
 
 - Continuous mode keeps the mic listening longer and increases battery usage.
 - In very noisy environments it may false-trigger; consider switching back to press-and-hold.
-- It may take a word or two to detect speech and start recording.
+- It may take a word or two to detect speech and start recording; try to use locally captured pre-trigger audio to reduce dropped beginnings.
   :::
 
 ## Omni-direction Cursor Sliding <Badge type="warning" text="Pro" />

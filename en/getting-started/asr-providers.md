@@ -112,6 +112,14 @@ Soniox supports both streaming and non-streaming.
 
 ![Soniox API keys](/images/getting-started/asr-providers/soniox-nav.png)
 
+### Recognition mode
+
+In Soniox settings, adjust "Endpoint detection sensitivity":
+
+- **Low latency**: faster endpoint detection, best for realtime input
+- **Default**: balances latency and accuracy
+- **High accuracy**: more sensitive endpoint detection, best for accuracy-sensitive scenarios
+
 ## Gemini
 
 Gemini is commonly used for file-based recognition and small usage.
@@ -150,6 +158,10 @@ The OpenAI provider supports OpenAI-format transcription endpoints, plus compati
 
 ::: tip Which OpenAI API should I use?
 Use `audio/transcriptions` for standard transcription models, `chat/completions` for multimodal models that accept audio input, and Realtime when you need live partial results. You should check the API format with your OpenAI provider.
+:::
+
+::: info Custom compatible endpoints
+For custom compatible `audio/transcriptions` endpoints, BiBi Keyboard uploads WAV audio to improve compatibility. In this case, "Compress audio before upload" does not apply to that custom OpenAI transcription endpoint.
 :::
 
 ## OpenRouter

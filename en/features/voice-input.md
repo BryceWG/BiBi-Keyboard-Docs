@@ -201,8 +201,9 @@ When downloading local models, you can choose a download source and see latency.
 
 ## Recognition Enhancements (Optional)
 
+- **Continuous recording while visible**: `Settings → Input Settings → Continuous recording while visible`. BiBi Keyboard records locally while the keyboard or floating ball is visible so recognition can start faster after you press the mic, reducing recording latency; audio before the trigger is not uploaded.
 - **Offline denoise for non-streaming ASR**: `Settings → Input Settings → Offline denoise for non-streaming ASR` (applies to file-mode and local offline recognition)
-- **Compress audio before upload**: `Settings → ASR Settings → Compress audio before upload`. For supported online non-streaming providers, audio is encoded as M4A/AAC, OGG Opus, or WAV before upload to reduce request size and waiting time.
+- **Compress audio before upload**: `Settings → ASR Settings → Compress audio before upload`. For supported online non-streaming providers, audio is encoded as M4A/AAC, OGG Opus, or WAV before upload to reduce request size and waiting time; custom compatible OpenAI transcription endpoints use WAV for better compatibility.
 - **Remove trailing punctuation and emoji**: `Settings → Input Settings → Remove trailing punctuation and emoji`. Set a word/character threshold so short results drop trailing punctuation/emoji while longer text keeps its ending.
 
 ## Recognition History & Metrics

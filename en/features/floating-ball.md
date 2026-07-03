@@ -34,6 +34,7 @@ Basic options are under `Settings → UI & Interaction → Floating Settings`:
 | `floatingBallSizeDp`                 | Int     | `44`    | size (28-96dp)                          |
 | `floatingBallDirectDragEnabled`      | Boolean | `true`  | drag to move without long-press         |
 | `floatingWriteTextCompatEnabled`     | Boolean | `true`  | compatibility mode (select-all + paste) |
+| `floatingImeBridgeEnabled`           | Boolean | `false` | IME bridge mode (requires a compatible LSPosed / LSPatch module) |
 
 ### Stability (Optional)
 
@@ -83,7 +84,17 @@ Enhanced keep-alive depends on privileged capabilities (Shizuku or root). Enable
   - On (default): uses "Select-all + Paste" strategy for better compatibility
   - Off: uses standard Accessibility APIs (faster, but may not work in some apps)
 
-#### 6. Edge semi-hidden and anchor positioning
+#### 6. IME bridge mode
+
+- Path: `Settings → UI & Interaction → Floating Settings → IME bridge mode`
+- Behavior: when the current third-party keyboard has a compatible LSPosed / LSPatch bridge module enabled, final floating-ball recognition text is inserted through that keyboard's own `InputConnection`, and keyboard visibility is reported by the keyboard itself.
+- Best for: apps that restrict accessibility insertion, or setups where third-party IME panel visibility should control the floating ball more accurately.
+
+::: warning Advanced option
+IME bridge mode requires an additional bridge module. It does not read existing input text. If the bridge is not ready, the floating ball continues using Accessibility insertion or clipboard fallback.
+:::
+
+#### 7. Edge semi-hidden and anchor positioning
 
 - Behavior:
   - After snapping to the left/right edge and staying idle, the floating ball can enter a semi-hidden state and show only an arrow handle; tap or drag the handle to expand quickly
@@ -131,6 +142,10 @@ BiBi Keyboard's accessibility service is **only used for text insertion**. It do
 
 1. On first use, Android shows a permission prompt
 2. Tap "Allow"
+
+::: info Android 14+
+On newer Android versions, a microphone foreground-service notification may appear while the floating ball is recording. This is a system requirement for background microphone use and helps keep recording from being interrupted silently.
+:::
 
 ## Usage
 

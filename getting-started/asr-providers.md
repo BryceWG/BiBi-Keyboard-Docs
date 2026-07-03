@@ -114,6 +114,14 @@ Soniox 支持流式与非流式；流式稳定性较好。
 
 ![进入 API keys](/images/getting-started/asr-providers/soniox-nav.png)
 
+### 识别模式
+
+在 Soniox 设置中可通过滑块调整「端点检测灵敏度」：
+
+- **低延迟**：更快的端点检测，适合实时输入
+- **默认**：平衡延迟与准确率
+- **高精度**：更敏感的端点检测，适合对准确率更敏感的场景
+
 ## Gemini
 
 Gemini 适合小用量体验，通常以文件识别为主。
@@ -154,6 +162,10 @@ OpenAI 渠道支持使用 OpenAI 格式的 ASR 端点（也可填写兼容 OpenA
 
 ::: tip 选择哪种 OpenAI 接口
 `audio/transcriptions` 适合标准转写模型；`chat/completions` 适合支持音频输入的多模态模型；Realtime 适合需要边说边出字的流式体验。需要确认你的 OpenAI 渠道支持哪种调用方式。
+:::
+
+::: info 自定义兼容端点
+使用自定义兼容的 `audio/transcriptions` 端点时，说点啥会上传 WAV 音频以提高兼容性；此时「上传音频前压缩」不会对该 OpenAI 自定义转写端点生效。
 :::
 
 ## OpenRouter
