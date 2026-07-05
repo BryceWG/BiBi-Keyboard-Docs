@@ -186,8 +186,9 @@ MiMo supports `mimo-v2.5-asr` and `mimo-v2.5` audio-understanding models.
    - Token Plan (Mainland China / Singapore / Europe)
    - Pay-as-you-go
    - Custom endpoint
-4. Choose a model and recognition language (Auto / Chinese / English)
-5. For the `mimo-v2.5` audio-understanding model, you can fill in a System Prompt; enable "Disable thinking" if you do not need reasoning output
+4. Fill in the MiMo API key for the current endpoint. API keys are stored separately per endpoint preset, so re-check the active slot after switching endpoints
+5. Choose a model and recognition language (Auto / Chinese / English)
+6. For the `mimo-v2.5` audio-understanding model, you can fill in a System Prompt; enable "Disable thinking" if you do not need reasoning output
 
 ## StepAudio
 
@@ -195,8 +196,12 @@ StepAudio is StepFun's online ASR service. In BiBi Keyboard it is currently used
 
 1. Create an API key in the StepFun console: https://platform.stepfun.com/
 2. In `Settings → ASR Settings`, select **StepAudio**
-3. Paste the `StepFun API Key`
-4. Choose language (Chinese / English / Auto) and enable ITN if needed
+3. Choose an endpoint preset:
+   - Pay-as-you-go
+   - Coding Plan
+   - Custom
+4. Paste the `StepFun API Key` for the current endpoint. API keys are stored separately per endpoint preset, so re-check it after switching endpoints
+5. Choose the `stepaudio-2.5-asr` model, language (Chinese / English / Auto), and enable ITN if needed
 
 ## Zhipu GLM
 

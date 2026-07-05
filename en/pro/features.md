@@ -113,13 +113,13 @@ When using Qwen3-ASR or FunASR Nano, changing hotwords may require the local mod
 
 ## Input Field Context <Badge type="warning" text="Pro" />
 
-When using AI post-processing from the main keyboard, Pro can send text around the cursor as reference to the LLM. This helps the model understand continuity, terminology, and tone.
+When using AI post-processing from the main keyboard, Pro can send text around the cursor as reference to the LLM. This helps the model understand continuity, terminology, and tone. When IME Bridge is enabled, floating-ball recordings can use the current input-field context too.
 
 ### How to use
 
 1. Open `Settings → AI Post-processing`
 2. Enable `Use input field context (Pro)`
-3. Dictate from the main keyboard with AI post-processing enabled
+3. Dictate from the main keyboard with AI post-processing enabled. To use it from the floating ball, also enable `Settings → UI & Interaction → Floating Settings → IME bridge mode`
 
 ::: warning Privacy
 This sends nearby input-field text to the selected LLM provider as reference. Enable it only when you trust that provider and the current content is appropriate to send.
@@ -127,7 +127,7 @@ This sends nearby input-field text to the selected LLM provider as reference. En
 
 ### Scope
 
-Input field context applies to AI post-processing after main-keyboard dictation. MiMo multimodal ASR can also use Pro context information to improve proper nouns and scene-specific terms.
+Input field context applies to AI post-processing after main-keyboard dictation and to floating-ball dictation when IME Bridge is enabled. MiMo multimodal ASR can also use Pro context information to improve proper nouns and scene-specific terms.
 
 ## AI Assistant <Badge type="warning" text="Pro" />
 
@@ -166,6 +166,8 @@ Based on VAD (Voice Activity Detection): automatically starts on speech and stop
 4. Tune VAD parameters:
    - **Silence window**: 0.5-3s (default 1.5s)
    - **Sensitivity**: 1-10 (default 5)
+
+The floating ball also supports continuous speaking mode, which is useful for dictating multiple segments in the current app or while using another IME. It keeps listening locally and submits each segment after silence. And you can toggle the switch in the floating ball menu.
 
 ::: warning Notes
 

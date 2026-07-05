@@ -190,8 +190,9 @@ MiMo 渠道支持 `mimo-v2.5-asr` 与 `mimo-v2.5` 音频理解模型，适合希
    - Token Plan（中国大陆 / 新加坡 / 欧洲）
    - 按量付费
    - 自定义端点
-4. 选择模型、识别语言（自动 / 中文 / 英文）
-5. 使用 `mimo-v2.5` 音频理解模型时，可填写 System Prompt；如不需要推理过程，可开启「禁用推理」
+4. 填写当前端点对应的 MiMo API Key。不同端点预设会分别保存 Key，切换端点时请确认当前槽位已配置
+5. 选择模型、识别语言（自动 / 中文 / 英文）
+6. 使用 `mimo-v2.5` 音频理解模型时，可填写 System Prompt；如不需要推理过程，可开启「禁用推理」
 
 ## StepAudio
 
@@ -199,8 +200,12 @@ StepAudio 是阶跃星辰提供的在线 ASR 服务，目前在说点啥中以�
 
 1. 进入阶跃星辰开放平台并创建 API Key：[StepFun 控制台](https://platform.stepfun.com/)
 2. 在 `设置 → 语音识别设置` 中选择 **StepAudio**
-3. 填入 `StepFun API Key`
-4. 选择识别语言（中文 / 英文 / 自动）并按需开启 ITN
+3. 选择请求端点：
+   - 按量付费
+   - Coding Plan
+   - 自定义
+4. 填入当前端点对应的 `StepFun API Key`。不同端点预设会分别保存 Key，切换端点后请重新确认
+5. 选择 `stepaudio-2.5-asr` 模型、识别语言（中文 / 英文 / 自动）并按需开启 ITN
 
 ## 智谱 GLM
 

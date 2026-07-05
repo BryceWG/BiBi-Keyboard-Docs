@@ -154,7 +154,7 @@ AI Assistant can automatically match preset modes by wake word and keywords, the
 
 ## Input Field Context <Badge type="warning" text="Pro" />
 
-When recording from the main keyboard, Pro can send text around the cursor as reference for AI post-processing. This helps the model keep continuity, terminology, and tone consistent with the surrounding text.
+When recording from the main keyboard, Pro can send text around the cursor as reference for AI post-processing. This helps the model keep continuity, terminology, and tone consistent with the surrounding text. Floating-ball recordings can also use this context when IME Bridge is enabled.
 
 ::: warning Privacy
 Input field context is sent only as reference for AI post-processing. Enable it only when you trust the selected LLM provider. The final AI output should still contain only the processed text for the current ASR result.

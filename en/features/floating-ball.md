@@ -18,8 +18,8 @@ The floating ball is a draggable circular button overlay. It provides:
 | State          | Description                             |
 | -------------- | --------------------------------------- |
 | **Idle**       | waiting; tap/hold to start recording    |
-| **Recording**  | recording audio with waveform animation |
-| **Processing** | recognizing; spinner while waiting      |
+| **Recording**  | recording audio with volume glow and peak ripples |
+| **Processing** | recognizing; processing animation continues from the recording visual state |
 | **Done**       | checkmark; result has been inserted     |
 
 ## Settings
@@ -172,6 +172,12 @@ On newer Android versions, a microphone foreground-service notification may appe
   - upload/pull clipboard (requires clipboard sync enabled)
 - **Drag**: by default you can drag to move directly. If "Drag to move" is disabled, long-press for ~2s (two vibration feedbacks) to enter move mode
 - **Reset**: tap "Reset floating position" in settings
+
+### Continuous speaking with floating ball <Badge type="warning" text="Pro" />
+
+In Pro, continuous speaking mode can also run from the floating ball. When enabled, the floating ball listens locally, starts a segment when VAD detects speech, submits the segment after silence, and then keeps waiting for the next segment.
+
+This is useful when you want continuous dictation in the current app without switching to the BiBi Keyboard panel. It keeps the microphone listening longer than normal hold/tap recording, so battery usage is higher; in noisy environments, switch back to normal recording mode.
 
 ## Volume Key Recording
 

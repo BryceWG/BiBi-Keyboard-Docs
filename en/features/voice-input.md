@@ -145,7 +145,7 @@ For non-streaming engines, if a recording exceeds the app's single-segment limit
 
 ## Backup ASR Engine (Parallel Primary/Backup)
 
-If your primary ASR occasionally times out or fails, you can enable a **backup ASR engine**: BiBi Keyboard records only once, then pushes the same audio to both primary and backup. If primary returns a non-empty final result in time, it uses primary; otherwise it falls back to the backup result.
+If your primary ASR occasionally times out or fails, you can enable a **backup ASR engine**. BiBi Keyboard records only once, then decides whether to run the backup in parallel or use lazy local fallback based on the selected engines and settings. If primary returns a usable result in time, it uses primary; otherwise it falls back to the backup result.
 
 ### How to enable
 
@@ -154,9 +154,17 @@ If your primary ASR occasionally times out or fails, you can enable a **backup A
 3. Tap "Backup provider" and choose a provider different from your primary one
 4. Make sure the backup provider is also configured (API key / local model files, etc.)
 5. If your primary provider is a local or slower model, tune "backup timeout sensitivity" to switch to backup results earlier or later
+6. If the backup provider is a local model, choose "On demand" or "Keep resident" under "Local backup mode"
+
+### Local backup mode
+
+| Mode | Description | Best for |
+| ---- | ----------- | -------- |
+| **On demand** | Default. Loads the local backup model only when needed, then releases it after idle time | Occasional backup use, large local models, lower memory usage |
+| **Keep resident** | Keeps the local backup model ready so fallback can start faster | Frequent local backup use, enough device memory, less first-use waiting |
 
 ::: warning Notes
-This runs two engines in parallel. Even if the primary result is used, the backup may still trigger an API request/cost (depending on vendor billing and cancellation behavior).
+Online backup engines may still trigger extra API requests/cost. Local backup engines may use more memory; choose "Keep resident" only when your device has enough RAM.
 :::
 
 ## One-tap Setup Options
