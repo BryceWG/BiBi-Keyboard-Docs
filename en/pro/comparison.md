@@ -5,7 +5,7 @@ BiBi Keyboard provides two editions: OSS and Pro. This page compares feature dif
 ## Positioning
 
 - **OSS**: free, includes core speech recognition features for most daily usage
-- **Pro**: one-time purchase ($4.49 / ¥32), adds advanced features for power users
+- **Pro**: one-time purchase ($5.49 / ¥36), adds advanced features for power users
 
 ## Full feature table
 
@@ -61,7 +61,7 @@ Hotword enhanced replacement support all models.
 | Edition | Price       |
 | ------- | ----------- |
 | OSS     | Free        |
-| Pro     | $4.49 / ¥32 |
+| Pro     | $5.49 / ¥36 |
 
 ## FAQ
 

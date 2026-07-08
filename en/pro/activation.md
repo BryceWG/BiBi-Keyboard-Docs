@@ -14,7 +14,7 @@ BiBi Keyboard Pro is distributed via **Google Play**. There are multiple ways to
 
 ### Option 1: Google Play
 
-**Price**: $4.49 USD (one-time purchase; regional pricing may vary)
+**Price**: $5.49 USD (one-time purchase; regional pricing may vary)
 
 Steps:
 
@@ -29,7 +29,7 @@ Pro package is `com.brycewg.asrkb.pro` and can coexist with OSS (`com.brycewg.as
 
 ### Option 2: Telegram activation code <Badge type="tip" text="Recommended" />
 
-**Price**: ¥32 CNY
+**Price**: ¥36 CNY
 
 Pros:
 
@@ -48,7 +48,7 @@ Only buy activation codes from the official Telegram group. Beware of scams.
 
 ### Option 3: In-app purchase via OSS
 
-**Price**: ¥32 CNY
+**Price**: ¥36 CNY
 
 Pros:
 

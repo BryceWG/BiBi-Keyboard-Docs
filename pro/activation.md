@@ -14,7 +14,7 @@
 
 ### 方式一：Google Play 商店
 
-**价格**: $4.49 USD（一次性买断，不同地区定价可能有所不同）
+**价格**: $5.49 USD（一次性买断，不同地区定价可能有所不同）
 
 **购买步骤**:
 
@@ -29,7 +29,7 @@ Pro 版的 Package ID 为 `com.brycewg.asrkb.pro`，可以与开源版（`com.br
 
 ### 方式二：Telegram 群组激活码<Badge type="tip" text="推荐" />
 
-**价格**: ¥32 CNY
+**价格**: ¥36 CNY
 
 **优势**:
 
@@ -48,7 +48,7 @@ Pro 版的 Package ID 为 `com.brycewg.asrkb.pro`，可以与开源版（`com.br
 
 ### 方式三：开源版内购买
 
-**价格**: ¥32 CNY
+**价格**: ¥36 CNY
 
 **优势**:
 
