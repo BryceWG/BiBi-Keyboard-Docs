@@ -17,9 +17,16 @@ The module runs inside selected third-party keyboard processes and requires LSPo
 | Streaming preview | ✅ | ✅ | Displays partial results as composing text when supported and cleans them up on finish/cancel |
 | Keyboard visibility | ✅ | ✅ | Reports IME panel visibility without relying only on Accessibility detection |
 | In-IME recording | ✅ | ✅ | Hold the bridge area at the bottom of a third-party keyboard and release to send audio to BiBi Keyboard |
+| Privileged clipboard R/W | ✅ | ✅* | Reads/writes the system clipboard inside the target IME process so SyncClipboard can work outside BiBi’s own keyboard; credentials and HTTP stay in BiBi |
 | Input-field context | ❌ | ✅ | Provides cursor-adjacent text to AI post-processing when the related option is enabled |
 
-The module does not run ASR or AI post-processing. Recording orchestration, provider selection, backup engines, history, and final processing remain owned by BiBi Keyboard.
+\* Both OSS and Pro require module 0.2.4 or newer with `supports_clipboard` advertised.
+
+The module does not run ASR or AI post-processing. Recording orchestration, provider selection, backup engines, history, SyncClipboard networking, and final processing remain owned by BiBi Keyboard.
+
+::: tip Clipboard sync limits
+Bridge clipboard access only works while the target IME process is alive. If the system kills the keyboard, observe/write pause until that IME is opened again. This is not an always-on daemon.
+:::
 
 ## Requirements
 

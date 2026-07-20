@@ -42,6 +42,18 @@ Clipboard sync service provides:
 
 Enable it in `Settings → Other Settings → Clipboard sync`.
 
+When enabled, the settings page reports the active execution mode:
+
+| Mode | Requirement | Background behavior |
+|------|-------------|---------------------|
+| BiBi default IME | BiBi Keyboard is the current default IME | Direct clipboard access continues after the panel is hidden while the IME service remains alive |
+| IME Bridge assisted | A third-party IME is default and IME Bridge 0.2.4+ reports clipboard support | The target IME process reads/writes/observes the system clipboard; server credentials and HTTP remain in BiBi Keyboard |
+| Manual only | Neither privileged path is available | Floating-ball manual upload/pull remains available; background auto-sync is not guaranteed |
+
+::: warning IME Bridge lifecycle
+Assisted sync depends on the target IME process remaining alive. It pauses when Android kills that process and automatically renews its subscription after the IME is opened again. It is not an always-on daemon.
+:::
+
 ### Clear in-app clipboard history
 
 To remove all clipboard items saved by BiBi Keyboard, open `Settings → Other Settings`, tap “Clear clipboard history,” and confirm. This deletes both regular and pinned items, but it does not clear the current system clipboard or delete history stored on the sync server.
