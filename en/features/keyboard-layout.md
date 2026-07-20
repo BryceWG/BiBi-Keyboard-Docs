@@ -53,9 +53,14 @@ At the top of the keyboard, there is a row of up to 4 customizable action button
 - **Move to start / end**: jump to start/end of text
 - **VAD toggle**: quickly enable/disable auto-stop on silence
 - **Recording mode switch**: quickly switch between press-and-hold and tap-to-toggle recording
+- **Auto enter after input**: toggle automatic Enter/send after recognition and optional AI post-processing finish
 - **Hide keyboard**: minimize the keyboard
 
 If an action is stateful (e.g. Selection mode or VAD toggle), the icon reflects the current state (highlighted/dimmed).
+
+::: warning Automatic sending
+You can also enable it under `Settings → Input Settings → Auto enter after input`. Every non-empty recognition result is then sent automatically. To send only one result, leave this setting off and swipe right on the microphone while recording.
+:::
 
 ### Visual layout editor
 

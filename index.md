@@ -5,7 +5,7 @@ title: 「说点啥」使用文档
 hero:
   name: 说点啥
   text: BiBi Keyboard
-  tagline: 支持 17 个 ASR 供应商，本地离线识别，AI 智能后处理
+  tagline: 支持 18 个 ASR 供应商，本地离线识别，AI 智能后处理
   image:
     src: /icon_new.svg
     alt: 说点啥 Logo
@@ -29,7 +29,7 @@ hero:
 features:
   - icon: 🎤
     title: 多供应商支持
-    details: 支持火山引擎、硅基流动、OpenAI、OpenRouter、MiMo、Gemini 等 17 个 ASR 供应商，可随时切换，灵活选择最适合的语音识别服务
+    details: 支持火山引擎、硅基流动、OpenAI、OpenRouter、MiMo、Cohere、Gemini 等 18 个 ASR 供应商，可随时切换，灵活选择最适合的语音识别服务
 
   - icon: 🤖
     title: AI 智能后处理
@@ -66,7 +66,7 @@ features:
 
 ### 核心特性
 
-- **17 个 ASR 供应商**：火山引擎、硅基流动、OpenAI、OpenRouter、MiMo、StepAudio、Gemini、ElevenLabs、DashScope、Soniox、Zhipu GLM 等
+- **18 个 ASR 供应商**：火山引擎、硅基流动、OpenAI、OpenRouter、MiMo、Cohere、StepAudio、Gemini、ElevenLabs、DashScope、Soniox、Zhipu GLM 等
 - **本地离线模型**：SenseVoice、FunASR Nano、Qwen3-ASR、Parakeet、FireRedASR V2、X-ASR，无需网络即可使用
 - **AI 后处理**：支持多种大语言模型优化识别结果
 - **多种录音模式**：长按、点按切换

@@ -12,7 +12,7 @@ BiBi Keyboard provides two editions: OSS and Pro. This page compares feature dif
 | Category     | Feature                                     | OSS | Pro |
 | ------------ | ------------------------------------------- | --- | --- |
 | **Core**     | Speech recognition (ASR)                    | ✅  | ✅  |
-|              | 17 ASR providers                            | ✅  | ✅  |
+|              | 18 ASR providers                            | ✅  | ✅  |
 |              | Streaming recognition                       | ✅  | ✅  |
 |              | Segmented recording                         | ✅  | ✅  |
 |              | Local offline models                        | ✅  | ✅  |

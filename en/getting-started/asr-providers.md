@@ -27,6 +27,7 @@ API keys and access tokens are sensitive. Do not share them publicly. If you sus
 | **Zhipu GLM**                                                                              | Cloud | ❌         | Simple integration, lower cost                       |
 | **OpenRouter**                                                                             | Cloud | ❌         | Use an OpenRouter API key with compatible ASR models |
 | **MiMo (Xiaomi)**                                                                          | Cloud | ❌         | MiMo v2.5 ASR / audio-understanding models           |
+| **Cohere**                                                                                 | Cloud | ❌         | Cohere Transcribe file-based multilingual ASR        |
 | **Local models** (SenseVoice / FunASR Nano / Qwen3-ASR / Parakeet / FireRedASR V2 / X-ASR) | Local | Partial ✅ | Privacy-first, offline usage                         |
 
 ## Volcengine
@@ -96,10 +97,30 @@ DashScope offers good accuracy and cost efficiency, with partial streaming suppo
 
 1. Open `Settings → ASR Settings` and select **DashScope**
 2. Paste the API key and save
-3. Choose a model as needed: `Qwen3-ASR-Flash`, `Qwen3.5-Omni-Flash`, `Qwen3.5-Omni-Plus`, or a streaming model
+3. Choose a model as needed: `Qwen3-ASR-Flash`, `Fun-ASR-Flash`, `Qwen3.5-Omni-Flash`, `Qwen3.5-Omni-Plus`, or a streaming model
 
 ::: tip Model choice
-`Qwen3.5-Omni` is for non-streaming multimodal transcription. Streaming defaults to `qwen3-asr-flash-realtime-2026-02-10`, and you can also switch to `fun-asr-realtime`.
+`Qwen3.5-Omni` is for non-streaming multimodal transcription. `Fun-ASR-Flash` is also non-streaming, but it does not use the recognition-language or custom-prompt settings. Streaming defaults to `qwen3-asr-flash-realtime-2026-02-10`, and you can also switch to `fun-asr-realtime`.
+:::
+
+## Cohere
+
+Cohere Transcribe is used as a non-streaming file recognizer in BiBi Keyboard.
+
+1. Sign in to the [Cohere Dashboard](https://dashboard.cohere.com/api-keys) and create/copy a Trial API key
+2. Open `Settings → ASR Settings` and select **Cohere**
+3. Enter the `Cohere API Key`
+4. Choose a model:
+   - `cohere-transcribe-03-2026`: general multilingual model
+   - `cohere-transcribe-arabic-07-2026`: Arabic/English model
+5. Select the language spoken in the recording. If you enter a custom model ID, also verify that the model accepts the selected language code
+
+::: tip Free limit
+Cohere Trial API Key is limited to 5 RPM (requests per minute).
+:::
+
+::: tip Language selection
+The general model offers Chinese, English, Arabic, Japanese, Korean, and several European languages. The Arabic model offers Arabic and English only.
 :::
 
 ## Soniox

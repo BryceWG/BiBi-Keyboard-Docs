@@ -32,9 +32,11 @@ Basic options are under `Settings → UI & Interaction → Floating Settings`:
 | `floatingSwitcherOnlyWhenImeVisible` | Boolean | `true`  | show only when keyboard is visible      |
 | `floatingSwitcherAlpha`              | Float   | `1.0`   | transparency (0.2-1.0)                  |
 | `floatingBallSizeDp`                 | Int     | `44`    | size (28-96dp)                          |
+| `floatingBallHoldToRecordEnabled`    | Boolean | `false` | hold to record; release to stop         |
 | `floatingBallDirectDragEnabled`      | Boolean | `true`  | drag to move without long-press         |
 | `floatingWriteTextCompatEnabled`     | Boolean | `true`  | compatibility mode (select-all + paste) |
 | `floatingImeBridgeEnabled`           | Boolean | `false` | IME bridge mode (requires a compatible LSPosed / LSPatch module) |
+| `imeBridgePcmRecordingEnabled`       | Boolean | `false` | record by holding inside a compatible bridged IME |
 
 ### Stability (Optional)
 
@@ -77,24 +79,38 @@ Enhanced keep-alive depends on privileged capabilities (Shizuku or root). Enable
 - Range: 28dp to 96dp
 - Default: 44dp
 
-#### 5. Compatibility mode
+#### 5. Floating-ball recording trigger
+
+- Path: `Settings → UI & Interaction → Floating Settings → Hold the floating ball to record`
+- Off (default): tap to start, then tap again to stop
+- On: hold to start and release to stop. Dragging far enough toward the menu or move direction cancels that recording and performs the corresponding action
+
+#### 6. Compatibility mode
 
 - Path: `Settings → UI & Interaction → Floating Settings → Write-text compatibility mode`
 - Behavior:
   - On (default): uses "Select-all + Paste" strategy for better compatibility
   - Off: uses standard Accessibility APIs (faster, but may not work in some apps)
 
-#### 6. IME bridge mode
+#### 7. IME bridge mode
 
 - Path: `Settings → UI & Interaction → Floating Settings → IME bridge mode`
 - Behavior: when the current third-party keyboard has a compatible LSPosed / LSPatch bridge module enabled, final floating-ball recognition text is inserted through that keyboard's own `InputConnection`, and keyboard visibility is reported by the keyboard itself.
 - Best for: apps that restrict accessibility insertion, or setups where third-party IME panel visibility should control the floating ball more accurately.
 
 ::: warning Advanced option
-IME bridge mode requires an additional bridge module. It does not read existing input text. If the bridge is not ready, the floating ball continues using Accessibility insertion or clipboard fallback.
+IME bridge mode requires an additional bridge module. It does not read existing input text. If the bridge is not ready, the floating ball continues using Accessibility insertion or clipboard fallback. See [IME Bridge Module](/en/advanced/ime-bridge) for downloads, LSPosed/LSPatch setup, scope configuration, and troubleshooting.
 :::
 
-#### 7. Edge semi-hidden and anchor positioning
+##### Record inside a bridged IME
+
+After enabling bridge text insertion, you can also enable `Record inside bridged IME`. With an updated compatible LSPosed/LSPatch module, hold the control in the third-party keyboard to record; BiBi Keyboard then recognizes the audio using your current ASR and post-processing settings. See [IME Bridge Module](/en/advanced/ime-bridge#record-inside-a-third-party-ime) for the full procedure.
+
+- In “IME bridge status,” confirm that `PCM` is shown as supported
+- Focus a normal text field and keep the third-party keyboard open; sensitive fields are blocked
+- If recording fails, it does not automatically switch to the floating ball or BiBi Keyboard's own microphone; trigger it again
+
+#### 8. Edge semi-hidden and anchor positioning
 
 - Behavior:
   - After snapping to the left/right edge and staying idle, the floating ball can enter a semi-hidden state and show only an arrow handle; tap or drag the handle to expand quickly
@@ -152,11 +168,11 @@ On newer Android versions, a microphone foreground-service notification may appe
 ### Basic
 
 1. **Start recording**:
-   - Default: press and hold the floating ball; release to stop
-   - Tap mode: tap to start; tap again to stop (enable in settings)
+   - Default: tap the floating ball to start; tap again to stop
+   - Hold mode: hold to start; release to stop (enable in settings)
 2. **Stop recording**:
-   - Hold mode: release finger
    - Tap mode: tap again
+   - Hold mode: release finger
 3. **Cancel**:
    - Swipe up/left while holding (hold mode)
    - Long-press to cancel (tap mode)

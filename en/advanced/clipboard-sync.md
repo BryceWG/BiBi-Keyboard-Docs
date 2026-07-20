@@ -42,6 +42,10 @@ Clipboard sync service provides:
 
 Enable it in `Settings → Other Settings → Clipboard sync`.
 
+### Clear in-app clipboard history
+
+To remove all clipboard items saved by BiBi Keyboard, open `Settings → Other Settings`, tap “Clear clipboard history,” and confirm. This deletes both regular and pinned items, but it does not clear the current system clipboard or delete history stored on the sync server.
+
 ### Server config (SyncClipboard)
 
 | Key                         | Type   | Required | Description                                         |

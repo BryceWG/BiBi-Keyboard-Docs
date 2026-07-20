@@ -88,6 +88,10 @@ BiBi Keyboard provides one-tap setup options for your first ASR configuration:
    - Configure local models (auto-download and use SenseVoice small)
 4. Follow the in-app steps
 
+### App language
+
+The interface can follow the system language, or you can choose Simplified Chinese, Traditional Chinese, Japanese, English, or Arabic under `Settings → Input Settings → App language`. ASR recognition language remains a separate setting under each provider.
+
 ## Grant Required Permissions
 
 On first use, BiBi Keyboard may request the following permissions:

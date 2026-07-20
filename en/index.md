@@ -4,7 +4,7 @@ layout: home
 hero:
   name: BiBi Keyboard
   text: 说点啥
-  tagline: 17 ASR providers, local offline recognition, AI post-processing
+  tagline: 18 ASR providers, local offline recognition, AI post-processing
   actions:
     - theme: brand
       text: Get Started
@@ -25,7 +25,7 @@ hero:
 features:
   - icon: 🎤
     title: Multiple ASR Providers
-    details: Supports 17 ASR providers like Volcengine, SiliconFlow, OpenAI, OpenRouter, MiMo, Gemini and more. Switch anytime and choose what works best.
+    details: Supports 18 ASR providers like Volcengine, SiliconFlow, OpenAI, OpenRouter, MiMo, Cohere, Gemini and more. Switch anytime and choose what works best.
 
   - icon: 🤖
     title: AI Post-processing
@@ -62,7 +62,7 @@ BiBi Keyboard (说点啥) is a voice-first Android IME. It integrates multiple m
 
 ### Key Highlights
 
-- **17 ASR providers**: Volcengine, SiliconFlow, OpenAI, OpenRouter, MiMo, StepAudio, Gemini, ElevenLabs, DashScope, Soniox, Zhipu GLM, and more
+- **18 ASR providers**: Volcengine, SiliconFlow, OpenAI, OpenRouter, MiMo, Cohere, StepAudio, Gemini, ElevenLabs, DashScope, Soniox, Zhipu GLM, and more
 - **Local offline models**: SenseVoice, FunASR Nano, Qwen3-ASR, Parakeet, FireRedASR V2, X-ASR (no network required)
 - **AI post-processing**: use LLMs to refine recognition results
 - **Multiple recording modes**: press-and-hold, tap-to-toggle

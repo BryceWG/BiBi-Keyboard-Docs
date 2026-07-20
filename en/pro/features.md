@@ -81,7 +81,7 @@ Manage custom hotwords to improve recognition of proper nouns, brand names, name
 - **Shortcut phrase input**: target word `xxxx@qq.com`, extra alias `primary email`. When you say "primary email" and it is recognized, it is replaced with the real email address.
 
 ::: warning Suggestion
-Enhanced replacement is best for proper nouns and frequent misrecognitions. Adding too many common words may cause unwanted replacements for similar-sounding text.
+Enhanced replacement is only best for Chinese and English. For other languages, it may not work properly. It is best for proper nouns and frequent misrecognitions. Adding too many common words may cause unwanted replacements for similar-sounding text.
 :::
 
 ### What’s new (more convenient)
@@ -113,7 +113,7 @@ When using Qwen3-ASR or FunASR Nano, changing hotwords may require the local mod
 
 ## Input Field Context <Badge type="warning" text="Pro" />
 
-When using AI post-processing from the main keyboard, Pro can send text around the cursor as reference to the LLM. This helps the model understand continuity, terminology, and tone. When IME Bridge is enabled, floating-ball recordings can use the current input-field context too.
+When using AI post-processing from the main keyboard, Pro can send text around the cursor as reference to the LLM. This helps the model understand continuity, terminology, and tone. When IME Bridge is enabled, floating-ball recordings can use the current input-field context too. See [IME Bridge Module](/en/advanced/ime-bridge#pro-input-field-context) for setup and privacy boundaries.
 
 ### How to use
 

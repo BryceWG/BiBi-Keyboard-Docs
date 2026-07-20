@@ -12,7 +12,7 @@
 
 ## 支持的 ASR 供应商
 
-说点啥支持 **17 个** ASR 供应商，分为云端和本地两大类：
+说点啥支持 **18 个** ASR 供应商，分为云端和本地两大类：
 
 ### 云端识别引擎
 
@@ -22,13 +22,14 @@
 | **SiliconFlow**<br>硅基流动 | ❌       | 20 分钟            | 内置免费 ASR 服务（SenseVoiceSmall / TeleSpeechASR），支持 Qwen3-Omni 多模态转写（需自有 Key） |
 | **ElevenLabs**              | ✅       | 20 分钟            | 高精度英文识别，支持文件与流式                                                                 |
 | **OpenAI**                  | ✅       | 20 分钟            | 默认 `gpt-4o-mini-transcribe`，支持多渠道配置与 Realtime 流式识别                              |
-| **DashScope**<br>阿里云百炼 | ✅       | 3 分钟             | qwen3-asr-flash / Qwen3.5-Omni，支持流式与非流式                                                |
+| **DashScope**<br>阿里云百炼 | ✅       | 3 分钟             | Qwen3-ASR-Flash / Fun-ASR-Flash / Qwen3.5-Omni，支持流式与非流式                                 |
 | **Gemini**<br>Google        | ❌       | 4 小时             | 基于文件的多模态语音理解                                                                       |
 | **Soniox**                  | ✅       | 1 小时             | 支持多语言提示，流式与文件双模式                                                               |
 | **StepAudio**               | ❌       | 20 分钟            | StepAudio 2.5 在线 ASR，支持中文、英文与 ITN                                                    |
 | **Zhipu**<br>智谱           | ❌       | 20 分钟            | GLM-ASR，支持上下文提示参数                                                                    |
 | **OpenRouter**              | ❌       | 20 分钟            | 通过 OpenRouter 调用兼容的 ASR / 多模态转写模型                                                |
 | **MiMo**<br>小米            | ❌       | 20 分钟            | MiMo v2.5 ASR / 音频理解模型，支持语言选择与 System Prompt                                     |
+| **Cohere**                   | ❌       | 12 分钟            | Cohere Transcribe 多语言文件识别，含通用与阿拉伯语模型                                         |
 
 ### 本地识别引擎（离线）
 

@@ -4,7 +4,7 @@ After installing BiBi Keyboard (说点啥), you need to configure an ASR provide
 
 ## Choose an ASR Provider
 
-BiBi Keyboard supports 17 ASR providers, including cloud services and local models. For the first setup, these are recommended:
+BiBi Keyboard supports 18 ASR providers, including cloud services and local models. For the first setup, these are recommended:
 
 ### Recommended Options
 

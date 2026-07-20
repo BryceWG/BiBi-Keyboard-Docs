@@ -27,6 +27,7 @@ API Key / Access Token 属于敏感信息，请勿截图公开或分享给他人
 | **Zhipu**<br>智谱 GLM                                                                        | 云端 | ❌       | 低成本、简单接入                                   |
 | **OpenRouter**                                                                               | 云端 | ❌       | 使用 OpenRouter API Key 调用兼容 ASR 模型          |
 | **MiMo**<br>小米                                                                              | 云端 | ❌       | MiMo v2.5 ASR / 音频理解模型                       |
+| **Cohere**                                                                                   | 云端 | ❌       | Cohere Transcribe 文件识别与多语言转写             |
 | **本地模型**（SenseVoice / FunASR Nano / Qwen3-ASR / Parakeet / FireRedASR V2 / X-ASR）      | 本地 | 部分 ✅  | 隐私优先、离线可用                                 |
 
 ## 火山引擎（Volcengine）
@@ -96,10 +97,30 @@ API Key / Access Token 属于敏感信息，请勿截图公开或分享给他人
 
 1. 打开 `设置 → 语音识别设置`，选择 **DashScope（阿里云百炼）**
 2. 填入 API Key 并保存
-3. 根据需要选择模型：`Qwen3-ASR-Flash`、`Qwen3.5-Omni-Flash`、`Qwen3.5-Omni-Plus` 或流式模型
+3. 根据需要选择模型：`Qwen3-ASR-Flash`、`Fun-ASR-Flash`、`Qwen3.5-Omni-Flash`、`Qwen3.5-Omni-Plus` 或流式模型
 
 ::: tip 模型选择
-`Qwen3.5-Omni` 适合非流式多模态转写；流式识别默认使用 `qwen3-asr-flash-realtime-2026-02-10`，也可切换到 `fun-asr-realtime`。
+`Qwen3.5-Omni` 适合非流式多模态转写；`Fun-ASR-Flash` 也是非流式模型，但不支持识别语言和自定义提示词设置。流式识别默认使用 `qwen3-asr-flash-realtime-2026-02-10`，也可切换到 `fun-asr-realtime`。
+:::
+
+## Cohere
+
+Cohere Transcribe 在说点啥中以非流式文件识别方式使用。
+
+1. 登录 [Cohere Dashboard](https://dashboard.cohere.com/api-keys)，创建并复制 Trial API Key
+2. 打开 `设置 → 语音识别设置`，选择 **Cohere**
+3. 填入 `Cohere API Key`
+4. 选择模型：
+   - `cohere-transcribe-03-2026`：通用多语言模型
+   - `cohere-transcribe-arabic-07-2026`：阿拉伯语 / 英语模型
+5. 选择与语音匹配的识别语言；若填写自定义模型 ID，请同时确认该模型接受所选语言代码
+
+::: tip 免费限制
+Cohere Trial API Key 限制为 5 RPM（每分钟请求数）。
+:::
+
+::: tip 语言选择
+通用模型支持中文、英语、阿拉伯语、日语、韩语及多种欧洲语言；阿拉伯语模型仅提供阿拉伯语和英语选项。
 :::
 
 ## Soniox

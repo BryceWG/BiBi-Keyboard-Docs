@@ -12,7 +12,7 @@ Voice input has three stages:
 
 ## Supported ASR Providers
 
-BiBi Keyboard supports **17** ASR providers, grouped into cloud and local:
+BiBi Keyboard supports **18** ASR providers, grouped into cloud and local:
 
 ### Cloud ASR
 
@@ -22,13 +22,14 @@ BiBi Keyboard supports **17** ASR providers, grouped into cloud and local:
 | **SiliconFlow**                   | ❌        | 20 min                         | Built-in free ASR (SenseVoiceSmall / TeleSpeechASR); supports Qwen3-Omni transcription (own key)     |
 | **ElevenLabs**                    | ✅        | 20 min                         | High-accuracy English; supports both file and streaming                                               |
 | **OpenAI**                        | ✅        | 20 min                         | Default `gpt-4o-mini-transcribe`; supports multiple channels and Realtime streaming                    |
-| **DashScope (Alibaba)**           | ✅        | 3 min                          | qwen3-asr-flash / Qwen3.5-Omni; supports streaming and non-streaming                                  |
+| **DashScope (Alibaba)**           | ✅        | 3 min                          | Qwen3-ASR-Flash / Fun-ASR-Flash / Qwen3.5-Omni; streaming and non-streaming                            |
 | **Gemini (Google)**               | ❌        | 4 hours                        | File-based multimodal speech understanding                                                            |
 | **Soniox**                        | ✅        | 1 hour                         | Supports multi-language prompts; both streaming and file modes                                         |
 | **StepAudio**                     | ❌        | 20 min                         | StepAudio 2.5 online ASR with Chinese/English and ITN                                                  |
 | **Zhipu (GLM)**                   | ❌        | 20 min                         | GLM-ASR; supports context prompt parameters                                                            |
 | **OpenRouter**                    | ❌        | 20 min                         | Calls compatible ASR / multimodal transcription models through OpenRouter                              |
 | **MiMo (Xiaomi)**                 | ❌        | 20 min                         | MiMo v2.5 ASR / audio-understanding models with language selection and System Prompt                    |
+| **Cohere**                        | ❌        | 12 min                         | Cohere Transcribe file recognition with general and Arabic-focused models                              |
 
 ### Local ASR (Offline)
 
