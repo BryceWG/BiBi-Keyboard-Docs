@@ -17,9 +17,11 @@ Currently, BiBi Keyboard mainly syncs **text**. If the server pushes images/file
 Clipboard sync service provides:
 
 - **Auto upload**: on local clipboard changes, `PUT` to server `SyncClipboard.json`
-- **Auto download**: periodically `GET` server `SyncClipboard.json` and apply new content locally
+- **Automatic receive**: uses Realtime when the server supports it, otherwise pulls at the configured interval
 - **Deduplication**: uses content hash to avoid uploading duplicates
 - **File name dedup**: remembers recent file names to avoid repeated previews
+
+An independent background service manages sync, so the floating ball does not need to be running. Android can still reclaim background processes; see “Keep background realtime connection” below if you need longer-lived receiving.
 
 ::: info How it works
 
@@ -46,8 +48,8 @@ When enabled, the settings page reports the active execution mode:
 
 | Mode | Requirement | Background behavior |
 |------|-------------|---------------------|
-| BiBi default IME | BiBi Keyboard is the current default IME | Direct clipboard access continues after the panel is hidden while the IME service remains alive |
-| IME Bridge assisted | A third-party IME is default and IME Bridge 0.2.4+ reports clipboard support | The target IME process reads/writes/observes the system clipboard; server credentials and HTTP remain in BiBi Keyboard |
+| BiBi default IME | BiBi Keyboard is the current default IME | The independent sync service runs the connection; BiBi Keyboard reads and writes the system clipboard |
+| IME Bridge assisted | A third-party IME is default and IME Bridge 0.2.4+ reports clipboard support | The independent sync service connects to the server; the target IME only reads/writes/observes the system clipboard, and credentials remain in BiBi Keyboard |
 | Manual only | Neither privileged path is available | Floating-ball manual upload/pull remains available; background auto-sync is not guaranteed |
 
 ::: warning IME Bridge lifecycle
@@ -77,14 +79,19 @@ If the URL does not end with `.json`, the app automatically appends `/SyncClipbo
 All fields are auto-trimmed (`trim()`). Make sure you did not paste extra spaces.
 :::
 
-### Auto pull
+### Automatic receive
 
-| Key                           | Type    | Range | Default | Description            |
-| ---------------------------- | ------- | ----- | ------- | ---------------------- |
-| `syncClipboardAutoPullEnabled` | Boolean | -     | false   | enable auto pull       |
-| `syncClipboardPullIntervalSec` | Int     | 1-600 | 15      | pull interval (seconds) |
+| Setting | Range | Default | Description |
+|---------|-------|---------|-------------|
+| Automatic receive | On/off | Off | Detects server capability automatically: Realtime when supported, otherwise periodic pull |
+| Keep background realtime connection | On/off | Off | Shown only when the server supports Realtime; tries to keep the connection after related screens or services exit |
+| Periodic pull interval | 1-600 seconds | 15 seconds | Used when Realtime is unsupported or its connection is temporarily unavailable |
 
-When enabled, the app periodically checks and syncs cloud clipboard content.
+The settings page reports whether capability detection, Realtime, or periodic pull is active. Changing the server URL or credentials triggers detection again.
+
+::: warning Background limits
+“Keep background realtime connection” uses additional battery and network resources and cannot bypass Android process limits. When off, Realtime stays active only while the app, IME, or IME Bridge related service is active; even when on, system battery policies may still interrupt it.
+:::
 
 ::: tip Suggested intervals
 
@@ -201,12 +208,12 @@ Fix:
 
 Possible causes:
 
-1. auto pull disabled (`syncClipboardAutoPullEnabled = false`)
+1. Automatic receive is disabled
 2. interval too long
-3. app in background and cannot write clipboard
+3. app or IME Bridge cannot write the clipboard in the background
 
 Fix:
 
-- enable auto pull and shorten interval
+- enable Automatic receive; if the status shows periodic pull, shorten the interval
 - disable battery optimization for the app
-- manually trigger sync ("Sync now" button in settings)
+- tap “Validate” in settings to check the URL and credentials
