@@ -33,7 +33,7 @@ BiBi Keyboard provides two editions: OSS and Pro. This page compares feature dif
 |              | Traditional Chinese conversion              | ❌  | ✅  |
 |              | Regex post-processing and order             | ❌  | ✅  |
 | **Advanced** | App-specific Prompt                         | ❌  | ✅  |
-|              | Hotwords management and phoneme enhancement | ❌  | ✅  |
+|              | Hotword management, phoneme enhancement, and automatic learning | ❌  | ✅  |
 |              | Speech presets                              | ✅  | ✅  |
 |              | Custom punctuation keys                     | ✅  | ✅  |
 |              | Visual keyboard layout editor               | ✅  | ✅  |

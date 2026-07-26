@@ -99,6 +99,8 @@ For more details on supported models, recommended configs and updated quotas, se
 - ⚠️ duration limit (see tables above)
 - ⚠️ recognition starts only after recording stops
 
+For local non-streaming models, long audio is progressively processed in silence-based chunks after recording stops to reduce the load of a single inference pass and requires no extra setting.
+
 ::: tip Suggestions
 
 - For providers that support both modes, switch under `Settings → ASR Settings → [Provider Settings]`.

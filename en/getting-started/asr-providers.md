@@ -250,6 +250,8 @@ Local models are ideal for offline usage and privacy. Each model trades off spee
 2. In the model manager, choose a variant and download
 3. If notification permission is granted, you can track download/unzip progress in notifications
 
+If the download is canceled or interrupted, the incomplete download task is cached locally. Downloading the same model again attempts to resume from that point. Partial downloads are kept for up to 7 days with a total cache limit of about 2 GB; older files are removed first. If the source does not support resuming, the app automatically downloads the full file again.
+
 ![Download local models in-app](/images/getting-started/asr-providers/local-models-download.png)
 
 ### Import from local files (optional)

@@ -9,6 +9,7 @@ Pro includes these exclusive features:
 - **Offline Traditional Chinese conversion**: convert results to Traditional Chinese automatically
 - **Hotwords management**: provider-aware hotword adaptation to improve recognition for proper nouns
 - **Hotword enhanced replacement**: replace similar-sounding fragments with target hotwords via phoneme matching
+- **Automatic hotword learning**: create pending hotwords from corrections after dictation, with optional AI-assisted filtering
 - **Hotword stats**: view trigger frequency and hit stats to keep improving your hotword list
 - **AI Assistant**: trigger voice commands with wake words, preset keywords, and fuzzy matching
 - **Input field context**: AI post-processing can reference nearby text around the cursor for better continuity
@@ -74,6 +75,28 @@ Manage custom hotwords to improve recognition of proper nouns, brand names, name
 | ---- | ------------------ | ----------------- |
 | Enhanced replacement off | Hotwords participate according to the provider's hotword support; quality depends on the provider | No phoneme fallback replacement |
 | Enhanced replacement on | Hotwords still participate according to provider support | Target word and aliases join phoneme matching, then matches are replaced with the target word |
+
+### Automatic hotword learning
+
+When enabled, Pro compares a committed voice result with your subsequent correction and tries to extract content suitable for the hotword list.
+
+1. Open `Settings → ASR Settings → Result Optimization (Pro)`
+2. Enable “Automatically learn hotwords”
+3. Optionally enable “Use AI to learn hotwords”; this requires a working LLM configuration
+4. Dictate through modified Fcitx5 / Trime, the latest IME Bridge, or an accessibility-assisted floating ball, then correct a recognition mistake
+5. Return to “Learned hotwords awaiting confirmation” to approve or remove candidates
+
+By default, a new candidate waits for manual confirmation; learning the same correction again confirms it automatically. If both “Automatically confirm learned hotwords” and “Use AI to learn hotwords” are enabled, an AI-approved candidate can be added after the first correction. Candidates found by local rules still require a second occurrence or manual confirmation.
+
+::: info Companion versions
+Modified Fcitx5 / Trime report corrections through optional AIDL function. Other third-party IMEs and the floating ball can use the latest LSPosed/LSPatch IME Bridge module or the floating ball accessibility calling method to trigger hotword learning.
+:::
+
+::: warning Privacy and false learning
+Password, email, URL, phone, and no-personalized-learning fields are excluded. With AI learning enabled, only the changed fragment and a small amount of context are sent to the selected LLM, never the full input field;
+local rules remain available when the LLM fails;
+possible false learning, can be combined with manual confirmation to avoid accidentally adding temporary rewrites or common words as hotwords.
+:::
 
 ### Alias examples
 

@@ -25,6 +25,12 @@
    - 长按具备 `VOICE_ASSIST` 功能的按键开始录音，松手结束
    - 如当前主题没有 `VOICE_ASSIST` 长按入口，可在同文设置中开启“工具栏麦克风按钮”，点按开始，再次点按结束并上屏
 
+### 更多外部联动能力
+
+- **剪贴板同步**：最新版修改版 Fcitx5 / Trime 可在各自的剪贴板设置中启用「说点啥粘贴板同步」。说点啥本体也必须已启用并配置剪贴板同步，详见[剪贴板同步](/advanced/clipboard-sync#修改版-fcitx5-trime-配置)。
+- **Pro 输入框上下文**：当 Pro 开启「使用输入框上下文辅助」时，修改版输入法会按服务端要求提供光标附近的受限文本，供 AI 后处理参考。
+- **Pro 自动学习热词**：当 Pro 开启「自动学习热词」时，修改版输入法会在语音上屏后短暂观察用户修正，并回报同一输入框中的最终改动。密码、邮箱、网址、电话及禁止个性化学习的输入框不会参与。
+
 **包名优先级**（与小企鹅实现一致）：
 
 1. `com.brycewg.asrkb.pro`
@@ -55,6 +61,9 @@ AIDL 联动适合修改版小企鹅/同文等输入法主动调用说点啥识�
 | `startPcmSession` | `FIRST_CALL_TRANSACTION + 6` | 推送 PCM 模式会话       |
 | `writePcm`        | `FIRST_CALL_TRANSACTION + 7` | 推送一帧 PCM 音频数据   |
 | `finishPcm`       | `FIRST_CALL_TRANSACTION + 8` | 结束 PCM 推送并进入处理 |
+| `getInputRequirements` | `FIRST_CALL_TRANSACTION + 9` | 查询可选输入信息（Pro 扩展） |
+| `setInputContext` | `FIRST_CALL_TRANSACTION + 10` | 提交受限光标上下文（Pro 扩展） |
+| `reportEdit`      | `FIRST_CALL_TRANSACTION + 11` | 回报语音结果修正（Pro 扩展） |
 
 对应 AIDL 方法签名：
 
@@ -68,6 +77,9 @@ fun getVersion(): String
 fun startPcmSession(config: SpeechConfig?, callback: ISpeechCallback): Int
 fun writePcm(sessionId: Int, pcm: ByteArray, sampleRate: Int, channels: Int)
 fun finishPcm(sessionId: Int)
+fun getInputRequirements(sessionId: Int): Int
+fun setInputContext(sessionId: Int, generation: Long, inputType: Int, imeOptions: Int, beforeCursor: String, afterCursor: String): Boolean
+fun reportEdit(sessionId: Int, generation: Long, beforeCursor: String, afterCursor: String, reason: String): Boolean
 ```
 
 ### 配置对象（SpeechConfig）
@@ -137,6 +149,23 @@ fun onAmplitude(sessionId: Int, amplitude: Float)
 - 推送 PCM 模式 **不会检查**说点啥的录音权限；录音权限由客户端自己处理。
 - 建议发送 `PCM16LE / 16000Hz / mono`，推荐 200ms 一包；服务端当前不强校验采样率与通道，但不匹配可能导致部分引擎效果异常。
 - `finishPcm(sessionId)` 等价于 `stopSession(sessionId)`，表示音频输入结束，等待最终结果。
+
+### 可选输入上下文与修正回报（Pro 4.3.0+）
+
+客户端应在会话启动后调用 `getInputRequirements(sessionId)`，按位判断服务端是否需要附加信息：
+
+| 位 | 值 | 含义 |
+|----|----|------|
+| bit 0 | `1` | AI 后处理需要输入框上下文 |
+| bit 1 | `2` | 自动热词学习需要观察识别后的修正 |
+
+当返回值非 `0` 时，客户端可调用 `setInputContext(...)` 提交当前输入目标的 `generation`、`inputType`、`imeOptions` 与光标前后文本。服务端会拒绝敏感输入框，并把光标两侧文本分别限制在 1500 字符内。
+
+若 bit 1 生效，客户端可在最终结果上屏后短暂观察同一输入目标，并通过 `reportEdit(...)` 回报结算快照。服务端只接受同一调用 UID、会话和输入目标的有效回报；学习票据约 90 秒后失效。
+
+::: warning 向后兼容
+这三个事务是 Pro 扩展。客户端必须把未知事务或返回 `0` 视为“不需要附加信息”，继续原有 ASR 流程；不要因旧版服务不支持它们而中止录音。
+:::
 
 ### stopSession / cancelSession
 

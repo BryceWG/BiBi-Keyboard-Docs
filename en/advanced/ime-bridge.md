@@ -134,6 +134,17 @@ When Pro's AI post-processing “Input-field context” option is enabled, the f
 
 See [Pro Features](/en/pro/features#input-field-context) for details.
 
+## Pro: Automatic hotword learning <Badge type="warning" text="Pro" />
+
+The latest IME Bridge can report manual corrections after a voice result is committed so Pro can learn hotword candidates. Each voice session stays bound to the editor where recording began; switching apps or input fields settles the old observation instead of treating edits elsewhere as a correction.
+
+1. Enable “Automatically learn hotwords” under `Pro Settings → ASR Settings → Result Optimization (Pro)`
+2. Enable IME Bridge text insertion or in-IME recording as described on this page
+3. Correct a recognition mistake directly after the voice result is committed
+4. Review it under “Learned hotwords awaiting confirmation”
+
+Password and other sensitive fields, plus editors that disallow personalized learning, do not expose context or correction observations. See [Pro Features](/en/pro/features#automatic-hotword-learning).
+
 ## Status and troubleshooting
 
 | Status or symptom | What to do |

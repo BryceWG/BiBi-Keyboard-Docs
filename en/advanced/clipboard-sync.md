@@ -49,8 +49,22 @@ When enabled, the settings page reports the active execution mode:
 | Mode | Requirement | Background behavior |
 |------|-------------|---------------------|
 | BiBi default IME | BiBi Keyboard is the current default IME | The independent sync service runs the connection; BiBi Keyboard reads and writes the system clipboard |
+| Modified Fcitx5 / Trime assisted | The latest modified Fcitx5 or Trime is in use and “BiBi Keyboard clipboard sync” is enabled in that IME | BiBi Keyboard connects to the server; the current IME reads/writes/observes the system clipboard |
 | IME Bridge assisted | A third-party IME is default and IME Bridge 0.2.4+ reports clipboard support | The independent sync service connects to the server; the target IME only reads/writes/observes the system clipboard, and credentials remain in BiBi Keyboard |
-| Manual only | Neither privileged path is available | Floating-ball manual upload/pull remains available; background auto-sync is not guaranteed |
+| Manual only | No automatic path is available | Floating-ball manual upload/pull remains available; background auto-sync is not guaranteed |
+
+### Modified Fcitx5 / Trime setup
+
+1. Install the latest [modified Fcitx5](https://github.com/BryceWG/fcitx5-android-bibi-keyboard/releases) or [modified Trime](https://github.com/BryceWG/trime-bibi-keyboard/releases)
+2. Configure the server and enable sync under `BiBi Keyboard Settings → Other Settings → Clipboard sync`
+3. Open the modified IME's clipboard settings and enable “BiBi Keyboard clipboard sync”
+4. Open that keyboard once, then confirm its clipboard settings show “observing clipboard changes”
+
+Both switches are required. The modified IME tries Pro first, then OSS.
+
+::: warning Modified IME lifecycle
+This path works only while the corresponding IME service is running. If the status says the IME service is stopped or waiting for the keyboard window, open the keyboard once. It reconnects when the keyboard is opened again after Android reclaims its process.
+:::
 
 ::: warning IME Bridge lifecycle
 Assisted sync depends on the target IME process remaining alive. It pauses when Android kills that process and automatically renews its subscription after the IME is opened again. It is not an always-on daemon.

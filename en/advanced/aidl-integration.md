@@ -25,6 +25,12 @@ Currently supported: modified Fcitx5 and modified Trime. Common steps:
    - Long-press a key that has `VOICE_ASSIST` to start recording, then release to finish
    - If your current theme has no `VOICE_ASSIST` long-press entry, enable the "Toolbar microphone button" in Trime settings; tap once to start, tap again to stop and commit
 
+### More external linking capabilities
+
+- **Clipboard sync**: the latest modified Fcitx5 / Trime can enable “BiBi Keyboard clipboard sync” in their clipboard settings. Clipboard sync must also be configured and enabled in BiBi Keyboard; see [Clipboard Sync](/en/advanced/clipboard-sync#modified-fcitx5-trime-setup).
+- **Pro input-field context**: when Pro's input-field context option is enabled, the modified IME supplies limited cursor-adjacent text when requested for AI post-processing.
+- **Pro automatic hotword learning**: when enabled in Pro, the modified IME briefly observes corrections after a voice result is committed and reports the settled edit from the same input field. Password, email, URL, phone, and no-personalized-learning fields are excluded.
+
 **Package priority** (same as Fcitx implementation):
 
 1. `com.brycewg.asrkb.pro`
@@ -55,6 +61,9 @@ Transaction codes (match AIDL stub):
 | `startPcmSession` | `FIRST_CALL_TRANSACTION + 6` | client-pushed PCM session        |
 | `writePcm`        | `FIRST_CALL_TRANSACTION + 7` | push one PCM frame               |
 | `finishPcm`       | `FIRST_CALL_TRANSACTION + 8` | finish PCM input and process     |
+| `getInputRequirements` | `FIRST_CALL_TRANSACTION + 9` | query optional input data (Pro extension) |
+| `setInputContext` | `FIRST_CALL_TRANSACTION + 10` | attach limited cursor context (Pro extension) |
+| `reportEdit`      | `FIRST_CALL_TRANSACTION + 11` | report a correction after dictation (Pro extension) |
 
 AIDL signatures:
 
@@ -68,6 +77,9 @@ fun getVersion(): String
 fun startPcmSession(config: SpeechConfig?, callback: ISpeechCallback): Int
 fun writePcm(sessionId: Int, pcm: ByteArray, sampleRate: Int, channels: Int)
 fun finishPcm(sessionId: Int)
+fun getInputRequirements(sessionId: Int): Int
+fun setInputContext(sessionId: Int, generation: Long, inputType: Int, imeOptions: Int, beforeCursor: String, afterCursor: String): Boolean
+fun reportEdit(sessionId: Int, generation: Long, beforeCursor: String, afterCursor: String, reason: String): Boolean
 ```
 
 ### Config object (SpeechConfig)
@@ -137,6 +149,23 @@ Notes:
 - Pushed PCM mode does **not** check BiBi Keyboard's microphone permission; the client handles recording permission itself.
 - Recommended format: `PCM16LE / 16000Hz / mono`, around 200ms per frame. The server currently does not strictly validate sample rate/channels, but mismatches may hurt results for some engines.
 - `finishPcm(sessionId)` is equivalent to `stopSession(sessionId)` and indicates end of audio input, waiting for final result.
+
+### Optional input context and correction reporting (Pro 4.3.0+)
+
+After starting a session, call `getInputRequirements(sessionId)` and inspect its bit mask:
+
+| Bit | Value | Meaning |
+|-----|-------|---------|
+| bit 0 | `1` | AI post-processing requests input-field context |
+| bit 1 | `2` | automatic hotword learning requests post-dictation correction observation |
+
+When the result is non-zero, the client may call `setInputContext(...)` with the input target's `generation`, `inputType`, `imeOptions`, and text before/after the cursor. The service rejects sensitive editors and limits each side to 1,500 characters.
+
+When bit 1 is active, the client may briefly observe the same input target after committing the final result and send the settled snapshot through `reportEdit(...)`. The service accepts only a matching caller UID, session, and editor generation; learning tickets expire after about 90 seconds.
+
+::: warning Backward compatibility
+These three transactions are Pro extensions. Treat an unknown transaction or a `0` result as “no optional input requested” and continue the original ASR flow. An older service must not make recording fail.
+:::
 
 ### stopSession / cancelSession
 
