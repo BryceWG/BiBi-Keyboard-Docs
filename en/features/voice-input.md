@@ -22,7 +22,7 @@ BiBi Keyboard supports **18** ASR providers, grouped into cloud and local:
 | **SiliconFlow**                   | ❌        | 20 min                         | Built-in free ASR (SenseVoiceSmall / TeleSpeechASR); supports Qwen3-Omni transcription (own key)     |
 | **ElevenLabs**                    | ✅        | 20 min                         | High-accuracy English; supports both file and streaming                                               |
 | **OpenAI**                        | ✅        | 20 min                         | Default `gpt-4o-mini-transcribe`; supports multiple channels and Realtime streaming                    |
-| **DashScope (Alibaba)**           | ✅        | 3 min                          | Qwen3-ASR-Flash / Fun-ASR-Flash / Qwen3.5-Omni; streaming and non-streaming                            |
+| **DashScope (Alibaba)**           | ✅        | 5 min                          | Qwen-Audio-3.0 / Fun-ASR / Qwen3.5-Omni; streaming and non-streaming                                  |
 | **Gemini (Google)**               | ❌        | 4 hours                        | File-based multimodal speech understanding                                                            |
 | **Soniox**                        | ✅        | 1 hour                         | Supports multi-language prompts; both streaming and file modes                                         |
 | **StepAudio**                     | ❌        | 20 min                         | StepAudio 2.5 online ASR with Chinese/English and ITN                                                  |
@@ -127,7 +127,7 @@ For non-streaming engines, if a recording exceeds the app's single-segment limit
 | SiliconFlow  | 20 min      | App default; unrelated to billing/quota                               |
 | ElevenLabs   | 20 min      | App default to avoid failures on very long audio                      |
 | OpenAI       | 20 min      | App default; tune model/usage as needed                               |
-| DashScope    | 3 min       | Default qwen3-asr-flash; app segment cap is 3 min                     |
+| DashScope    | 3 min       | Default Qwen-Audio-3.0-ASR-Flash; app segment cap is 5 min            |
 | Gemini       | 4 hours     | Official max is ~9.5h; app uses 4h as a safety margin                 |
 | Soniox       | 1 hour      | No strict official max found; app defaults to 1h                      |
 | StepAudio    | 20 min      | App default, suitable for short and medium dictation                  |

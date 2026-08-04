@@ -8,8 +8,8 @@ Pro includes these exclusive features:
 
 - **Offline Traditional Chinese conversion**: convert results to Traditional Chinese automatically
 - **Hotwords management**: provider-aware hotword adaptation to improve recognition for proper nouns
-- **Hotword enhanced replacement**: replace similar-sounding fragments with target hotwords via phoneme matching
-- **Automatic hotword learning**: create pending hotwords from corrections after dictation, with optional AI-assisted filtering
+- **Post-recognition similar-word replacement**: replace similar-sounding fragments with target hotwords via phoneme matching
+- **Learn hotwords from corrections**: create pending hotwords from corrections after dictation, with optional LLM-assisted filtering
 - **Hotword stats**: view trigger frequency and hit stats to keep improving your hotword list
 - **AI Assistant**: trigger voice commands with wake words, preset keywords, and fuzzy matching
 - **Input field context**: AI post-processing can reference nearby text around the cursor for better continuity
@@ -53,7 +53,7 @@ Manage custom hotwords to improve recognition of proper nouns, brand names, name
 - **Before + after recognition**: hotwords first participate in recognition according to provider support; when enhancement is enabled, Pro also runs a pronunciation-similarity fallback after recognition
 - **Target word + aliases**: each hotword has up to 3 alias slots. The target word always occupies the first alias slot, and you can add 2 extra aliases
 - **Aliases participate in phoneme matching**: both the target word and extra aliases are matched after recognition; matches are replaced with the target word
-- **Unified adaptation**: for providers without native hotword support, hotwords are structured and injected into recognition prompt parameters
+- **Injection control**: independently controls whether supported recognition engines receive hotwords, without disabling post-recognition replacement
 - **Hotword stats**: view trigger frequency and hit stats to iteratively tune your hotword list
 - **Linked with AI Assistant**: AI Assistant keywords can be auto-synced into the hotword list to reduce duplicate maintenance
 
@@ -61,32 +61,36 @@ Manage custom hotwords to improve recognition of proper nouns, brand names, name
 
 1. Open BiBi Keyboard Pro settings
 2. Go to `Settings → ASR Settings → Result Optimization (Pro)`
-3. Add/import hotwords (supports batch import from clipboard)
-4. Long-press a hotword chip to edit aliases (`target | alias 2 | alias 3`)
-5. Enable `Hotword enhanced replacement` if needed
-6. Save to apply
-7. Open the hotword management page to review trigger frequency/hit stats and refine your list based on results
+3. Enable `Inject hotwords into recognition engines` so hotwords participate according to provider support
+4. Open `Hotword management` to add hotwords or batch-import them from the clipboard
+5. Long-press a hotword chip to edit aliases (`target | alias 2 | alias 3`)
+6. Enable `Replace similar words after recognition` if needed
+7. Review trigger frequency/hit stats on the management page and refine your list
 
 > Avoid too many hotwords. Per-provider limits apply and excessive lists may hurt performance.
 
 ### How it takes effect
 
-| Mode | Before recognition | After recognition |
-| ---- | ------------------ | ----------------- |
-| Enhanced replacement off | Hotwords participate according to the provider's hotword support; quality depends on the provider | No phoneme fallback replacement |
-| Enhanced replacement on | Hotwords still participate according to provider support | Target word and aliases join phoneme matching, then matches are replaced with the target word |
+| Inject hotwords | Replace after recognition | Result |
+|-----------------|---------------------------|--------|
+| On | Off | Hotwords participate according to provider support; no pronunciation fallback runs afterward |
+| On | On | Hotwords participate in recognition, then targets and aliases provide a pronunciation-based fallback |
+| Off | On | Recognition engines receive no hotwords, but post-recognition replacement still runs |
+| Off | Off | Hotwords are not applied before or after recognition |
 
-### Automatic hotword learning
+`Inject hotwords into recognition engines` is enabled by default. Actual support and quality still depend on the selected provider.
+
+### Learn hotwords from corrections
 
 When enabled, Pro compares a committed voice result with your subsequent correction and tries to extract content suitable for the hotword list.
 
 1. Open `Settings → ASR Settings → Result Optimization (Pro)`
-2. Enable “Automatically learn hotwords”
-3. Optionally enable “Use AI to learn hotwords”; this requires a working LLM configuration
+2. Enable `Learn hotwords from corrections`
+3. Optionally enable `Use an LLM to analyze corrections`; this requires a working LLM configuration
 4. Dictate through modified Fcitx5 / Trime, the latest IME Bridge, or an accessibility-assisted floating ball, then correct a recognition mistake
 5. Return to “Learned hotwords awaiting confirmation” to approve or remove candidates
 
-By default, a new candidate waits for manual confirmation; learning the same correction again confirms it automatically. If both “Automatically confirm learned hotwords” and “Use AI to learn hotwords” are enabled, an AI-approved candidate can be added after the first correction. Candidates found by local rules still require a second occurrence or manual confirmation.
+By default, a new candidate waits for manual confirmation; learning the same correction again confirms it automatically. If both `Automatically adopt learning results` and `Use an LLM to analyze corrections` are enabled, an LLM-approved candidate can be added after the first correction. Candidates found by local rules still require a second occurrence or manual confirmation.
 
 ::: info Companion versions
 Modified Fcitx5 / Trime report corrections through optional AIDL function. Other third-party IMEs and the floating ball can use the latest LSPosed/LSPatch IME Bridge module or the floating ball accessibility calling method to trigger hotword learning.
@@ -104,7 +108,7 @@ possible false learning, can be combined with manual confirmation to avoid accid
 - **Shortcut phrase input**: target word `xxxx@qq.com`, extra alias `primary email`. When you say "primary email" and it is recognized, it is replaced with the real email address.
 
 ::: warning Suggestion
-Enhanced replacement is only best for Chinese and English. For other languages, it may not work properly. It is best for proper nouns and frequent misrecognitions. Adding too many common words may cause unwanted replacements for similar-sounding text.
+`Replace similar words after recognition` works best for Chinese and English. For other languages, it may not work properly. It is best for proper nouns and frequent misrecognitions. Adding too many common words may cause unwanted replacements for similar-sounding text.
 :::
 
 ### What’s new (more convenient)
@@ -184,7 +188,7 @@ Based on VAD (Voice Activity Detection): automatically starts on speech and stop
 ### How to use
 
 1. Open the BiBi Keyboard Pro panel
-2. Add the continuous mode button under `Settings → Input Settings → Custom keyboard layout`, then toggle it on the keyboard
+2. Add the continuous mode button under `Settings → UI Settings → Custom keyboard layout`, then toggle it on the keyboard
 3. Start speaking
 4. Tune VAD parameters:
    - **Silence window**: 0.5-3s (default 1.5s)

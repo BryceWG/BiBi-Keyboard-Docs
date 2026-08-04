@@ -22,7 +22,7 @@
 | **SiliconFlow**<br>硅基流动 | ❌       | 20 分钟            | 内置免费 ASR 服务（SenseVoiceSmall / TeleSpeechASR），支持 Qwen3-Omni 多模态转写（需自有 Key） |
 | **ElevenLabs**              | ✅       | 20 分钟            | 高精度英文识别，支持文件与流式                                                                 |
 | **OpenAI**                  | ✅       | 20 分钟            | 默认 `gpt-4o-mini-transcribe`，支持多渠道配置与 Realtime 流式识别                              |
-| **DashScope**<br>阿里云百炼 | ✅       | 3 分钟             | Qwen3-ASR-Flash / Fun-ASR-Flash / Qwen3.5-Omni，支持流式与非流式                                 |
+| **DashScope**<br>阿里云百炼 | ✅       | 5 分钟             | Qwen-Audio-3.0 / Fun-ASR / Qwen3.5-Omni，支持流式与非流式                                        |
 | **Gemini**<br>Google        | ❌       | 4 小时             | 基于文件的多模态语音理解                                                                       |
 | **Soniox**                  | ✅       | 1 小时             | 支持多语言提示，流式与文件双模式                                                               |
 | **StepAudio**               | ❌       | 20 分钟            | StepAudio 2.5 在线 ASR，支持中文、英文与 ITN                                                    |
@@ -127,7 +127,7 @@
 | SiliconFlow | 20 分钟  | 应用内默认单段上限为 20 分钟，用于控制分段录音，与收费/免费额度无关 |
 | ElevenLabs  | 20 分钟  | 应用内默认单段上限为 20 分钟，防止超长音频导致失败                  |
 | OpenAI      | 20 分钟  | 应用内默认单段上限为 20 分钟，可根据实际需求调整模型与用量          |
-| DashScope   | 3 分钟   | 默认采用 qwen3-asr-flash，应用内单段上限为 3 分钟                   |
+| DashScope   | 3 分钟   | 默认采用 Qwen-Audio-3.0-ASR-Flash，应用内单段上限为 5 分钟          |
 | Gemini      | 4 小时   | 官方单次最长约 9.5 小时，这里预留安全边距，仅在应用内限制为 4 小时  |
 | Soniox      | 1 小时   | 未查到严格官方上限，应用内默认限制为 1 小时                         |
 | StepAudio   | 20 分钟  | 应用内默认单段上限为 20 分钟，适合中短语音识别                      |

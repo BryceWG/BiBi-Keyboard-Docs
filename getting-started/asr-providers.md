@@ -97,10 +97,13 @@ API Key / Access Token 属于敏感信息，请勿截图公开或分享给他人
 
 1. 打开 `设置 → 语音识别设置`，选择 **DashScope（阿里云百炼）**
 2. 填入 API Key 并保存
-3. 根据需要选择模型：`Qwen3-ASR-Flash`、`Fun-ASR-Flash`、`Qwen3.5-Omni-Flash`、`Qwen3.5-Omni-Plus` 或流式模型
+3. 根据需要选择模型：
+   - 非流式：`Qwen-Audio-3.0-ASR-Flash`（默认）、`Fun-ASR-Flash`、`Qwen3.5-Omni-Flash`、`Qwen3.5-Omni-Plus`
+   - 流式：`Qwen-Audio-3.0-ASR-Flash-Streaming`（默认）或 `Fun-ASR-Realtime`
 
 ::: tip 模型选择
-`Qwen3.5-Omni` 适合非流式多模态转写；`Fun-ASR-Flash` 也是非流式模型，但不支持识别语言和自定义提示词设置。流式识别默认使用 `qwen3-asr-flash-realtime-2026-02-10`，也可切换到 `fun-asr-realtime`。
+`Qwen-Audio-3.0` 支持选择最多 4 种识别语言。`Qwen3.5-Omni` 适合非流式多模态转写；`Fun-ASR-Flash` 也是非流式模型，但不使用识别语言和自定义提示词设置。流式模型可开启「使用语义断句」获得更自然的标点，但返回可能稍慢。
+旧版 Qwen3-ASR 设置会自动迁移到对应的 Qwen-Audio-3.0 模型。
 :::
 
 ## Cohere

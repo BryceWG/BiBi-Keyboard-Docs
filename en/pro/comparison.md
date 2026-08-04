@@ -53,7 +53,7 @@ BiBi Keyboard provides two editions: OSS and Pro. This page compares feature dif
 
 ::: info Pro hotwords support details
 Pro hotwords cover multiple online ASR providers and selected local engines such as Qwen3-ASR and FunASR Nano.
-Hotword enhanced replacement support all models.
+Post-recognition similar-word replacement supports all models.
 :::
 
 ## Pricing

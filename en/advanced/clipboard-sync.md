@@ -10,7 +10,7 @@ You can use any of the following backends as a "server":
 - **Desktop SyncClipboard built-in server**
 - **WebDAV / cloud storage** (as long as it supports HTTP PUT/GET)
 
-Currently, BiBi Keyboard mainly syncs **text**. If the server pushes images/files, the file name will be shown in clipboard history or the keyboard status bar, and you can tap to download if needed.
+The current version syncs **text, images, and files**. Image and file sync can be enabled independently; eligible remote attachments are downloaded automatically to the system `Download/BiBi` folder.
 
 ## What it does
 
@@ -18,6 +18,8 @@ Clipboard sync service provides:
 
 - **Auto upload**: on local clipboard changes, `PUT` to server `SyncClipboard.json`
 - **Automatic receive**: uses Realtime when the server supports it, otherwise pulls at the configured interval
+- **Attachment download**: downloads remote attachments according to the image/file switches and size limit, with system progress/result notifications
+- **Attachment upload**: watches a selected folder for new files or uploads one file from Android's share sheet
 - **Deduplication**: uses content hash to avoid uploading duplicates
 - **File name dedup**: remembers recent file names to avoid repeated previews
 
@@ -82,12 +84,14 @@ To remove all clipboard items saved by BiBi Keyboard, open `Settings → Other S
 | `syncClipboardUsername`    | String | ✓        | username (HTTP Basic Auth)                          |
 | `syncClipboardPassword`    | String | ✓        | password (HTTP Basic Auth)                          |
 
-The server address can be either a base URL or the full file URL:
+The server address can be either a base URL(recommended) or the full file URL:
 
-- Base URL examples: `https://example.com:5033/`, `https://dav.jianguoyun.com/dav/`
+- Base URL example: `https://example.com:5033/`; Webdav server (e.g. Jianguoyun) work-directory example: `https://dav.jianguoyun.com/dav/SyncClipboard`
 - Full URL example: `https://example.com:5033/SyncClipboard.json`
 
-If the URL does not end with `.json`, the app automatically appends `/SyncClipboard.json`.
+If the URL does not end with `.json`, the app automatically appends `/SyncClipboard.json`. The Webdav server example therefore accesses `https://dav.jianguoyun.com/dav/SyncClipboard/SyncClipboard.json`.
+
+To sync files or attachments, enter the directory base URL rather than the full `SyncClipboard.json` URL, because files are accessed from that directory's `file/` path. The Webdav server example above is such a URL.
 
 ::: warning Note
 All fields are auto-trimmed (`trim()`). Make sure you did not paste extra spaces.
@@ -115,6 +119,28 @@ The settings page reports whether capability detection, Realtime, or periodic pu
 
 :::
 
+### Image and file sync
+
+Under `Settings → Other Settings → Clipboard sync`, enable `Sync images` and/or `Sync files`. When either is enabled, you can also configure:
+
+| Setting | Range | Description |
+|---------|-------|-------------|
+| Attachment size limit | 1-1024 MB | Applied to both uploads and downloads |
+| Watched folder | Optional folder | Automatically uploads the latest new eligible attachment added later |
+
+Without a watched folder, attachment downloads and manual share-sheet uploads still work. When a folder is selected for the first time, existing files are marked as handled instead of being uploaded in bulk; only files added afterward are considered. `Download/BiBi` is reserved for downloaded attachments and cannot also be watched, which prevents upload loops.
+
+Downloaded attachments are saved in `Download/BiBi`. Android notifications show upload/download progress and the final result.
+
+### Upload from the Android share sheet
+
+1. Enable Clipboard Sync and the matching `Sync images` or `Sync files` switch
+2. Share one file from a file manager, gallery, or another app
+3. Choose `Upload to Clipboard Sync` in the Android share sheet
+4. Wait for the upload result notification
+
+Only one shared file is handled at a time, and the attachment size limit still applies.
+
 ## Available servers/backends
 
 ### SyncClipboard dedicated server (recommended)
@@ -141,25 +167,28 @@ If you want to use WebDAV/cloud storage as backend, it only needs to support HTT
 
 Jianguoyun is a popular WebDAV provider. Quota/pricing depend on their official plans.
 
+First, create a dedicated folder in your Jianguoyun root, for example `SyncClipboard`; if you want to sync files, create a `file` subdirectory in `SyncClipboard`. Use an English, space-free name where possible. Folder names containing Chinese characters or spaces must be URL-encoded in the server address.
+
 Example:
 
 ```
-Server: https://dav.jianguoyun.com/dav/
-Username: your Jianguoyun account (email)
-Password: app-specific password
+Server: https://dav.jianguoyun.com/dav/SyncClipboard
+Username: your Jianguoyun registration email
+Password: Jianguoyun third-party app password
 ```
 
 ::: warning Important
-Jianguoyun does not allow WebDAV access with your login password. You must generate an **app password** under Account settings → Security → Third-party apps.
+Do not add a trailing `/`, and do not use only `https://dav.jianguoyun.com/dav/`: the URL must point to an existing dedicated working directory. Jianguoyun does not allow WebDAV access with your login password. Generate a third-party app password under **Account information → Security options → Third-party app management → Add app password**.
 :::
 
 Steps:
 
 1. Log in to Jianguoyun web
-2. Open Account settings → Security
-3. Find Third-party apps
-4. Add an app (e.g. "BiBi Keyboard")
-5. Use the generated password as WebDAV password
+2. Create the `SyncClipboard` folder in the root directory
+3. To sync files, create a `file` subdirectory in `SyncClipboard` (optional)
+4. Open Account information → Security options → Third-party app management
+5. Add an app password (for example, “BiBi Keyboard”)
+6. Use the generated password as the WebDAV password
 
 ## Use cases
 
@@ -196,7 +225,7 @@ Possible causes:
 
 1. Server URL wrong
    - ensure scheme `https://` / `http://`
-   - ensure path is correct (Jianguoyun must end with `/dav/`)
+   - the Jianguoyun URL must point to an existing work directory, for example `https://dav.jianguoyun.com/dav/SyncClipboard`, without a trailing `/`
 2. Wrong username/password
    - Jianguoyun requires an app password
    - check for extra spaces

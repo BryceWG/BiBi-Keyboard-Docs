@@ -68,9 +68,17 @@ The Recording Test page lets you test the current ASR setup without opening the 
 - Compare results after changing VAD, silent-part filtering, or upload compression
 - Capture an error message or API Log summary before reporting a problem
 
-## 30-day ASR Stats
+## Usage Stats
 
-The About page shows recent online ASR failure-rate statistics for the last 30 days. Use it to notice providers that are failing more often and decide whether to switch providers, enable a backup ASR engine, or adjust endpoint/network settings.
+Open `Usage Stats` from the settings home page to view:
+
+- Total audio time, recognized characters, session count, and average input speed
+- Activity for the last seven days, plus 7-day and 4-week averages
+- Usage by ASR provider and online ASR failure rates for the last 30 days
+
+Tap the share button in the top-right corner to preview a usage card, then save it to `Pictures/BiBi` or share it through Android. The card uses the current UI theme.
+
+To stop storing these local aggregates, enable `Disable usage statistics` under `Settings → Other Settings`. This clears existing statistics and stops recording new data.
 
 ## Clearing Records
 

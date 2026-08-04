@@ -12,7 +12,7 @@ Main keyboard buttons and AI Edit panel buttons support long-press hints. If you
 
 - **AI Edit (pencil)**: enter AI Edit panel. Requires ASR and LLM to be configured; otherwise the status bar will ask you to configure keys first.
 - **AI Post-processing toggle (magic wand)**: enable/disable auto AI post-processing after each recognition. See [AI Post-processing](./ai-postprocess.md).
-- **Clipboard (clipboard icon)**: open the built-in clipboard panel to browse and insert recent clips.
+- **Clipboard (clipboard icon)**: open the built-in clipboard panel to browse and insert recent clips. Swipe right to pin/unpin and left to delete; unpin a pinned item before deleting it.
 - **Backspace**: delete the character before cursor. Supports long-press delete and gesture actions (see [Gestures](./gestures.md)).
 
 ### Middle row (overlay row)
@@ -38,7 +38,7 @@ At the top of the keyboard, there is a row of up to 4 customizable action button
 
 ### Where to configure
 
-- Path: `Settings → Input Settings → Custom keyboard layout`
+- Path: `Settings → UI Settings → Custom keyboard layout`
 - Select a button position in the editor, then assign an action or restore the default layout.
 - If you only want to change the top row, edit just the action-row area.
 
@@ -66,7 +66,7 @@ You can also enable it under `Settings → Input Settings → Auto enter after i
 
 Custom keyboard layout is useful if you want frequently used buttons in fixed positions, or want to hide actions you rarely use.
 
-1. Open `Settings → Input Settings → Custom keyboard layout`
+1. Open `Settings → UI Settings → Custom keyboard layout`
 2. Tap a button block on the canvas
 3. Choose a new action from the action list
 4. Save and return to the keyboard to check the result

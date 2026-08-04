@@ -108,7 +108,7 @@ This keeps the microphone listening locally while the keyboard or floating ball 
 
 If you often switch between short messages and long dictation, add the "Recording mode switch" action to your keyboard layout:
 
-1. Open `Settings → Input Settings → Custom keyboard layout`
+1. Open `Settings → UI Settings → Custom keyboard layout`
 2. Pick an action-row or keyboard button position
 3. Set its action to `Recording mode switch`
 4. Return to the keyboard and tap it to switch between press-and-hold and tap-to-toggle recording

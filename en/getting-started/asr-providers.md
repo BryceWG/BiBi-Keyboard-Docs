@@ -97,10 +97,13 @@ DashScope offers good accuracy and cost efficiency, with partial streaming suppo
 
 1. Open `Settings → ASR Settings` and select **DashScope**
 2. Paste the API key and save
-3. Choose a model as needed: `Qwen3-ASR-Flash`, `Fun-ASR-Flash`, `Qwen3.5-Omni-Flash`, `Qwen3.5-Omni-Plus`, or a streaming model
+3. Choose a model:
+   - Non-streaming: `Qwen-Audio-3.0-ASR-Flash` (default), `Fun-ASR-Flash`, `Qwen3.5-Omni-Flash`, or `Qwen3.5-Omni-Plus`
+   - Streaming: `Qwen-Audio-3.0-ASR-Flash-Streaming` (default) or `Fun-ASR-Realtime`
 
 ::: tip Model choice
-`Qwen3.5-Omni` is for non-streaming multimodal transcription. `Fun-ASR-Flash` is also non-streaming, but it does not use the recognition-language or custom-prompt settings. Streaming defaults to `qwen3-asr-flash-realtime-2026-02-10`, and you can also switch to `fun-asr-realtime`.
+`Qwen-Audio-3.0` accepts up to four recognition-language hints. `Qwen3.5-Omni` is for non-streaming multimodal transcription. `Fun-ASR-Flash` is also non-streaming, but it does not use recognition-language or custom-prompt settings. Streaming models can enable semantic segmentation for more natural punctuation, although results may arrive slightly later. 
+Legacy Qwen3-ASR selections are migrated to the matching Qwen-Audio-3.0 model automatically.
 :::
 
 ## Cohere

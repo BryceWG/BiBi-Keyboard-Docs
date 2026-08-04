@@ -29,7 +29,7 @@ Currently supported: modified Fcitx5 and modified Trime. Common steps:
 
 - **Clipboard sync**: the latest modified Fcitx5 / Trime can enable “BiBi Keyboard clipboard sync” in their clipboard settings. Clipboard sync must also be configured and enabled in BiBi Keyboard; see [Clipboard Sync](/en/advanced/clipboard-sync#modified-fcitx5-trime-setup).
 - **Pro input-field context**: when Pro's input-field context option is enabled, the modified IME supplies limited cursor-adjacent text when requested for AI post-processing.
-- **Pro automatic hotword learning**: when enabled in Pro, the modified IME briefly observes corrections after a voice result is committed and reports the settled edit from the same input field. Password, email, URL, phone, and no-personalized-learning fields are excluded.
+- **Pro learn hotwords from corrections**: when enabled in Pro, the modified IME briefly observes corrections after a voice result is committed and reports the settled edit from the same input field. Password, email, URL, phone fields are excluded.
 
 **Package priority** (same as Fcitx implementation):
 
@@ -157,7 +157,7 @@ After starting a session, call `getInputRequirements(sessionId)` and inspect its
 | Bit | Value | Meaning |
 |-----|-------|---------|
 | bit 0 | `1` | AI post-processing requests input-field context |
-| bit 1 | `2` | automatic hotword learning requests post-dictation correction observation |
+| bit 1 | `2` | learning hotwords from corrections requests post-dictation observation |
 
 When the result is non-zero, the client may call `setInputContext(...)` with the input target's `generation`, `inputType`, `imeOptions`, and text before/after the cursor. The service rejects sensitive editors and limits each side to 1,500 characters.
 

@@ -162,7 +162,8 @@ Input field context is sent only as reference for AI post-processing. Enable it 
 
 ## Hotword Enhancement <Badge type="warning" text="Pro" />
 
-Pro hotwords can participate before recognition according to the selected provider's hotword support. When "Hotword enhanced replacement" is enabled, Pro also runs a phoneme-similarity fallback after recognition. The target word always acts as one alias, and you can add two more aliases; the target word and aliases all participate in phoneme matching, then matches are replaced with the target word.
+With `Inject hotwords into recognition engines` enabled, Pro hotwords can participate before recognition according to provider support. You can independently enable `Replace similar words after recognition` for a phoneme-similarity fallback. 
+The target word always acts as one alias, and you can add two more aliases; the target word and aliases all participate in phoneme matching, then matches are replaced with the target word.
 
 Example: target word `音素` can have aliases `因素` and `严肃`; if the transcript contains `因素`, it is replaced with `音素`. You can also set the target word to `xxxx@qq.com` and alias to `primary email` for shortcut phrase input.
 
