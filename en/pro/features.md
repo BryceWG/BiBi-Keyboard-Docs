@@ -144,7 +144,7 @@ When using AI post-processing from the main keyboard, Pro can send text around t
 
 ### How to use
 
-1. Open `Settings → AI Post-processing`
+1. Open `Settings → AI Feature Settings`
 2. Enable `Use input field context (Pro)`
 3. Dictate from the main keyboard with AI post-processing enabled. To use it from the floating ball, also enable `Settings → UI & Interaction → Floating Settings → IME bridge mode`
 
@@ -169,7 +169,7 @@ Trigger voice commands with a wake word, so AI can directly handle translation, 
 
 ### How to use
 
-1. Open `Settings → AI Post-processing`
+1. Open `Settings → AI Feature Settings`
 2. Enable `AI Assistant (Pro)`
 3. Configure wake words and preset keywords
 4. Speak in the form of "wake word + command" to trigger (for example: "Dian Dian, translate this into English")
@@ -274,7 +274,7 @@ Assign different AI post-processing prompt presets per app. Example: use "Genera
 
 ### How to use
 
-1. Open `Settings → AI Post-processing`
+1. Open `Settings → AI Feature Settings`
 2. Tap "App-specific Prompt (Pro)"
 3. Enable "App-specific Prompt"
 4. Tap "Add app" and select a prompt preset for that app

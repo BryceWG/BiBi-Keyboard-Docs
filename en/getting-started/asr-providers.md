@@ -56,7 +56,9 @@ Volcengine (Doubao Voice) has strong Chinese recognition and supports both strea
 2. Select **Volcengine**
 3. Paste `APP ID` into `X-Api-App-Key`
 4. Paste `Access Token` into `X-Api-Access-Key`
-5. If you want streaming, enable “Use Streaming (WebSocket)”
+5. Pick a Doubao model directly under `Recognition model`:
+   - Streaming (live results, needs a stable network): `Doubao streaming speech recognition 2.0` (default), `Doubao streaming speech recognition 1.0`
+   - Non-streaming (uploads the full recording after you stop): `Doubao standard file recognition 2.0`, `Doubao standard file recognition 1.0`, `Doubao turbo file recognition 1.0` (fastest)
 
 ![Configure Volcengine in app](/images/getting-started/asr-providers/volcengine-app-settings.png)
 
@@ -98,13 +100,8 @@ DashScope offers good accuracy and cost efficiency, with partial streaming suppo
 1. Open `Settings → ASR Settings` and select **DashScope**
 2. Paste the API key and save
 3. Choose a model:
-   - Non-streaming: `Qwen-Audio-3.0-ASR-Flash` (default), `Fun-ASR-Flash`, `Qwen3.5-Omni-Flash`, or `Qwen3.5-Omni-Plus`
-   - Streaming: `Qwen-Audio-3.0-ASR-Flash-Streaming` (default) or `Fun-ASR-Realtime`
-
-::: tip Model choice
-`Qwen-Audio-3.0` accepts up to four recognition-language hints. `Qwen3.5-Omni` is for non-streaming multimodal transcription. `Fun-ASR-Flash` is also non-streaming, but it does not use recognition-language or custom-prompt settings. Streaming models can enable semantic segmentation for more natural punctuation, although results may arrive slightly later. 
-Legacy Qwen3-ASR selections are migrated to the matching Qwen-Audio-3.0 model automatically.
-:::
+   - Streaming: `Qwen-Audio-3.0-ASR-Flash-Streaming` (default), `Fun-ASR-Realtime`, or `Qwen3-ASR-Flash-Realtime`
+   - Non-streaming: `Qwen-Audio-3.0-ASR-Flash` (default), `Fun-ASR-Flash`, `Qwen3-ASR-Flash`, `Qwen3.5-Omni-Flash`, or `Qwen3.5-Omni-Plus`
 
 ## Cohere
 
@@ -153,6 +150,15 @@ Gemini is commonly used for file-based recognition and small usage.
 3. Paste it into the Gemini section in BiBi Keyboard
 
 ![Gemini API key](/images/getting-started/asr-providers/gemini-api-key.png)
+
+### Call mode
+
+`Call mode` offers two transcription paths, both non-streaming (audio is uploaded once after recording stops):
+
+- **Gemini**: multimodal audio understanding with a Gemini model; enable "Reduce thinking" for faster, closer-to-verbatim results.
+- **Transcribe**: the dedicated Gemini Transcribe API, sending the audio inline in a single request. The default model is `gemini-3.5-transcribe`. Extra options:
+  - **Recognition language**: Automatic, Mandarin Chinese, Traditional Cantonese, US English, Japanese, Korean, or a custom BCP-47 code
+  - **Smart transcription**: when enabled, removes fillers, resolves speech corrections, and restructures formatting (may change the verbatim content); when disabled, keeps verbatim transcription including fillers, repetitions, and false starts
 
 ## ElevenLabs
 
@@ -242,7 +248,7 @@ Local models are ideal for offline usage and privacy. Each model trades off spee
 
 - **SenseVoice**: non-streaming; fast and balanced; supports language settings
 - **FunASR Nano**: non-streaming; language selection, native ITN, and MLT Nano multilingual variant
-- **Qwen3-ASR**: non-streaming; local 0.6B model, good Chinese recognition, optional rule-based ITN
+- **Qwen3-ASR**: non-streaming; local 0.6B / 1.7B models, good Chinese recognition, optional rule-based ITN
 - **Parakeet**: non-streaming; V3 for several European languages, V2 for English
 - **FireRedASR V2**: non-streaming / pseudo-streaming; replaces the old TeleSpeech local engine
 - **X-ASR**: local streaming; Chinese/English 480ms model with thread count, unload policy, and optional ITN
@@ -290,6 +296,7 @@ The links below point to `BiBi-Keyboard` model ZIPs. If you see 404 or slow down
 #### Qwen3-ASR (non-streaming)
 
 - 0.6B int8 (~806MB): [sherpa-onnx-qwen3-asr-0.6B-int8-2026-03-25.zip](https://github.com/BryceWG/BiBi-Keyboard/releases/download/models/sherpa-onnx-qwen3-asr-0.6B-int8-2026-03-25.zip)
+- 1.7B int8 (~2.0GB): [sherpa-onnx-qwen3-asr-1.7B-int8-2026-08-04.zip](https://github.com/BryceWG/BiBi-Keyboard/releases/download/models/sherpa-onnx-qwen3-asr-1.7B-int8-2026-08-04.zip)
 
 #### Parakeet (non-streaming)
 

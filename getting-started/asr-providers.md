@@ -56,7 +56,9 @@ API Key / Access Token 属于敏感信息，请勿截图公开或分享给他人
 2. 选择 **Volcengine（火山引擎）**
 3. 将 `APP ID` 填入 `X-Api-App-Key`
 4. 将 `Access Token` 填入 `X-Api-Access-Key`
-5. 如需流式识别，开启「使用流式识别（WebSocket）」
+5. 在「识别模型」中直接选择要使用的豆包模型：
+   - 流式（边说边出字，网络需较稳定）：`豆包流式语音识别 2.0`（默认）、`豆包流式语音识别 1.0`
+   - 非流式（录音结束后上传完整音频）：`豆包普通文件识别 2.0`、`豆包普通文件识别 1.0`、`豆包极速文件识别 1.0`（速度更快）
 
 ![在应用内填写凭证](/images/getting-started/asr-providers/volcengine-app-settings.png)
 
@@ -98,13 +100,8 @@ API Key / Access Token 属于敏感信息，请勿截图公开或分享给他人
 1. 打开 `设置 → 语音识别设置`，选择 **DashScope（阿里云百炼）**
 2. 填入 API Key 并保存
 3. 根据需要选择模型：
-   - 非流式：`Qwen-Audio-3.0-ASR-Flash`（默认）、`Fun-ASR-Flash`、`Qwen3.5-Omni-Flash`、`Qwen3.5-Omni-Plus`
-   - 流式：`Qwen-Audio-3.0-ASR-Flash-Streaming`（默认）或 `Fun-ASR-Realtime`
-
-::: tip 模型选择
-`Qwen-Audio-3.0` 支持选择最多 4 种识别语言。`Qwen3.5-Omni` 适合非流式多模态转写；`Fun-ASR-Flash` 也是非流式模型，但不使用识别语言和自定义提示词设置。流式模型可开启「使用语义断句」获得更自然的标点，但返回可能稍慢。
-旧版 Qwen3-ASR 设置会自动迁移到对应的 Qwen-Audio-3.0 模型。
-:::
+   - 流式：`Qwen-Audio-3.0-ASR-Flash-Streaming`（默认）、`Fun-ASR-Realtime`、`Qwen3-ASR-Flash-Realtime`
+   - 非流式：`Qwen-Audio-3.0-ASR-Flash`（默认）、`Fun-ASR-Flash`、`Qwen3-ASR-Flash`、`Qwen3.5-Omni-Flash`、`Qwen3.5-Omni-Plus`
 
 ## Cohere
 
@@ -155,6 +152,15 @@ Gemini 适合小用量体验，通常以文件识别为主。
 3. 填入说点啥对应的 Gemini 配置项
 
 ![创建 Gemini Key](/images/getting-started/asr-providers/gemini-api-key.png)
+
+### 调用模式
+
+在「调用模式」中可选择两种转写方式，均为非流式（录音结束后一次性上传识别）：
+
+- **Gemini**：使用 Gemini 多模态模型进行音频理解转写，可配合「最低思考强度」获得更快的逐字转写。
+- **Transcribe**：使用 Gemini Transcribe 专用转写接口，音频以单条请求内嵌上传，默认模型为 `gemini-3.5-transcribe`。可额外设置：
+  - **识别语言**：自动、简体普通话、繁体粤语、美式英语、日语、韩语，或填写自定义 BCP-47 代码
+  - **Smart 转录**：开启后移除语气词、纠正口误并重排格式（可能改变逐字内容）；关闭则逐字转录，保留语气词、重复和口误
 
 ## ElevenLabs
 
@@ -246,7 +252,7 @@ StepAudio 是阶跃星辰提供的在线 ASR 服务，目前在说点啥中以�
 
 - **SenseVoice**：非流式；速度快、均衡；支持语言设置
 - **FunASR Nano**：非流式；支持语言选择、原生 ITN，并提供 MLT Nano 多语言变体
-- **Qwen3-ASR**：非流式；本地 0.6B 模型，中文效果较好
+- **Qwen3-ASR**：非流式；本地 0.6B / 1.7B 模型，中文效果较好
 - **Parakeet**：非流式；V3 适合多种欧洲语言，V2 适合英语
 - **FireRedASR V2**：非流式 / 伪流式；替代旧版 TeleSpeech，支持中英本地识别
 - **X-ASR**：本地流式；中英 480ms 模型，支持线程数、模型卸载策略与可选 ITN
@@ -290,6 +296,7 @@ StepAudio 是阶跃星辰提供的在线 ASR 服务，目前在说点啥中以�
 #### Qwen3-ASR（非流）
 
 - 0.6B int8（约 806MB）：[sherpa-onnx-qwen3-asr-0.6B-int8-2026-03-25.zip](https://github.com/BryceWG/BiBi-Keyboard/releases/download/models/sherpa-onnx-qwen3-asr-0.6B-int8-2026-03-25.zip)
+- 1.7B int8（约 2.0GB）：[sherpa-onnx-qwen3-asr-1.7B-int8-2026-08-04.zip](https://github.com/BryceWG/BiBi-Keyboard/releases/download/models/sherpa-onnx-qwen3-asr-1.7B-int8-2026-08-04.zip)
 
 #### Parakeet（非流）
 

@@ -62,7 +62,7 @@ API keys are sensitive. Do not share them. If leaked, delete the key immediately
 
 SiliconFlow also provides LLM services for AI post-processing:
 
-1. Go to "AI Post-processing Settings"
+1. Go to "AI Feature Settings"
 2. Enable "AI post-processing"
 3. Choose "SiliconFlow" as the LLM provider
 4. Use the same API key (shared with ASR)

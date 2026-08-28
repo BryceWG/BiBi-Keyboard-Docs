@@ -53,6 +53,7 @@ At the top of the keyboard, there is a row of up to 4 customizable action button
 - **Move to start / end**: jump to start/end of text
 - **VAD toggle**: quickly enable/disable auto-stop on silence
 - **Recording mode switch**: quickly switch between press-and-hold and tap-to-toggle recording
+- **Recognition history**: open the in-keyboard history panel. Tap an entry to insert its text; swipe right to polish again, swipe left to recognize again (see [Voice Input Basics](./voice-input.md#in-keyboard-recognition-history))
 - **Auto enter after input**: toggle automatic Enter/send after recognition and optional AI post-processing finish
 - **Hide keyboard**: minimize the keyboard
 
@@ -102,7 +103,7 @@ AI Edit lets you "rework" existing text (polish, translate, or edit by instructi
 
 ### Typical workflow
 
-1. Select text in the target app. If no selection, the panel edits the whole input field by default (you can change this in `Settings → AI Post-processing` to prefer "last recognition result").
+1. Select text in the target app. If no selection, the panel edits the whole input field by default (you can change this in `Settings → AI Feature Settings` to prefer "last recognition result").
 2. Tap the microphone button and speak an instruction (e.g. "Translate to English and simplify").
 3. Tap mic again or release (depending on recording mode) and wait for ASR + AI to finish.
 4. The result replaces the selection (or the whole text). Use Undo to revert.

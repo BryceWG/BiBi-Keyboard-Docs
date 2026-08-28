@@ -12,12 +12,30 @@ Recognition History lets you review previous voice input results and basic metri
 2. From the settings home page, open `Recognition History`
 3. Browse by source, time, or content
 
+You can also open history quickly inside the keyboard: add the "Recognition history" extension button in the custom keyboard layout, then tap it to open the history panel. Tap an entry to insert its text; swipe left/right to recognize again or polish again.
+
 ### What you can inspect
 
 - **Source**: keyboard input, floating ball input, external input, etc.
 - **Provider**: the ASR engine used for that recognition
 - **Transcript**: the resulting text
 - **Timing**: total time, ASR time, and AI post-processing time when available
+
+### Stage timeline
+
+History details for newer records provide a **stage timeline** that breaks elapsed time down by stage, making it easier to see where time is spent:
+
+- **Audio input**: time spent capturing the recording
+- **Speech recognition**: time the ASR engine took to return results
+- **Post-processing**: local text filtering / regex post-processing
+- **AI polish**: the LLM polish stage (when enabled and attempted)
+- **Text delivery**: time committing the result into the input field
+
+Records created by earlier versions show a note that stage timings were not saved.
+
+### Failed records
+
+Records that failed, timed out, or were canceled are kept as well, with the failure reason shown (such as invalid credentials, microphone in use, network unavailable, or recognition timeout). Records that still have their recording audio can be retried via re-recognition.
 
 ## API Log
 

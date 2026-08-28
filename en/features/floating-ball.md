@@ -49,6 +49,7 @@ If your device aggressively kills background services and the floating ball/acce
 
 - **Foreground keep-alive (recommended first)**: suitable for most users. It shows a persistent notification and improves background survival.
 - **Persistent notification status**: after foreground keep-alive is enabled, the notification refreshes basic floating-service status so you can confirm it is still working.
+- **Persistent notification tap**: after keep-alive is enabled, choose which settings page opens when you tap the persistent notification under `Settings → Other Settings → Persistent notification tap` (Input, UI, Floating, ASR, AI, Recognition History, or Usage Stats). The default is Recognition History.
 - **Shizuku / Root enhanced keep-alive (advanced)**: for devices that still kill the service even after foreground keep-alive. Prerequisites: foreground keep-alive is already enabled, and Shizuku authorization or a root environment is available.
 
 ::: warning Keep-alive risk note

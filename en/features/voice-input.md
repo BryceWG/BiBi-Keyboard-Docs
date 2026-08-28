@@ -22,7 +22,7 @@ BiBi Keyboard supports **18** ASR providers, grouped into cloud and local:
 | **SiliconFlow**                   | ❌        | 20 min                         | Built-in free ASR (SenseVoiceSmall / TeleSpeechASR); supports Qwen3-Omni transcription (own key)     |
 | **ElevenLabs**                    | ✅        | 20 min                         | High-accuracy English; supports both file and streaming                                               |
 | **OpenAI**                        | ✅        | 20 min                         | Default `gpt-4o-mini-transcribe`; supports multiple channels and Realtime streaming                    |
-| **DashScope (Alibaba)**           | ✅        | 5 min                          | Qwen-Audio-3.0 / Fun-ASR / Qwen3.5-Omni; streaming and non-streaming                                  |
+| **DashScope (Alibaba)**           | ✅        | 5 min                          | Qwen-Audio-3.0 / Fun-ASR / Qwen3-ASR / Qwen3.5-Omni; streaming and non-streaming                    |
 | **Gemini (Google)**               | ❌        | 4 hours                        | File-based multimodal speech understanding                                                            |
 | **Soniox**                        | ✅        | 1 hour                         | Supports multi-language prompts; both streaming and file modes                                         |
 | **StepAudio**                     | ❌        | 20 min                         | StepAudio 2.5 online ASR with Chinese/English and ITN                                                  |
@@ -37,7 +37,7 @@ BiBi Keyboard supports **18** ASR providers, grouped into cloud and local:
 | ---------------- | --------- | ------------------------------ | --------------------------------------- |
 | **SenseVoice**   | Pseudo ¹  | 5 min                          | Based on sherpa-onnx; multilingual      |
 | **FunASR Nano**  | ❌        | 5 min                          | Offline recognition with language selection, native ITN, and MLT Nano multilingual variant |
-| **Qwen3-ASR**    | ❌        | 5 min                          | Local 0.6B model, strong Chinese recognition and numeric formatting |
+| **Qwen3-ASR**    | ❌        | 5 min                          | Local 0.6B / 1.7B models, strong Chinese recognition and numeric formatting |
 | **Parakeet**     | ❌        | 5 min                          | Local English / European-language recognition |
 | **FireRedASR V2** | Pseudo ¹ | 5 min                          | Replaces the old TeleSpeech local engine |
 | **X-ASR**        | ✅        | Unlimited ²                    | Local streaming recognition with a Chinese/English 480ms model and optional ITN |
@@ -231,7 +231,19 @@ Each record shows basic info (provider, source, AI processing status, word count
 - **Recognition elapsed time**: ASR-stage processing time.
 - **AI post-processing elapsed time**: shown when AI post-processing is enabled and attempted.
 
-Older records may not include some timing fields, which is expected.
+Newer records also provide a **elapsed time timeline** in the history details, breaking down elapsed time by stage (audio input, speech recognition, post-processing, AI polish, text delivery). Records created by earlier versions do not store stage timings.
+
+### Failed records and retries
+
+Records that failed, timed out, or were canceled are also kept in history, with the failure reason shown (such as invalid credentials, microphone in use, network unavailable, or recognition timeout). Records that still have their recording audio can be re-recognized or re-polished.
+
+### In-keyboard recognition history
+
+If you add the "Recognition history" extension button in the custom keyboard layout, you can open a history panel directly inside the keyboard:
+
+- Tap an entry to insert its text into the current input field
+- **Swipe right** on an entry: polish again (requires a configured LLM and usable text)
+- **Swipe left** on an entry: recognize again (requires the recording audio to be kept for that entry)
 
 Recognition History also links to [API Log and Recording Test](/en/advanced/diagnostics), where you can inspect ASR / LLM call summaries, local model loading records, and current recording-test results.
 

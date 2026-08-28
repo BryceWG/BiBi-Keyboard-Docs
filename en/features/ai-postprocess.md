@@ -2,13 +2,17 @@
 
 AI post-processing uses a Large Language Model (LLM) to refine ASR transcripts. Typical improvements include removing filler words, fixing typos, adjusting punctuation, and polishing tone, making voice typing smoother and more natural.
 
+::: info Naming note
+Since v4.4.2, the settings entry is `Settings → AI Feature Settings`, and the UI refers to this feature as "AI polish". Both names mean the same feature.
+:::
+
 ## Quick Setup
 
 ### Use free service (recommended)
 
 BiBi Keyboard ships with **SiliconFlow free service**. No API key is required:
 
-1. Open `Settings → AI Post-processing`
+1. Open `Settings → AI Feature Settings`
 2. Enable "AI post-processing"
 3. Ensure vendor is **SF_FREE** (default)
 4. Pick a prompt preset (recommended: "General post-process")
@@ -28,7 +32,7 @@ Example with DeepSeek:
 
 1. Sign up at https://platform.deepseek.com/
 2. Create an API key and add credits
-3. In `Settings → AI Post-processing`:
+3. In `Settings → AI Feature Settings`:
    - Vendor: **DEEPSEEK**
    - API key: paste your key
    - Model: e.g. `deepseek-chat`
@@ -63,11 +67,17 @@ Recording → ASR → [AI post-processing] → Insert text
 
 ## Streaming Preview & Typewriter Effect
 
-When your LLM vendor supports streaming output, AI post-processing can show a **live preview** while the model is generating. You can toggle the "typewriter effect" under `Settings → AI Post-processing` to make the preview output smoother.
+When your LLM vendor supports streaming output, AI post-processing can show a **live preview** while the model is generating. You can toggle the "typewriter effect" under `Settings → AI Feature Settings` to make the preview output smoother.
 
 ::: info Note
-The typewriter effect only affects how the streaming preview is displayed. It does not change the final inserted text.
+The typewriter effect only affects how the streaming preview is displayed. It does not change the final inserted text. When the typewriter effect is off, the polished text is committed all at once when polishing finishes.
 :::
+
+## Timeouts & Interruption
+
+- **Polish timeout**: AI post-processing has a timeout cap; when reached, the original text is committed instead of waiting indefinitely.
+- **No fallback after cancel**: canceling a polish no longer triggers an extra non-streaming request.
+- **Closing the keyboard cancels polishing**: hiding the keyboard cancels an in-progress polish and commits the original text, so the next mic press keeps responding.
 
 ### Recommended use cases
 
@@ -128,7 +138,7 @@ BiBi Keyboard includes 5 built-in prompt presets and supports custom ones.
 
 ### Custom prompts
 
-Go to `Settings → AI Post-processing → Prompt presets`:
+Go to `Settings → AI Feature Settings → Prompt presets`:
 
 1. Tap "Add preset"
 2. Write your prompt (role, task, rules, output format, etc.)
@@ -136,7 +146,7 @@ Go to `Settings → AI Post-processing → Prompt presets`:
 
 ### AI Edit system prompt
 
-The AI Edit panel uses a separate system prompt to understand the "edit the current text according to my instruction" task. Customize it under `Settings → AI Post-processing → AI edit system prompt`; leave it empty to use the built-in default.
+The AI Edit panel uses a separate system prompt to understand the "edit the current text according to my instruction" task. Customize it under `Settings → AI Feature Settings → AI edit system prompt`; leave it empty to use the built-in default.
 
 Use this for long-term role/rule/output-format constraints. One-off edit instructions (for example, "translate to English and simplify") should still be spoken in the AI Edit panel.
 
@@ -223,9 +233,13 @@ Different vendors control reasoning mode in different ways:
 
 ## Model Selection & Fetching Model List
 
-In `Settings → AI Post-processing`, you can tap "Fetch model list" to query available models from your vendor and add commonly used ones into the in-app dropdown.
+In `Settings → AI Feature Settings`, you can tap "Fetch model list" to query available models from your vendor and add commonly used ones into the in-app dropdown.
 
-During "Test LLM call", you can cancel the current request at any time to quickly adjust settings and retry.
+During the LLM test, you can cancel the current request at any time to quickly adjust settings and retry. A successful test shows a timing breakdown so you can see where time is spent:
+
+- **Streaming output**: whether streaming is supported (falls back to a non-streaming response otherwise)
+- **Connect / response headers / first visible text / output**: per-stage elapsed time and the total
+- **Connection reuse**: whether the test reused an existing connection or created a new one
 
 ::: tip Tip
 For **CUSTOM** vendors, if your backend has a default model, the model field can be left empty. If the test call fails, fill in the required model name as your provider expects.
