@@ -196,6 +196,7 @@ Example: target word `音素` can have aliases `因素` and `严肃`; if the tra
 | Key                      | Type   | Default | Description                                              |
 | ------------------------ | ------ | ------- | -------------------------------------------------------- |
 | `postprocSkipUnderChars` | Int    | `0`     | skip AI post-processing if shorter than this (0=disable) |
+| `reasoningCharThreshold` | Int    | `300`   | reasoning character threshold (0=always, 300=never)      |
 | `aiEditSystemPrompt`     | String | default | system prompt used by AI Edit; empty means built-in default |
 | `activePromptId`         | String | `""`    | active prompt preset id                                  |
 | `promptPresetsJson`      | String | `""`    | prompt preset list JSON                                  |
@@ -230,6 +231,22 @@ Different vendors control reasoning mode in different ways:
 - ✅ multi-step transformations (e.g. translate + polish)
 - ❌ simple filler-word removal (extra latency without benefit)
   :::
+
+## Reasoning Character Threshold
+
+For vendors with reasoning mode enabled, the "Reasoning character threshold" slider in `Settings → AI Feature Settings` decides whether the model thinks deeply based on the **character count of the recognized text**:
+
+| Slider position        | Behavior                                                                  |
+| ---------------------- | ------------------------------------------------------------------------- |
+| Far left (Always)      | reasoning is always enabled                                               |
+| Middle values          | reasoning is enabled only when the recognized text exceeds the threshold; shorter input is returned directly for lower latency |
+| Far right (Never)      | reasoning is never enabled                                                |
+
+The threshold is stored per LLM vendor. Legacy "Reasoning mode" toggles migrate automatically: previously on means "always", previously off means "never".
+
+::: tip Tip
+Everyday short phrases do not need deep thinking and answer faster without it. For long rewrites or complex tasks, lower the threshold so the model thinks only when there is enough content.
+:::
 
 ## Model Selection & Fetching Model List
 

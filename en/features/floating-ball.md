@@ -111,7 +111,13 @@ After enabling bridge text insertion, you can also enable `Record inside bridged
 - Focus a normal text field and keep the third-party keyboard open; sensitive fields are blocked
 - If recording fails, it does not automatically switch to the floating ball or BiBi Keyboard's own microphone; trigger it again
 
-#### 8. Edge semi-hidden and anchor positioning
+#### 8. Use Android 13 Accessibility IME API
+
+- Path: `Settings → UI & Interaction → Floating Settings → Compatibility → Use Android 13 Accessibility IME API` (shown on Android 13 and later only)
+- Off (default): results are inserted through the traditional Accessibility API. Streaming preview stays available and works with the write-compatibility optimization, suitable for typical apps and older systems.
+- On: on Android 13 and later, results are inserted first via the new Accessibility API. This works better in terminals, editors, and similar special cases. The write-compatibility optimization is disabled automatically, and streaming preview is unavailable.
+
+#### 9. Edge semi-hidden and anchor positioning
 
 - Behavior:
   - After snapping to the left/right edge and staying idle, the floating ball can enter a semi-hidden state and show only an arrow handle; tap or drag the handle to expand quickly

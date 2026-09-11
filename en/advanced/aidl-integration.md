@@ -30,6 +30,7 @@ Currently supported: modified Fcitx5 and modified Trime. Common steps:
 - **Clipboard sync**: the latest modified Fcitx5 / Trime can enable “BiBi Keyboard clipboard sync” in their clipboard settings. Clipboard sync must also be configured and enabled in BiBi Keyboard; see [Clipboard Sync](/en/advanced/clipboard-sync#modified-fcitx5-trime-setup).
 - **Pro input-field context**: when Pro's input-field context option is enabled, the modified IME supplies limited cursor-adjacent text when requested for AI post-processing.
 - **Pro learn hotwords from corrections**: when enabled in Pro, the modified IME briefly observes corrections after a voice result is committed and reports the settled edit from the same input field. Password, email, URL, phone fields are excluded.
+- **Foxy IME voice input plugin**: BiBi Keyboard can also serve as the provider for the Foxy IME voice input plugin. Once the plugin is enabled in the Foxy IME, it can call BiBi Keyboard for recognition, following the current ASR and AI post-processing settings.
 
 **Package priority** (same as Fcitx implementation):
 

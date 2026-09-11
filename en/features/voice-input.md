@@ -170,6 +170,13 @@ If your primary ASR occasionally times out or fails, you can enable a **backup A
 Online backup engines may still trigger extra API requests/cost. Local backup engines may use more memory; choose "Keep resident" only when your device has enough RAM.
 :::
 
+## Switching IME After Input
+
+Voice input is often used in chat apps, where you usually want to switch back to your favorite keyboard for quick edits. The related toggles live in `Settings → Input Settings`:
+
+- **Switch to specified IME after input**: once recognition (and optional AI post-processing) finishes and the preview text is settled, BiBi Keyboard switches to the IME chosen under `Switch target IME`; if none is set, it switches to the previously used IME. Empty results do not trigger a switch.
+- **Switch to specified IME when hidden**: when the BiBi Keyboard panel is hidden, it switches to the specified IME (or the previous IME if unset), handy for occasional voice input.
+
 ## One-tap Setup Options
 
 ### 1. Use the free service (recommended for beginners)

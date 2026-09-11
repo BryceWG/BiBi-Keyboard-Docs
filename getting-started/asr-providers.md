@@ -74,9 +74,11 @@ API Key / Access Token 属于敏感信息，请勿截图公开或分享给他人
 
 1. 在 `设置 → 语音识别设置` 中选择 **SiliconFlow**
 2. 保持「免费 ASR」相关开关为开启
-3. 在可用的免费模型（如 `FunAudioLLM/SenseVoiceSmall`、`TeleAI/TeleSpeechASR`）之间切换即可
+3. 在可用的免费模型之间切换即可：`FunAudioLLM/SenseVoiceSmall`、`TeleAI/TeleSpeechASR`，以及 XingChen 系列（`XingChenAGI/XingChenASR-V3.2`、`XingChenASR-V3.2-Ultra`、`XingChenGSR-V1.0`）
 
 ### 使用自有 API Key（可选）
+
+使用自己的 SiliconFlow API Key 时，除免费模型外还可使用付费模型：`Qwen/Qwen3-Omni-30B-A3B-Instruct`、`Qwen/Qwen3-Omni-30B-A3B-Thinking`、`Qwen/Qwen3-ASR-1.7B`。
 
 1. 注册并登录：[硅基流动官网](https://cloud.siliconflow.cn/)
 2. 在控制台进入「API 密钥」，创建并复制 Key

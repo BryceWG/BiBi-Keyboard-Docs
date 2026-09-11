@@ -74,9 +74,11 @@ SiliconFlow provides a built-in free ASR option (no key required) and paid model
 
 1. In `Settings → ASR Settings`, select **SiliconFlow**
 2. Keep the “Free ASR” toggles enabled
-3. Switch between the free models (e.g. `FunAudioLLM/SenseVoiceSmall`, `TeleAI/TeleSpeechASR`) as needed
+3. Switch between the free models as needed: `FunAudioLLM/SenseVoiceSmall`, `TeleAI/TeleSpeechASR`, and the XingChen series (`XingChenAGI/XingChenASR-V3.2`, `XingChenASR-V3.2-Ultra`, `XingChenGSR-V1.0`)
 
 ### Use your own API key (optional)
+
+With your own SiliconFlow API key, paid models are also available: `Qwen/Qwen3-Omni-30B-A3B-Instruct`, `Qwen/Qwen3-Omni-30B-A3B-Thinking`, and `Qwen/Qwen3-ASR-1.7B`.
 
 1. Sign up / log in: https://cloud.siliconflow.cn/
 2. Create an API key in the console
