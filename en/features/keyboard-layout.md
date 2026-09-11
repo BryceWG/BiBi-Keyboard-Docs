@@ -1,12 +1,12 @@
 # Keyboard Layout & Buttons
 
-This page introduces the main keyboard UI, the visual layout editor, the customizable action row, the AI Edit panel, and the number/symbol keyboard.
+This page introduces the main keyboard UI, the custom keyboard layout editor, the AI Edit panel, and the number/symbol keyboard.
 
 ::: tip Long-press hints
 Main keyboard buttons and AI Edit panel buttons support long-press hints. If you are unsure what an icon does, long-press it first to check.
 :::
 
-## Main Keyboard Buttons
+## Main Keyboard Default Layout
 
 ### Top row
 
@@ -19,7 +19,7 @@ Main keyboard buttons and AI Edit panel buttons support long-press hints. If you
 
 - **Settings (gear)**: open app settings.
 - **Prompt selector (document icon)**: choose an AI post-processing prompt preset.
-- **Switch IME (keyboard icon)**: open system IME picker. If Fcitx5 linking is enabled, it will try to switch back to the previous IME first. You can also set a fixed target under `Settings → Input Settings → Switch target IME` (default: previous IME).
+- **Switch IME (keyboard icon)**: open system IME picker. If "IME switcher key returns to the specified input method" is enabled, it goes straight back to the IME chosen under `Settings → Input → Input Settings → Input Behavior → Target IME` (falls back to the previous IME if not set).
 - **Enter**: newline or editor action depending on the target input field.
 
 ### Punctuation & space row
@@ -28,53 +28,67 @@ Main keyboard buttons and AI Edit panel buttons support long-press hints. If you
 - **Merged punctuation keys A/B**: the two punctuation keys in the middle:
   - Tap: input the 1st/3rd commonly-used punctuation.
   - Swipe up: input the 2nd/4th punctuation.
-  Configure in `Settings → Other Settings → Custom punctuation keys`.
+  Configure in `Settings → System → Other Settings → Custom punctuation keys`.
 - **Quick provider switch**: the rightmost dot icon; cycles through configured ASR providers.
 - **Space**: the middle long key. In press-and-hold mode, you can press and hold the mic and slide down to the space area to lock recording; tap space again to stop.
 
-## Custom Action Row
+## Custom Keyboard Layout Editor
 
-At the top of the keyboard, there is a row of up to 4 customizable action buttons (default: Undo, Select All, Copy, Hide keyboard). The newer settings UI also includes a visual keyboard layout editor, so you can adjust buttons directly on a canvas.
+The whole keyboard is built from grid blocks driven by the layout editor. You can place frequently used buttons where you like, resize blocks, and hide functions you rarely use.
 
 ### Where to configure
 
-- Path: `Settings → UI Settings → Custom keyboard layout`
-- Select a button position in the editor, then assign an action or restore the default layout.
-- If you only want to change the top row, edit just the action-row area.
+Path: `Settings → Input → UI Settings → Keyboard UI → Custom keyboard layout`
 
-### Example actions
-
-- **Undo**: undo the last text change (voice commit, AI post-processing, manual typing, etc.)
-- **Select all**: select all text in the current input field
-- **Copy**: copy current selection to clipboard
-- **Paste**: paste clipboard at cursor (undoable)
-- **Selection mode**: enable/disable selection mode to refine selection with cursor keys
-- **Cursor left / right**: move by one character; long-press to repeat
-- **Move to start / end**: jump to start/end of text
-- **VAD toggle**: quickly enable/disable auto-stop on silence
-- **Recording mode switch**: quickly switch between press-and-hold and tap-to-toggle recording
-- **Recognition history**: open the in-keyboard history panel. Tap an entry to insert its text; swipe right to polish again, swipe left to recognize again (see [Voice Input Basics](./voice-input.md#in-keyboard-recognition-history))
-- **Auto enter after input**: toggle automatic Enter/send after recognition and optional AI post-processing finish
-- **Hide keyboard**: minimize the keyboard
-
-If an action is stateful (e.g. Selection mode or VAD toggle), the icon reflects the current state (highlighted/dimmed).
-
-::: warning Automatic sending
-You can also enable it under `Settings → Input Settings → Auto enter after input`. Every non-empty recognition result is then sent automatically. To send only one result, leave this setting off and swipe right on the microphone while recording.
-:::
-
-### Visual layout editor
-
-Custom keyboard layout is useful if you want frequently used buttons in fixed positions, or want to hide actions you rarely use.
-
-1. Open `Settings → UI Settings → Custom keyboard layout`
+1. Pick the panel to edit at the top of the editor
 2. Tap a button block on the canvas
-3. Choose a new action from the action list
+3. Choose a new action from the action list, or adjust the block size
 4. Save and return to the keyboard to check the result
 
+Editor capabilities:
+
+- **Three panels edited separately**: Main, AI edit, and Recording (the recording panel contains the "Swipe Left Cancel" and "Swipe Right Send" gesture blocks)
+- **Adjustable rows/columns**: 7 columns × 4 rows by default
+- **Block resizing**: most blocks support several size combinations
+- **Reset**: restore the default layout any time
+- **JSON import/export**: copy your layout JSON to share it, or import a layout shared by others
+
 ::: tip Suggestion
-When trying it for the first time, change only the top action row or a few buttons. If the layout does not feel right, restore the default layout in the editor.
+When trying it for the first time, change only a few blocks before doing a full customization.
 :::
+
+### Available actions
+
+**Extension actions** (the default layout places "Undo, Select All, Copy, Hide keyboard" on both top corners; besides panel fixed blocks they can be added freely, and each action can appear at most once in a layout):
+
+| Action | Description |
+| ------ | ----------- |
+| Undo | undo the last text change (voice commit, AI post-processing, manual typing, etc.) |
+| Select All | select all text in the current input field |
+| Copy | copy the current selection to clipboard |
+| Paste | paste clipboard at cursor (undoable) |
+| Selection Mode | enable/disable selection mode to refine selection with cursor keys |
+| Recognition history | open the in-keyboard history panel. Tap an entry to insert its text; swipe right to polish again, swipe left to recognize again (see [Voice Input Basics](./voice-input.md#in-keyboard-recognition-history)) |
+| Clipboard | open the clipboard panel to browse and insert recent clips |
+| Hide keyboard | minimize the keyboard |
+| Auto-stop on silence | quickly enable/disable "stop when speech ends" |
+| Recording mode | quickly switch between press-and-hold and tap-to-toggle recording |
+| Floating keyboard | toggle the floating keyboard window |
+| Auto enter after input | toggle automatic sending; when on, every recognition (and optional AI post-processing) finishes with an automatic Enter/send action. You can also enable it under `Settings → Input → Input Settings → Input Behavior → Auto enter after input`; to send only one result, leave it off and swipe right on the microphone while recording |
+| Move Left / Right | move by one character; long-press to repeat |
+| Previous / Next punctuation | move the cursor to the previous/next sentence punctuation |
+| Move to Start / End | jump to the start/end of the text |
+| Numpad | open the number/symbol keyboard |
+
+**Panel fixed blocks** (can be moved and resized in the editor):
+
+| Panel | Fixed blocks |
+| ----- | ------------ |
+| Main | Microphone, Status, AI Edit, AI Polish, Clipboard, Backspace, Settings, Switch polish prompt, Switch input method, Enter, Number pad, the two punctuation keys (shown as "Custom keys 2/3" in the editor), Space, Switch ASR provider |
+| AI edit | AI info, Microphone, Back to main keyboard, Apply preset prompt, Select all, Backspace, Move cursor left/right, Copy, Paste, Number pad, Toggle selection mode, Space, Move to start/end |
+| Recording | Swipe Left Cancel, Swipe Right Send |
+
+If an action is stateful (e.g. Selection Mode or Auto-stop on silence), the icon reflects the current state (highlighted/dimmed).
 
 ## IME Switching Tips
 
@@ -90,7 +104,7 @@ Tapping the tile opens the system IME picker.
 
 ### Haptic strength
 
-If haptics feel too strong/weak, adjust it under `Settings → Input Settings → Input/tap haptic strength`.
+If haptics feel too strong/weak, adjust it under `Settings → Input → UI Settings → Keyboard UI → Input/tap haptic strength`.
 
 ## AI Edit Panel
 
@@ -103,7 +117,7 @@ AI Edit lets you "rework" existing text (polish, translate, or edit by instructi
 
 ### Typical workflow
 
-1. Select text in the target app. If no selection, the panel edits the whole input field by default (you can change this in `Settings → AI Feature Settings` to prefer "last recognition result").
+1. Select text in the target app. If no selection, the panel edits the whole input field by default (you can change this in `Settings → Smart → AI Feature Settings` to prefer "last recognition result").
 2. Tap the microphone button and speak an instruction (e.g. "Translate to English and simplify").
 3. Tap mic again or release (depending on recording mode) and wait for ASR + AI to finish.
 4. The result replaces the selection (or the whole text). Use Undo to revert.

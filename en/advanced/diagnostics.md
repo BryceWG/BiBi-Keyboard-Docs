@@ -83,7 +83,7 @@ The Recording Test page lets you test the current ASR setup without opening the 
 
 - Verify a newly configured provider before using it in the keyboard
 - Confirm that a local model is downloaded and can load correctly
-- Compare results after changing VAD, silent-part filtering, or upload compression
+- Compare results after changing auto-stop on silence, silent-part filtering, or upload compression
 - Capture an error message or API Log summary before reporting a problem
 
 ## Usage Stats
@@ -106,4 +106,4 @@ You can clear recognition history or API Log from their page menus. This only de
 
 - [Voice Input Basics](/en/features/voice-input) - ASR providers and recognition flow
 - [Auto-stop on Silence](/en/features/vad) - VAD and silent-part filtering
-- [Backup & Restore](./backup-restore.md) - export and restore app settings
+- [Backup and Sync](./backup-restore.md) - export and restore app settings

@@ -32,53 +32,27 @@ flowchart TD
   doneNode --> idle
 ```
 
-## Settings
+## Setup & Configuration
 
-Basic options are under `Settings → UI & Interaction → Floating Settings`:
+Floating-ball settings live under `Settings → Input → More Input Methods`, which is divided into three sections: "Floating Ball Settings", "Volume Key Recording Mode", and "Advanced".
 
-| Key                                  | Type    | Default | Description                             |
-| ------------------------------------ | ------- | ------- | --------------------------------------- |
-| `floatingAsrEnabled`                 | Boolean | `true`  | enable floating ball voice recognition  |
-| `floatingSwitcherOnlyWhenImeVisible` | Boolean | `true`  | show only when keyboard is visible      |
-| `floatingSwitcherAlpha`              | Float   | `1.0`   | transparency (0.2-1.0)                  |
-| `floatingBallSizeDp`                 | Int     | `44`    | size (28-96dp)                          |
-| `floatingBallHoldToRecordEnabled`    | Boolean | `false` | hold to record; release to stop         |
-| `floatingBallDirectDragEnabled`      | Boolean | `true`  | drag to move without long-press         |
-| `floatingWriteTextCompatEnabled`     | Boolean | `true`  | accessibility write compatibility optimization (placeholder before recording in selected apps) |
-| `floatingImeBridgeEnabled`           | Boolean | `false` | IME bridge mode (requires a compatible LSPosed / LSPatch module) |
-| `imeBridgePcmRecordingEnabled`       | Boolean | `false` | record by holding inside a compatible bridged IME |
+### Floating Ball Settings
 
-### Stability (Optional)
+| Setting                              | Default | Description                             |
+| ------------------------------------ | ------- | --------------------------------------- |
+| Use floating ball for voice recognition | off  | master switch; the ball is hidden when off |
+| Only show floating ball when keyboard is visible | on | hide automatically when the keyboard is hidden |
+| Hold the floating ball to record     | off     | hold to record; release to stop         |
+| Drag to move the floating ball       | on      | drag to reposition without entering move mode |
+| Floating ball transparency           | `1.0`   | 0.2-1.0; lower values reduce obstruction |
+| Floating ball size                   | `44dp`  | 28-96dp                                 |
 
-If your device aggressively kills background services and the floating ball/accessibility gets reclaimed, enable keep-alive under `Settings → Other Settings`:
+#### Display & appearance
 
-| Key                                  | Type    | Default | Description                                                                           |
-| ------------------------------------ | ------- | ------- | ------------------------------------------------------------------------------------- |
-| `floatingKeepAliveEnabled`           | Boolean | `false` | keep alive with a foreground service (and request battery whitelist)                  |
-| `floatingKeepAlivePrivilegedEnabled` | Boolean | `false` | enhanced keep-alive via Shizuku / Root (requires foreground keep-alive enabled first) |
+**Visibility condition** ("Only show floating ball when keyboard is visible"):
 
-- **Foreground keep-alive (recommended first)**: suitable for most users. It shows a persistent notification and improves background survival.
-- **Persistent notification status**: after foreground keep-alive is enabled, the notification refreshes basic floating-service status so you can confirm it is still working.
-- **Persistent notification tap**: after keep-alive is enabled, choose which settings page opens when you tap the persistent notification under `Settings → Other Settings → Persistent notification tap` (Input, UI, Floating, ASR, AI, Recognition History, or Usage Stats). The default is Recognition History.
-- **Shizuku / Root enhanced keep-alive (advanced)**: for devices that still kill the service even after foreground keep-alive. Prerequisites: foreground keep-alive is already enabled, and Shizuku authorization or a root environment is available.
-
-::: warning Keep-alive risk note
-Enhanced keep-alive depends on privileged capabilities (Shizuku or root). Enable it only if your device/security policy allows it. Some systems or enterprise policies may restrict this and it may increase battery usage.
-:::
-
-### Details
-
-#### 1. Enable floating ball
-
-- Path: `Settings → UI & Interaction → Floating Settings → Enable voice recognition`
-- Description: master switch; when disabled the floating ball is hidden
-
-#### 2. Visibility condition
-
-- Path: `Settings → UI & Interaction → Floating Settings → Only show when keyboard is visible`
-- Behavior:
-  - On (default): show only when the keyboard panel is visible
-  - Off: always show; when keyboard hidden, it becomes semi-transparent and sticks to the edge
+- On (default): show only when the keyboard panel is visible
+- Off: always show; when keyboard hidden, it becomes semi-transparent and sticks to the edge
 
 ```mermaid
 flowchart TD
@@ -93,59 +67,60 @@ flowchart TD
   vis -->|no| hide
 ```
 
-#### 3. Transparency
+**Edge semi-hidden and anchor positioning**:
 
-- Range: 0.2 (20%) to 1.0 (opaque)
-- Lower values reduce obstruction on screen
+- After snapping to the left/right edge and staying idle, the floating ball can enter a semi-hidden state and show only an arrow handle; tap or drag the handle to expand quickly
+- On portrait/landscape rotation, it tries to keep the original edge side and relative height to reduce unexpected jumps to center
 
-#### 4. Size
+#### Recording trigger
 
-- Range: 28dp to 96dp
-- Default: 44dp
+"Hold the floating ball to record" decides the trigger:
 
-#### 5. Floating-ball recording trigger
-
-- Path: `Settings → UI & Interaction → Floating Settings → Hold the floating ball to record`
 - Off (default): tap to start, then tap again to stop
 - On: hold to start and release to stop. Dragging far enough toward the menu or move direction cancels that recording and performs the corresponding action
 
-#### 6. Compatibility mode
+### Volume Key Recording Mode
 
-- Path: `Settings → UI & Interaction → Floating Settings → Accessibility write compatibility optimization`
-- Behavior:
-  - On (default): in apps you select, a placeholder is inserted before recording to reduce leftover hint text in the final result
-  - Off: skip the pre-recording placeholder. Results still follow the insertion fallback chain below; this is not a switch to a separate "standard IME API"
-  - Enabling "Use Android 13 Accessibility IME API" disables this placeholder automatically
+If you prefer physical buttons, you can use volume keys to start or stop voice recognition while the keyboard is visible.
 
-#### 7. IME bridge mode
+1. Open `Settings → Input → More Input Methods → Volume Key Recording Mode`
+2. Enable "Use volume keys for voice recognition"
+3. Choose an action mode:
+   - Volume+ starts / stops recording
+   - Volume- starts / stops recording
+   - Volume+ starts, Volume- stops
+   - Volume- starts, Volume+ stops
+4. Optionally enable "Recording status reminder" and "Stop recording when keyboard disappears"
 
-- Path: `Settings → UI & Interaction → Floating Settings → IME bridge mode`
-- Behavior: when the current third-party keyboard has a compatible LSPosed / LSPatch bridge module enabled, final floating-ball recognition text is inserted through that keyboard's own `InputConnection`, and keyboard visibility is reported by the keyboard itself.
-- Best for: apps that restrict accessibility insertion, or setups where third-party IME panel visibility should control the floating ball more accurately.
-
-::: warning Advanced option
-IME bridge mode requires an additional bridge module. It does not read existing input text. If the bridge is not ready, the floating ball continues using Accessibility insertion or clipboard fallback. See [IME Bridge Module](/en/advanced/ime-bridge) for downloads, LSPosed/LSPatch setup, scope configuration, and troubleshooting.
+::: warning Permission note
+Volume key recording uses the Accessibility Service to detect keyboard visibility and volume-key clicks.
 :::
 
-##### Record inside a bridged IME
+### Advanced
 
-After enabling bridge text insertion, you can also enable `Record inside bridged IME`. With an updated compatible LSPosed/LSPatch module, hold the control in the third-party keyboard to record; BiBi Keyboard then recognizes the audio using your current ASR and post-processing settings. See [IME Bridge Module](/en/advanced/ime-bridge#record-inside-a-third-party-ime) for the full procedure.
+Located under `Settings → Input → More Input Methods → Advanced`, with three options:
 
-- In “IME bridge status,” confirm that `PCM` is shown as supported
+- **Accessibility write compatibility optimization**: in apps you select, a placeholder is inserted before recording to reduce leftover hint text in the final result (see [How results are inserted](#how-results-are-inserted))
+- **Use Android 13 Accessibility IME API** (shown on Android 13 and later only): works better in terminals, editors, and similar special cases; disables the compatibility optimization and streaming preview (see [How results are inserted](#how-results-are-inserted))
+- **IME Hook module**: when the current third-party keyboard has a compatible LSPosed / LSPatch bridge module enabled, final floating-ball recognition text is inserted through that keyboard's own `InputConnection`, and keyboard visibility is reported by the keyboard itself. Best for apps that restrict accessibility insertion, or setups where third-party IME panel visibility should control the floating ball more accurately.
+
+::: warning Advanced option
+The IME Hook module requires an additional bridge module. It does not read existing input text. If the bridge is not ready, the floating ball continues using Accessibility insertion or clipboard fallback. See [IME Bridge Module](/en/advanced/ime-bridge) for downloads, LSPosed/LSPatch setup, scope configuration, and troubleshooting.
+:::
+
+**Record inside a bridged IME**: after enabling bridge text insertion, you can also enable "Record inside bridged IME". With an updated compatible LSPosed/LSPatch module, hold the control in the third-party keyboard to record; BiBi Keyboard then recognizes the audio using your current ASR and post-processing settings. See [IME Bridge Module](/en/advanced/ime-bridge#record-inside-a-third-party-ime) for the full procedure.
+
+- In "IME Hook module status," confirm that the PCM recording area is shown as supported
 - Focus a normal text field and keep the third-party keyboard open; sensitive fields are blocked
 - If recording fails, it does not automatically switch to the floating ball or BiBi Keyboard's own microphone; trigger it again
 
-#### 8. Use Android 13 Accessibility IME API
+## How results are inserted
 
-- Path: `Settings → UI & Interaction → Floating Settings → Compatibility → Use Android 13 Accessibility IME API` (shown on Android 13 and later only)
-- Off (default): results are inserted through the traditional Accessibility API. Streaming preview stays available and works with the write-compatibility optimization, suitable for typical apps and older systems.
-- On: on Android 13 and later, results are inserted first via the new Accessibility API. This works better in terminals, editors, and similar special cases. The write-compatibility optimization is disabled automatically, and streaming preview is unavailable.
-
-Results actually follow the fallback chain below. When IME Bridge is ready, the current keyboard inserts the text; otherwise Accessibility is used. A later step runs only if the previous one fails.
+Accessibility does not provide a true IME-style "insert text" API, and some apps (e.g. WeChat, QQ, some games) may restrict text input. Results actually follow the fallback chain below: when the IME Hook module is ready, the current keyboard inserts the text; otherwise Accessibility is used. A later step runs only if the previous one fails.
 
 ```mermaid
 flowchart TD
-  start[Result ready to insert] --> bridge{IME Bridge ready?}
+  start[Result ready to insert] --> bridge{IME Hook module ready?}
   bridge -->|yes| brOk[Insert via current IME]
   brOk -->|fail| brInsertFail[Show a toast, do not fall back to Accessibility]
   bridge -->|no| a11y{Accessibility enabled?}
@@ -163,23 +138,26 @@ flowchart TD
   paste -->|fail| clipToast
 ```
 
-#### 9. Edge semi-hidden and anchor positioning
+::: tip Tip
+The compatibility optimization can reduce leftover hint text in some apps, but insertion still follows the fallback chain above and is not perfect. For best reliability, prefer the BiBi Keyboard IME, the IME Hook module, or Fcitx5 AIDL linking.
+:::
 
-- Behavior:
-  - After snapping to the left/right edge and staying idle, the floating ball can enter a semi-hidden state and show only an arrow handle; tap or drag the handle to expand quickly
-  - On portrait/landscape rotation, it tries to keep the original edge side and relative height to reduce unexpected jumps to center
+## Keep-alive
 
-::: tip About compatibility mode
-Accessibility does not provide a true IME-style "insert text" API. Some apps (e.g. WeChat, QQ, some games) may restrict accessibility text input, causing insertion failure. Compatibility optimization can reduce leftover hint text in selected apps, but insertion still follows the fallback chain above and is not perfect.
+If your device aggressively kills background services and the floating ball/accessibility gets reclaimed, enable keep-alive under `Settings → System → Other Settings → Keep-alive`:
 
-For best reliability, prefer the BiBi Keyboard IME, IME Bridge, or Fcitx5 AIDL linking.
+- **Foreground keep-alive (recommended first)**: suitable for most users. It shows a persistent notification and improves background survival.
+- **Persistent notification status**: after foreground keep-alive is enabled, the notification refreshes basic floating-service status so you can confirm it is still working.
+- **Persistent notification tap**: after keep-alive is enabled, choose which settings page opens when you tap the persistent notification (Input, UI, Floating, ASR, AI, Recognition History, or Usage Stats). The default is Recognition History.
+- **Shizuku / Root enhanced keep-alive (advanced)**: for devices that still kill the service even after foreground keep-alive. Prerequisites: foreground keep-alive is already enabled, and Shizuku authorization or a root environment is available.
 
-You can configure the target package list in Settings (one per line; supports prefix match). You can also mark selected apps as clipboard-only so results are copied instead of inserted.
+::: warning Keep-alive risk note
+Enhanced keep-alive depends on privileged capabilities (Shizuku or root). Enable it only if your device/security policy allows it. Some systems or enterprise policies may restrict this and it may increase battery usage.
 :::
 
 ## Permissions
 
-The floating ball requires three system permissions:
+The floating ball requires the following system permissions:
 
 ### 1. Overlay permission
 
@@ -201,6 +179,10 @@ The floating ball requires three system permissions:
 
 ::: warning Privacy
 BiBi Keyboard's accessibility service is **only used for text insertion**. It does not read screen content or collect sensitive info.
+:::
+
+::: info Insertion without accessibility
+With the "IME Hook module" (LSPosed / LSPatch bridge module) installed and enabled, results can be inserted through the current keyboard, so no accessibility permission is needed; see [How results are inserted](#how-results-are-inserted).
 :::
 
 ### 3. Microphone permission
@@ -233,39 +215,23 @@ On newer Android versions, a microphone foreground-service notification may appe
 ### Advanced
 
 - **Radial menu**: long-press and drag toward the screen center to open the menu; release on a menu item to trigger it. Items include:
-  - switch AI post-processing prompt
+  - switch AI polish prompt
   - switch ASR provider
   - switch IME
-  - toggle VAD
+  - move floating ball
+  - toggle auto-stop on silence
+  - toggle AI polish
   - view recognition history
   - upload/pull clipboard (requires clipboard sync enabled)
-- **Drag**: by default you can drag to move directly. If "Drag to move" is disabled, long-press for ~2s (two vibration feedbacks) to enter move mode
-- **Reset**: tap "Reset floating position" in settings
+  - settings
+- **Drag**: by default you can drag to move directly. If "Drag to move" is disabled, long-press for ~2s (two vibration feedbacks) to enter move mode, or pick "Move floating ball" from the menu
+- **Reset**: tap "Reset floating ball position" in settings
 
 ### Continuous speaking with floating ball <Badge type="warning" text="Pro" />
 
 In Pro, continuous speaking mode can also run from the floating ball. When enabled, the floating ball listens locally, starts a segment when VAD detects speech, submits the segment after silence, and then keeps waiting for the next segment.
 
 This is useful when you want continuous dictation in the current app without switching to the BiBi Keyboard panel. It keeps the microphone listening longer than normal hold/tap recording, so battery usage is higher; in noisy environments, switch back to normal recording mode.
-
-## Volume Key Recording
-
-If you prefer physical buttons, you can use volume keys to start or stop voice recognition while the keyboard is visible.
-
-### How to enable
-
-1. Open `Settings → Interface & interaction → More input methods`
-2. In "Volume Key Recording Mode", enable "Use volume keys for voice recognition"
-3. Choose an action mode:
-   - Volume+ starts / stops recording
-   - Volume- starts / stops recording
-   - Volume+ starts, Volume- stops
-   - Volume- starts, Volume+ stops
-4. Optionally enable "Recording status reminder" and "Stop recording when keyboard disappears"
-
-::: warning Permission note
-Volume key recording uses the Accessibility Service to detect keyboard visibility and volume-key clicks.
-:::
 
 ## Common issues
 
@@ -274,17 +240,17 @@ Volume key recording uses the Accessibility Service to detect keyboard visibilit
 Possible causes:
 
 1. Overlay permission not granted
-2. Master switch off (`floatingAsrEnabled`)
+2. Master switch off → check `Settings → Input → More Input Methods → Floating Ball Settings → Use floating ball for voice recognition`
 3. "Only show when keyboard is visible" enabled (you need to show keyboard first)
 4. System battery optimization/background restrictions kill the app or its accessibility service
-   - You can enable "Keep alive with a foreground service" under `Settings → Other Settings`, and request battery whitelist
+   - You can enable "Foreground keep-alive" under `Settings → System → Other Settings → Keep-alive`, and request battery whitelist
 
 ### Cannot insert text
 
 Possible causes:
 
-1. Accessibility permission not granted
-2. The target app blocks accessibility text input → try enabling compatibility mode
+1. Accessibility permission not granted → check accessibility settings, or use the IME Hook module instead
+2. The target app blocks accessibility text input → try enabling "Accessibility write compatibility optimization"
 
 ## Related
 

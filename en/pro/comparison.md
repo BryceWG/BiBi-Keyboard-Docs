@@ -14,11 +14,11 @@ BiBi Keyboard provides two editions: OSS and Pro. This page compares feature dif
 | **Core**     | Speech recognition (ASR)                    | ✅  | ✅  |
 |              | 18 ASR providers                            | ✅  | ✅  |
 |              | Streaming recognition                       | ✅  | ✅  |
-|              | Segmented recording                         | ✅  | ✅  |
+|              | Continuous recording while visible          | ✅  | ✅  |
 |              | Local offline models                        | ✅  | ✅  |
 |              | X-ASR local streaming                       | ✅  | ✅  |
 |              | AI post-processing (LLM)                    | ✅  | ✅  |
-|              | Auto-stop on silence (VAD)                  | ✅  | ✅  |
+|              | Auto-stop on silence                        | ✅  | ✅  |
 | **Input**    | Press-and-hold / Tap-to-toggle              | ✅  | ✅  |
 |              | Volume key recording                        | ✅  | ✅  |
 |              | Floating ball voice input                   | ✅  | ✅  |
@@ -26,14 +26,14 @@ BiBi Keyboard provides two editions: OSS and Pro. This page compares feature dif
 |              | Continuous speaking mode (VAD auto)         | ❌  | ✅  |
 | **Text**     | Trailing punctuation trimming               | ✅  | ✅  |
 |              | Remove trailing punctuation and emoji       | ✅  | ✅  |
-|              | AI editing (basic)                          | ✅  | ✅  |
+|              | AI editing                                  | ✅  | ✅  |
 |              | AI post-processing input context            | ❌  | ✅  |
 |              | AI Assistant (voice commands)               | ❌  | ✅  |
 |              | Global undo                                 | ✅  | ✅  |
 |              | Traditional Chinese conversion              | ❌  | ✅  |
 |              | Regex post-processing and order             | ❌  | ✅  |
 | **Advanced** | App-specific Prompt                         | ❌  | ✅  |
-|              | Hotword management, phoneme enhancement, and automatic learning | ❌  | ✅  |
+|              | Hotword management, post-recognition similar-word replacement, and automatic learning | ❌  | ✅  |
 |              | Speech presets                              | ✅  | ✅  |
 |              | Custom punctuation keys                     | ✅  | ✅  |
 |              | Visual keyboard layout editor               | ✅  | ✅  |

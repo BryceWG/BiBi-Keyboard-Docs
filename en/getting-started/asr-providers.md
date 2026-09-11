@@ -4,7 +4,7 @@ This page covers how to register, obtain credentials, and configure ASR provider
 
 ## Before you start
 
-- Open `Settings → ASR Settings` and select your ASR provider.
+- Open `Settings → Smart → Speech Recognition Settings` and select your provider under "Speech Recognition Provider".
 - Cloud providers usually require an `API Key` / `Access Token`.
 - Local models require downloading/importing model files (first load may take a few seconds).
 
@@ -16,19 +16,39 @@ API keys and access tokens are sensitive. Do not share them publicly. If you sus
 
 | Provider                                                                                   | Type  | Streaming  | Best for                                             |
 | ------------------------------------------------------------------------------------------ | ----- | ---------- | ---------------------------------------------------- |
-| **Volcengine**                                                                             | Cloud | ✅         | Low-latency, real-time streaming                     |
 | **SiliconFlow**                                                                            | Cloud | ❌         | Beginner-friendly, low cost                          |
-| **DashScope (Alibaba)**                                                                    | Cloud | ✅         | Balanced accuracy and cost                           |
-| **Soniox**                                                                                 | Cloud | ✅         | Stable streaming, international usage                |
-| **Gemini**                                                                                 | Cloud | ❌         | Small usage / file-based recognition                 |
+| **Volcengine**                                                                             | Cloud | ✅/❌      | Low-latency, real-time streaming                     |
 | **ElevenLabs**                                                                             | Cloud | ✅/❌      | High accuracy (model-dependent)                      |
 | **OpenAI** (compatible)                                                                    | Cloud | ✅/❌      | OpenAI/compatible file or Realtime transcription     |
+| **OpenRouter**                                                                             | Cloud | ❌         | Use an OpenRouter API key with compatible ASR models |
+| **DashScope (Alibaba)**                                                                    | Cloud | ✅/❌      | Balanced accuracy and cost                           |
+| **Gemini**                                                                                 | Cloud | ❌         | Small usage / file-based recognition                 |
+| **MiMo (Xiaomi)**                                                                          | Cloud | ❌         | MiMo v2.5 ASR / audio-understanding models           |
+| **Soniox**                                                                                 | Cloud | ✅/❌      | Stable streaming, international usage                |
 | **StepAudio**                                                                              | Cloud | ❌         | StepFun online ASR, Chinese/English and ITN          |
 | **Zhipu GLM**                                                                              | Cloud | ❌         | Simple integration, lower cost                       |
-| **OpenRouter**                                                                             | Cloud | ❌         | Use an OpenRouter API key with compatible ASR models |
-| **MiMo (Xiaomi)**                                                                          | Cloud | ❌         | MiMo v2.5 ASR / audio-understanding models           |
 | **Cohere**                                                                                 | Cloud | ❌         | Cohere Transcribe file-based multilingual ASR        |
 | **Local models** (SenseVoice / FunASR Nano / Qwen3-ASR / Parakeet / FireRedASR V2 / X-ASR) | Local | Partial ✅ | Privacy-first, offline usage                         |
+
+## SiliconFlow
+
+SiliconFlow provides a built-in free ASR option (no key required) and paid models (own key).
+
+### Quick start (no API key required)
+
+1. In `Settings → Smart → Speech Recognition Settings`, select **SiliconFlow**
+2. Keep the “Free ASR” toggles enabled
+3. Switch between the free models as needed: `FunAudioLLM/SenseVoiceSmall`, `TeleAI/TeleSpeechASR`, and the XingChen series (`XingChenAGI/XingChenASR-V3.2`, `XingChenASR-V3.2-Ultra`, `XingChenGSR-V1.0`)
+
+### Use your own API key (optional)
+
+With your own SiliconFlow API key, paid models are also available: `Qwen/Qwen3-Omni-30B-A3B-Instruct`, `Qwen/Qwen3-Omni-30B-A3B-Thinking`, and `Qwen/Qwen3-ASR-1.7B`.
+
+1. Sign up / log in: https://cloud.siliconflow.cn/
+2. Create an API key in the console
+3. Paste it into the SiliconFlow section in BiBi Keyboard
+
+![SiliconFlow API key](/images/getting-started/asr-providers/siliconflow-api-key.png)
 
 ## Volcengine
 
@@ -52,7 +72,7 @@ Volcengine (Doubao Voice) has strong Chinese recognition and supports both strea
 
 ### 3. Configure in BiBi Keyboard
 
-1. Open `Settings → ASR Settings`
+1. Open `Settings → Smart → Speech Recognition Settings`
 2. Select **Volcengine**
 3. Paste `APP ID` into `X-Api-App-Key`
 4. Paste `Access Token` into `X-Api-Access-Key`
@@ -66,25 +86,53 @@ Volcengine (Doubao Voice) has strong Chinese recognition and supports both strea
 If you enabled both streaming and audio-file recognition when creating the app, they share the same credentials.
 :::
 
-## SiliconFlow
+## ElevenLabs
 
-SiliconFlow provides a built-in free ASR option (no key required) and paid models (own key).
+ElevenLabs `scribe_v1` is non-streaming only; `scribe_v2` is streaming only.
 
-### Quick start (no API key required)
+### Get an API key
 
-1. In `Settings → ASR Settings`, select **SiliconFlow**
-2. Keep the “Free ASR” toggles enabled
-3. Switch between the free models as needed: `FunAudioLLM/SenseVoiceSmall`, `TeleAI/TeleSpeechASR`, and the XingChen series (`XingChenAGI/XingChenASR-V3.2`, `XingChenASR-V3.2-Ultra`, `XingChenGSR-V1.0`)
+1. Open: https://elevenlabs.io/app/settings/api-keys
+2. Create an API key
+3. Enable `Speech to Text` permission for the key
 
-### Use your own API key (optional)
+![Create ElevenLabs key](/images/getting-started/asr-providers/elevenlabs-create-key.png)
+![Enable Speech to Text permission](/images/getting-started/asr-providers/elevenlabs-stt-permission.png)
 
-With your own SiliconFlow API key, paid models are also available: `Qwen/Qwen3-Omni-30B-A3B-Instruct`, `Qwen/Qwen3-Omni-30B-A3B-Thinking`, and `Qwen/Qwen3-ASR-1.7B`.
+## OpenAI (compatible endpoints)
 
-1. Sign up / log in: https://cloud.siliconflow.cn/
-2. Create an API key in the console
-3. Paste it into the SiliconFlow section in BiBi Keyboard
+The OpenAI provider supports OpenAI-format transcription endpoints, plus compatible third-party Audio Transcriptions, Chat Completions, or Realtime endpoints.
 
-![SiliconFlow API key](/images/getting-started/asr-providers/siliconflow-api-key.png)
+1. In `Settings → Smart → Speech Recognition Settings`, select **OpenAI**
+2. Use "Add channel" to create one or more OpenAI ASR configurations, for separating official endpoints, proxy endpoints, or different models
+3. Fill in:
+   - `ASR Endpoint` (e.g. `https://api.openai.com/v1/audio/transcriptions`, `https://api.openai.com/v1/chat/completions`, or a compatible endpoint)
+   - `API Key` (sent automatically with requests; no extra configuration needed)
+   - `Model name` (e.g. `gpt-4o-mini-transcribe` / `whisper-1`)
+4. If the endpoint is a multimodal Chat Completions API, enable `Use Completions API` and optionally fill in a custom prompt
+5. If the endpoint supports the Realtime API, enable "Streaming (Realtime)" for live partial results
+
+![OpenAI settings example](/images/getting-started/asr-providers/openai-settings.png)
+
+::: tip Which OpenAI API should I use?
+Use `audio/transcriptions` for standard transcription models, `chat/completions` for multimodal models that accept audio input, and Realtime when you need live partial results. You should check the API format with your OpenAI provider.
+:::
+
+::: info Custom compatible endpoints
+For custom compatible `audio/transcriptions` endpoints, BiBi Keyboard uploads WAV audio to improve compatibility. In this case, "Compress audio before upload" does not apply to that custom OpenAI transcription endpoint.
+:::
+
+## OpenRouter
+
+OpenRouter lets BiBi Keyboard call compatible ASR / multimodal transcription models through OpenRouter. It is currently used in non-streaming mode.
+
+1. Create an API key in [OpenRouter Keys](https://openrouter.ai/settings/keys)
+2. In `Settings → Smart → Speech Recognition Settings`, select **OpenRouter**
+3. Fill in:
+   - `ASR Endpoint` (usually keep the default or use a compatible `/audio/transcriptions` endpoint)
+   - `OpenRouter API Key`
+   - `Model` (for example `qwen/qwen3-asr-flash-2026-02-10`)
+4. Save, then use `Settings → Input → Recording Test` to verify the setup
 
 ## DashScope (Alibaba Bailian / Qwen)
 
@@ -99,49 +147,11 @@ DashScope offers good accuracy and cost efficiency, with partial streaming suppo
 
 ### 2. Configure in BiBi Keyboard
 
-1. Open `Settings → ASR Settings` and select **DashScope**
+1. Open `Settings → Smart → Speech Recognition Settings` and select **DashScope**
 2. Paste the API key and save
 3. Choose a model:
    - Streaming: `Qwen-Audio-3.0-ASR-Flash-Streaming` (default), `Fun-ASR-Realtime`, or `Qwen3-ASR-Flash-Realtime`
    - Non-streaming: `Qwen-Audio-3.0-ASR-Flash` (default), `Fun-ASR-Flash`, `Qwen3-ASR-Flash`, `Qwen3.5-Omni-Flash`, or `Qwen3.5-Omni-Plus`
-
-## Cohere
-
-Cohere Transcribe is used as a non-streaming file recognizer in BiBi Keyboard.
-
-1. Sign in to the [Cohere Dashboard](https://dashboard.cohere.com/api-keys) and create/copy a Trial API key
-2. Open `Settings → ASR Settings` and select **Cohere**
-3. Enter the `Cohere API Key`
-4. Choose a model:
-   - `cohere-transcribe-03-2026`: general multilingual model
-   - `cohere-transcribe-arabic-07-2026`: Arabic/English model
-5. Select the language spoken in the recording. If you enter a custom model ID, also verify that the model accepts the selected language code
-
-::: tip Free limit
-Cohere Trial API Key is limited to 5 RPM (requests per minute).
-:::
-
-::: tip Language selection
-The general model offers Chinese, English, Arabic, Japanese, Korean, and several European languages. The Arabic model offers Arabic and English only.
-:::
-
-## Soniox
-
-Soniox supports both streaming and non-streaming.
-
-1. Log in: https://console.soniox.com
-2. In your project, go to `API keys`
-3. Create and copy the API key, then paste it into BiBi Keyboard
-
-![Soniox API keys](/images/getting-started/asr-providers/soniox-nav.png)
-
-### Recognition mode
-
-In Soniox settings, adjust "Endpoint detection sensitivity":
-
-- **Low latency**: faster endpoint detection, best for realtime input
-- **Default**: balances latency and accuracy
-- **High accuracy**: more sensitive endpoint detection, best for accuracy-sensitive scenarios
 
 ## Gemini
 
@@ -162,58 +172,12 @@ Gemini is commonly used for file-based recognition and small usage.
   - **Recognition language**: Automatic, Mandarin Chinese, Traditional Cantonese, US English, Japanese, Korean, or a custom BCP-47 code
   - **Smart transcription**: when enabled, removes fillers, resolves speech corrections, and restructures formatting (may change the verbatim content); when disabled, keeps verbatim transcription including fillers, repetitions, and false starts
 
-## ElevenLabs
-
-ElevenLabs `scribe_v1` is non-streaming only; `scribe_v2` is streaming only.
-
-1. Open: https://elevenlabs.io/app/settings/api-keys
-2. Create an API key
-3. Enable `Speech to Text` permission for the key
-
-![Create ElevenLabs key](/images/getting-started/asr-providers/elevenlabs-create-key.png)
-![Enable Speech to Text permission](/images/getting-started/asr-providers/elevenlabs-stt-permission.png)
-
-## OpenAI (compatible endpoints)
-
-The OpenAI provider supports OpenAI-format transcription endpoints, plus compatible third-party Audio Transcriptions, Chat Completions, or Realtime endpoints.
-
-1. In `Settings → ASR Settings`, select **OpenAI**
-2. Add one or more OpenAI ASR channels to separate official endpoints, proxy endpoints, or different models
-3. Fill in:
-   - `ASR Endpoint` (e.g. `https://api.openai.com/v1/audio/transcriptions`, `https://api.openai.com/v1/chat/completions`, or a compatible endpoint)
-   - `API Key` (Bearer)
-   - `Model name` (e.g. `gpt-4o-mini-transcribe` / `whisper-1`)
-4. If the endpoint is a multimodal Chat Completions API, enable `Use Completions API` and optionally fill in a custom prompt
-5. If the endpoint supports the Realtime API, enable "Streaming (Realtime)" for live partial results
-
-![OpenAI settings example](/images/getting-started/asr-providers/openai-settings.png)
-
-::: tip Which OpenAI API should I use?
-Use `audio/transcriptions` for standard transcription models, `chat/completions` for multimodal models that accept audio input, and Realtime when you need live partial results. You should check the API format with your OpenAI provider.
-:::
-
-::: info Custom compatible endpoints
-For custom compatible `audio/transcriptions` endpoints, BiBi Keyboard uploads WAV audio to improve compatibility. In this case, "Compress audio before upload" does not apply to that custom OpenAI transcription endpoint.
-:::
-
-## OpenRouter
-
-OpenRouter lets BiBi Keyboard call compatible ASR / multimodal transcription models through OpenRouter. It is currently used in non-streaming mode.
-
-1. Create an API key in [OpenRouter Keys](https://openrouter.ai/settings/keys)
-2. In `Settings → ASR Settings`, select **OpenRouter**
-3. Fill in:
-   - `ASR Endpoint` (usually keep the default or use a compatible `/audio/transcriptions` endpoint)
-   - `OpenRouter API Key`
-   - `Model` (for example `qwen/qwen3-asr-flash-2026-02-10`)
-4. Save, then use `Settings Home → Recording Test` to verify the setup
-
 ## MiMo (Xiaomi)
 
 MiMo supports `mimo-v2.5-asr` and `mimo-v2.5` audio-understanding models.
 
 1. Prepare a MiMo API key
-2. In `Settings → ASR Settings`, select **MiMo**
+2. In `Settings → Smart → Speech Recognition Settings`, select **MiMo**
 3. Choose an endpoint preset:
    - Token Plan (Mainland China / Singapore / Europe)
    - Pay-as-you-go
@@ -222,12 +186,32 @@ MiMo supports `mimo-v2.5-asr` and `mimo-v2.5` audio-understanding models.
 5. Choose a model and recognition language (Auto / Chinese / English)
 6. For the `mimo-v2.5` audio-understanding model, you can fill in a System Prompt; enable "Disable thinking" if you do not need reasoning output
 
+## Soniox
+
+Soniox supports both streaming and non-streaming; streaming is relatively stable.
+
+### Get an API key
+
+1. Log in: https://console.soniox.com
+2. In your project, go to `API keys`
+3. Create and copy the API key, then paste it into BiBi Keyboard
+
+![Soniox API keys](/images/getting-started/asr-providers/soniox-nav.png)
+
+### Recognition mode
+
+In Soniox settings, choose the endpoint detection behavior under "Recognition mode":
+
+- **Low latency**: faster endpoint detection, best for realtime input
+- **Default**: balances latency and accuracy
+- **High accuracy**: more sensitive endpoint detection, best for accuracy-sensitive scenarios
+
 ## StepAudio
 
 StepAudio is StepFun's online ASR service. In BiBi Keyboard it is currently used in non-streaming mode.
 
 1. Create an API key in the StepFun console: https://platform.stepfun.com/
-2. In `Settings → ASR Settings`, select **StepAudio**
+2. In `Settings → Smart → Speech Recognition Settings`, select **StepAudio**
 3. Choose an endpoint preset:
    - Pay-as-you-go
    - Coding Plan
@@ -242,18 +226,38 @@ Zhipu GLM is simple to integrate and usually used as non-streaming.
 1. Get an API key: https://bigmodel.cn/usercenter/proj-mgmt/apikeys
 2. Paste it into the Zhipu section in BiBi Keyboard
 
+## Cohere
+
+Cohere Transcribe is used as a non-streaming file recognizer in BiBi Keyboard.
+
+1. Sign in to the [Cohere Dashboard](https://dashboard.cohere.com/api-keys) and create/copy a Trial API key
+2. Open `Settings → Smart → Speech Recognition Settings` and select **Cohere**
+3. Enter the `Cohere API Key`
+4. Choose a model:
+   - `cohere-transcribe-03-2026`: general multilingual model
+   - `cohere-transcribe-arabic-07-2026`: Arabic/English model
+5. Select the language spoken in the recording. If you enter a custom model ID, also verify that the model accepts the selected language code
+
+::: tip Free limit
+Cohere Trial API Key is limited to 5 RPM (requests per minute).
+:::
+
+::: tip Language selection
+The general model offers Chinese, English, Arabic, Japanese, Korean, and several European languages. The Arabic model offers Arabic and English only.
+:::
+
 ## Local model setup
 
 Local models are ideal for offline usage and privacy. Each model trades off speed, quality, and streaming support.
 
 ### Model selection tips
 
-- **SenseVoice**: non-streaming; fast and balanced; supports language settings
+- **SenseVoice（recommended）**: non-streaming; lightweight fast and balanced; supports language settings
 - **FunASR Nano**: non-streaming; language selection, native ITN, and MLT Nano multilingual variant
-- **Qwen3-ASR**: non-streaming; local 0.6B / 1.7B models, good Chinese recognition, optional rule-based ITN
+- **Qwen3-ASR（recommended）**: non-streaming; local 0.6B / 1.7B models, good Chinese recognition, optional rule-based ITN
 - **Parakeet**: non-streaming; V3 for several European languages, V2 for English
 - **FireRedASR V2**: non-streaming / pseudo-streaming; replaces the old TeleSpeech local engine
-- **X-ASR**: local streaming; Chinese/English 480ms model with thread count, unload policy, and optional ITN
+- **X-ASR（recommended）**: local streaming; Chinese/English 480ms model with thread count, unload policy, and optional ITN
 
 ### Download in-app (recommended)
 
@@ -263,13 +267,15 @@ Local models are ideal for offline usage and privacy. Each model trades off spee
 
 If the download is canceled or interrupted, the incomplete download task is cached locally. Downloading the same model again attempts to resume from that point. Partial downloads are kept for up to 7 days with a total cache limit of about 2 GB; older files are removed first. If the source does not support resuming, the app automatically downloads the full file again.
 
+::: tip Reduce first-recognition latency
+Local models may take a few seconds on first load. Every local provider supports an "Aggressive model loading" option: when enabled, the model is preloaded as soon as the keyboard or floating ball is first shown, reducing the wait for the first recognition.
+:::
+
 ![Download local models in-app](/images/getting-started/asr-providers/local-models-download.png)
 
 ### Import from local files (optional)
 
 If you prefer adding models from local files, download the ZIP first, then choose "Import from local" in the model manager.
-
-### Direct download links (GitHub Releases)
 
 ::: info Direct links
 The links below point to `BiBi-Keyboard` model ZIPs. If you see 404 or slow downloads, use the models page (Releases: models) or a GitHub mirror site.

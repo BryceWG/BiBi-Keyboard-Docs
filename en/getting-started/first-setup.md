@@ -22,7 +22,7 @@ BiBi Keyboard supports 18 ASR providers, including cloud services and local mode
 
 | Provider         | Type  | Free/Pricing                         | Pros                                                  | Best for |
 | ---------------- | ----- | ------------------------------------ | ----------------------------------------------------- | -------- |
-| **SiliconFlow**  | Cloud | built-in free ASR/LLM service         | no extra config; supports SenseVoice and Qwen3-Omni    | New users |
+| **SiliconFlow**  | Cloud | built-in free ASR/LLM service         | no extra config; 5 built-in free recognition models (SenseVoiceSmall etc.) | New users |
 | **Volcengine**   | Cloud | usually includes free quota for new users (see console) | streaming transcription with real-time output          | Low-latency experience |
 | **SenseVoice**   | Local | fully offline, no API cost            | offline + privacy; supports pseudo-streaming preview   | Privacy-first |
 
@@ -65,8 +65,8 @@ API keys are sensitive. Do not share them. If leaked, delete the key immediately
 ### 3. Configure in BiBi Keyboard
 
 1. Open BiBi Keyboard and tap the Settings button (gear icon) above the keyboard
-2. Go to "ASR Settings"
-3. Under "ASR Provider", choose "SiliconFlow"
+2. Go to "Speech Recognition Settings"
+3. Under "Speech Recognition Provider", choose "SiliconFlow"
 4. Paste the API key
 5. Tap "Save" or just go back
 
@@ -87,47 +87,49 @@ AI post-processing can add punctuation, fix recognition mistakes, and improve to
 
 ## Test Voice Input
 
-1. Open any text field in any app.
-2. Make sure the current IME is BiBi Keyboard.
-3. **Press and hold** the microphone button (the big button), speak, then **release** and wait for the transcript.
+Once configured, let's test that voice recognition works:
 
-### Check the result
+1. **Open a text field**: open any app that supports text input.
+2. **Record**: make sure the current IME is BiBi Keyboard, **press and hold** the microphone button (the big button), speak, then **release** and wait for the transcript.
+3. **Check the result**: if configured correctly, text will be inserted into the input field; if something fails, the error message will be copied to clipboard.
 
-- If configured correctly, text will be inserted into the input field.
-- If something fails, the error message will be copied to clipboard. Check:
-  - whether the API key is correct
-  - network connectivity
-  - microphone permission
-  - whether audio is captured (watch waveform / volume indicator)
+### Error checks
+
+If something fails, check:
+
+- whether the API key is correct
+- network connectivity
+- microphone permission
+- whether audio is captured (watch waveform / volume indicator)
 
 ## Basic Tweaks
 
-### Recording mode
+### Keyboard recording start/stop
 
-1. Open Settings → "Basic Settings"
-2. Choose "Recording mode":
-   - **Press and hold** (default)
-   - **Tap to toggle** (tap to start, tap again to stop)
+1. Open `Settings → Input → Input Settings → Input Behavior`
+2. Toggle "Tap to start/stop recording" as needed:
+   - **Off** (default): press and hold to record, release to stop
+   - **On**: tap to start, tap again to stop
 
-### Auto-stop on silence (VAD)
+### Auto-stop on silence
 
-VAD works best with tap-to-toggle mode. When no speech is detected for a given window, it stops recording automatically.
+When "Stop when speech ends" is selected, the app stops recording automatically after no speech is detected for a given window. If your recordings are often cut off by pauses, or stopping feels too slow, adjust the auto-stop settings:
 
-1. Settings → "Basic Settings"
-2. Enable "Auto-stop on silence (VAD)"
-3. Tune "Silence window" (0.5-3s)
-4. Tune "Sensitivity" (1-10; higher means easier to stop)
+1. Open `Settings → Smart → Speech Recognition Settings → Auto-stop on Silence`
+2. Choose "Recording auto-stop mode": **Manual control** / **Stop when speech ends** / **Timeout stop**
+3. Tune "Stop window (ms)" (300-5000, default 1200)
+4. Tune "Stop-recording sensitivity" (1-10; higher stops sooner, default 4)
 
-::: tip VAD tips
+::: tip Auto-stop tips
 
-- If it stops too easily, increase the silence window or lower sensitivity.
-- If it stops too slowly, decrease the silence window or raise sensitivity.
+- If it stops too easily, increase the stop window or lower the sensitivity.
+- If it stops too slowly, decrease the stop window or raise the sensitivity.
   :::
 
-### Keyboard height
+### Keyboard scale
 
-1. Settings → "UI Settings"
-2. Choose "Keyboard height":
+1. Open `Settings → Input → UI Settings → Keyboard UI`
+2. Choose "Keyboard scale":
    - **Small**
    - **Medium** (default)
    - **Large**

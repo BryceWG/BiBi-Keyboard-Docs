@@ -42,7 +42,6 @@ flowchart TD
 BiBi Keyboard's background service talks to the server. Clipboard read/write depends on the execution mode: the BiBi Keyboard IME when it is the default keyboard; a modified Fcitx/Trime or IME Bridge otherwise (paused if that IME process is reclaimed).
 
 - Upload: uses **SHA-256** hash of content to decide whether upload is needed
-- Download: remembers the last handled file name to avoid duplicate processing
 - Protocol basics:
   - `PUT /SyncClipboard.json` upload
   - `GET /SyncClipboard.json` pull
@@ -53,9 +52,9 @@ BiBi Keyboard's background service talks to the server. Clipboard read/write dep
 
 ### Master switch
 
-| Key                  | Type    | Default | Description                 |
-| ------------------- | ------- | ------- | --------------------------- |
-| `syncClipboardEnabled` | Boolean | false  | enable clipboard sync service |
+| Setting | Range | Default | Description |
+|---------|-------|---------|-------------|
+| Use SyncClipboard to sync clipboard | On/off | Off | Enable the clipboard sync service |
 
 Enable it in `Settings → Other Settings → Clipboard sync`.
 
@@ -91,11 +90,11 @@ To remove all clipboard items saved by BiBi Keyboard, open `Settings → Other S
 
 ### Server config (SyncClipboard)
 
-| Key                         | Type   | Required | Description                                         |
-| -------------------------- | ------ | -------- | --------------------------------------------------- |
-| `syncClipboardServerBase`  | String | ✓        | server base URL or full `SyncClipboard.json` URL    |
-| `syncClipboardUsername`    | String | ✓        | username (HTTP Basic Auth)                          |
-| `syncClipboardPassword`    | String | ✓        | password (HTTP Basic Auth)                          |
+| Setting | Required | Description |
+|---------|----------|-------------|
+| Server address | ✓ | server base URL or full `SyncClipboard.json` URL (`/SyncClipboard.json` is appended automatically) |
+| Username | ✓ | username (HTTP Basic Auth) |
+| Password | ✓ | password (HTTP Basic Auth) |
 
 The server address can be either a base URL(recommended) or the full file URL:
 

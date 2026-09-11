@@ -1,17 +1,24 @@
-# AIDL 通信（小企鹅 / 同文联动）
+# 外部输入法联动（AIDL）
 
-说点啥（asr-keyboard）提供标准 AIDL 服务，允许其他应用（如[修改版小企鹅输入法](https://github.com/BryceWG/fcitx5-android-bibi-keyboard)、[修改版同文输入法](https://github.com/BryceWG/trime-bibi-keyboard)）调用说点啥的语音识别能力。
+说点啥（asr-keyboard）提供标准 AIDL 服务，允许其他输入法调用说点啥的语音识别能力。目前支持四类输入法：
 
-服务端为手写 Binder 协议，但与 AIDL 生成的代理完全兼容；客户端可直接使用 `.aidl` 生成的 Stub/Proxy，也可以像小企鹅/同文一样用 `transact` 纯 Binder 调用。
+| 输入法 | 联动协议 | 说明 |
+| ------ | -------- | ---- |
+| [修改版小企鹅输入法](https://github.com/BryceWG/fcitx5-android-bibi-keyboard) | 说点啥联动协议 | 空格键长按语音输入 |
+| [修改版同文输入法（Trime）](https://github.com/BryceWG/trime-bibi-keyboard) | 说点啥联动协议 | 语音键 / 工具栏麦克风 |
+| [fxliang 版小企鹅输入法（Fcitx5）](https://github.com/fxliang/fcitx5-android) | fxliang 语音插件协议 | 由输入法侧录音，说点啥负责识别 |
+| Foxy 输入法 | fxliang 语音插件协议 | 通过语音输入插件选择说点啥 |
+
+服务端为手写 Binder 协议，但与 AIDL 生成的代理完全兼容；客户端可直接使用 `.aidl` 生成的 Stub/Proxy，也可以像修改版小企鹅/同文一样用 `transact` 纯 Binder 调用。
 
 ## 用户使用指南
 
 ```mermaid
 sequenceDiagram
   actor User as 用户
-  participant Ime as 修改版输入法
+  participant Ime as 联动输入法
   participant Bibi as 说点啥
-  User->>Ime: 长按语音键
+  User->>Ime: 按下语音键
   Ime->>Bibi: 开始识别
   Bibi->>Bibi: 按当前供应商识别
   opt 已开启 AI 润色
@@ -23,38 +30,41 @@ sequenceDiagram
 
 供应商跟随说点啥当前设置，不会被输入法传入的供应商覆盖。
 
-目前支持修改版小企鹅输入法（Fcitx5）与修改版同文输入法（Trime）。通用步骤如下：
+所有联动方式都依赖同一个前置开关（唯一前置条件，无需悬浮球或无障碍）：
 
 1. 下载并安装说点啥最新版（开源版或 Pro 版均可，优先调用 Pro 版）
-2. 在说点啥中启用外部联动功能：`设置 → 输入设置 → 允许外部输入法联动（AIDL）`
+2. 在说点啥中启用外部联动功能：`设置 → 输入 → 输入设置 → 音频与联动 → 允许外部输入法联动（AIDL）`
 
-**Fcitx5（小企鹅）**：
+### 修改版小企鹅（Fcitx5）
 
-3. 下载并安装修改版小企鹅输入法：<https://github.com/BryceWG/fcitx5-android-bibi-keyboard/releases>
-4. 在小企鹅输入法中启用：`设置 → 虚拟键盘 → 空格键长按行为 → 语音输入（AIDL）`
-5. 长按空格键开始语音输入，松手结束
+1. 下载并安装修改版小企鹅输入法：<https://github.com/BryceWG/fcitx5-android-bibi-keyboard/releases>（需卸载原版 Fcitx 并注意备份数据）
+2. 在小企鹅输入法中启用：`设置 → 虚拟键盘 → 空格键长按行为 → 语音输入（AIDL）`
+3. 长按空格键开始语音输入，松手结束
 
-**Trime（同文）**：
+### fxliang 版小企鹅（Fcitx5）
 
-3. 下载并安装修改版同文输入法：<https://github.com/BryceWG/trime-bibi-keyboard/releases>
-4. 在同文输入法中启用：`设置 → 常规设置 → 说点啥 AIDL 语音输入`
-5. 使用方式：
+1. 安装 [fxliang 版小企鹅输入法](https://github.com/fxliang/fcitx5-android)（说点啥 v4.0.1 起支持）
+2. 在其语音输入设置中选择「说点啥联动」作为语音识别提供方
+3. 通过输入法自身的语音键发起录音：录音由输入法侧完成，识别与 AI 润色由说点啥按当前设置执行
+
+### 修改版同文（Trime）
+
+1. 下载并安装修改版同文输入法：<https://github.com/BryceWG/trime-bibi-keyboard/releases>
+2. 在同文输入法中启用：`设置 → 常规设置 → 说点啥 AIDL 语音输入`
+3. 使用方式：
    - 长按具备 `VOICE_ASSIST` 功能的按键开始录音，松手结束
    - 如当前主题没有 `VOICE_ASSIST` 长按入口，可在同文设置中开启“工具栏麦克风按钮”，点按开始，再次点按结束并上屏
+
+### Foxy 输入法
+
+1. 在 Foxy 输入法中启用语音输入插件，并选择说点啥作为识别提供方
+2. 之后即可在 Foxy 中通过语音输入调用说点啥完成识别，跟随说点啥当前的语音识别与 AI 后处理设置
 
 ### 更多外部联动能力
 
 - **剪贴板同步**：最新版修改版 Fcitx5 / Trime 可在各自的剪贴板设置中启用「说点啥粘贴板同步」。说点啥本体也必须已启用并配置剪贴板同步，详见[剪贴板同步](/advanced/clipboard-sync#修改版-fcitx5-trime-配置)。
 - **Pro 输入框上下文**：当 Pro 开启「使用输入框上下文辅助」时，修改版输入法会按服务端要求提供光标附近的受限文本，供 AI 后处理参考。
 - **Pro 从纠正中学习热词**：当 Pro 开启此功能时，修改版输入法会在语音上屏后短暂观察用户修正，并回报同一输入框中的最终改动。密码、邮箱、网址、电话输入框不会参与。
-- **Foxy 输入法语音输入插件**：说点啥也可作为 Foxy 输入法语音输入插件的服务端。在 Foxy 输入法中可选择使用说点啥完成识别，跟随说点啥当前的语音识别与 AI 后处理设置。
-
-**包名优先级**（与小企鹅实现一致）：
-
-1. `com.brycewg.asrkb.pro`
-2. `com.brycewg.asrkb`
-
-客户端应按顺序尝试绑定，优先使用已安装的 Pro 包（接口与行为一致）。
 
 ::: tip 与悬浮球输入法桥接的区别
 AIDL 联动适合修改版小企鹅/同文等输入法主动调用说点啥识别能力；IME Bridge 则通过 LSPosed / LSPatch 让说点啥悬浮球把结果交给当前第三方输入法写入。两者可以服务不同场景，普通用户通常只需按所用输入法选择其中一种。详见 [IME Bridge 模块](/advanced/ime-bridge)。
@@ -72,6 +82,13 @@ flowchart TD
 :::
 
 ## 开发者指南
+
+### 包名优先级
+
+1. `com.brycewg.asrkb.pro`
+2. `com.brycewg.asrkb`
+
+客户端应按顺序尝试绑定，优先使用已安装的 Pro 包（接口与行为一致）。
 
 ### 服务接口（IExternalSpeechService）
 
@@ -138,9 +155,9 @@ fun onError(sessionId: Int, code: Int, message: String)
 fun onAmplitude(sessionId: Int, amplitude: Float)
 ```
 
-## 主要方法
+### 主要方法
 
-### startSession（服务端录音模式）
+#### startSession（服务端录音模式）
 
 由说点啥负责录音与上行音频。
 
@@ -162,7 +179,7 @@ fun onAmplitude(sessionId: Int, amplitude: Float)
 服务端直接回调 `onPartial("【联通测试中】……")` 与 `onFinal("说点啥外部AIDL联通成功（mock）")`，无需录音权限。
 :::
 
-### startPcmSession / writePcm / finishPcm（推送 PCM 模式）
+#### startPcmSession / writePcm / finishPcm（推送 PCM 模式）
 
 由客户端自行录音，并持续向服务端推送 PCM 数据（小企鹅 bibi 使用该模式）。
 
@@ -179,7 +196,7 @@ fun onAmplitude(sessionId: Int, amplitude: Float)
 - 建议发送 `PCM16LE / 16000Hz / mono`，推荐 200ms 一包；服务端当前不强校验采样率与通道，但不匹配可能导致部分引擎效果异常。
 - `finishPcm(sessionId)` 等价于 `stopSession(sessionId)`，表示音频输入结束，等待最终结果。
 
-### 可选输入上下文与修正回报（Pro 4.3.0+）
+#### 可选输入上下文与修正回报（Pro 4.3.0+）
 
 客户端应在会话启动后调用 `getInputRequirements(sessionId)`，按位判断服务端是否需要附加信息：
 
@@ -196,25 +213,25 @@ fun onAmplitude(sessionId: Int, amplitude: Float)
 这三个事务是 Pro 扩展。客户端必须把未知事务或返回 `0` 视为“不需要附加信息”，继续原有 ASR 流程；不要因旧版服务不支持它们而中止录音。
 :::
 
-### stopSession / cancelSession
+#### stopSession / cancelSession
 
 两者均为 `void`，服务端不返回是否成功。
 
 - `stopSession`：结束录音/输入，进入处理阶段（如有），稍后会回 `onFinal` 或 `onError`。
 - `cancelSession`：取消并清理会话；不保证不会回 `onFinal`（AIDL 注释为“不可保证产生最终结果”）。
 
-### isRecording / isAnyRecording
+#### isRecording / isAnyRecording
 
 - `isRecording(sessionId)`：指定会话是否正在录音/输入中。
 - `isAnyRecording()`：是否存在任意活动会话。
 
-### getVersion
+#### getVersion
 
-返回说点啥的语义化版本名（`BuildConfig.VERSION_NAME`），例如 `"1.6.0"`。
+返回说点啥的语义化版本名（`BuildConfig.VERSION_NAME`），例如 `"4.4.5"`。
 
-## 回调状态与错误
+### 回调状态与错误
 
-### onState 的 state 取值
+#### onState 的 state 取值
 
 | state(Int) | 说明       | 常见 message       |
 | ---------- | ---------- | ------------------ |
@@ -223,7 +240,7 @@ fun onAmplitude(sessionId: Int, amplitude: Float)
 | `2`        | Processing | `processing`       |
 | `3`        | Error      | 错误文本           |
 
-### onError 的 code 取值
+#### onError 的 code 取值
 
 | code  | 说明                                         |
 | ----- | -------------------------------------------- |
@@ -231,15 +248,7 @@ fun onAmplitude(sessionId: Int, amplitude: Float)
 | `403` | 外部联动功能未启用                           |
 | `500` | 服务端内部错误（引擎/网络等）                |
 
-## 启用条件
-
-外部 API 联动仅要求：
-
-- `Prefs.externalAidlEnabled == true`
-
-开关入口：`设置 → 输入设置 → 外部输入法联动`。
-
-## 供应商与流式决策
+### 供应商与流式决策
 
 外部调用完全跟随说点啥当前设置（忽略 SpeechConfig）：
 
@@ -249,24 +258,25 @@ fun onAmplitude(sessionId: Int, amplitude: Float)
 - **DashScope**：`prefs.dashStreamingEnabled`
 - **Soniox**：`prefs.sonioxStreamingEnabled`
 - **ElevenLabs**：`prefs.elevenStreamingEnabled`
-- **OpenAI / Gemini / SiliconFlow / Zhipu / OpenRouter / MiMo / StepAudio**：固定非流式文件引擎
+- **OpenAI**：跟随应用内 OpenAI 渠道的流式识别（Realtime）开关，对所有调用来源生效
+- **Gemini / SiliconFlow / 智谱 GLM / OpenRouter / 小米 MiMo / StepAudio / Cohere**：固定非流式文件引擎
 
 **本地供应商**：
 
 - **X-ASR**：固定流式
 - **SenseVoice / FunASR Nano / Qwen3-ASR / Parakeet / FireRedASR V2**：固定非流式文件引擎（伪流式仅用于说点啥自身 UI，不暴露给外部）
 
-## 结果过滤
+### 结果过滤
 
 最终结果（`onFinal`）会经过统一末处理：
 
 1. 若开启 `trimFinalTrailingPunct`，去除尾部标点/emoji。
 2. 语音预设替换：命中时直接替换为预设文本。
-3. 若开启 `postProcessEnabled` 且 LLM 配置有效，则执行 AI 后处理；失败或返回空时回退到简单处理。
+3. 若在「AI 功能设置」中开启了 AI 后处理且 LLM 配置有效，则执行 AI 后处理；失败或返回空时回退到简单处理。
 
 统一入口：`AsrFinalFilters.applySimple` / `AsrFinalFilters.applyWithAi`。
 
-## 会话清理
+### 会话清理
 
 服务端会在以下情况移除会话并释放资源：
 
@@ -276,7 +286,7 @@ fun onAmplitude(sessionId: Int, amplitude: Float)
 
 建议客户端在窗口/焦点变化时主动 `cancelSession`，避免挂起会话。
 
-## 小企鹅输入法（bibi/lexi）集成示例
+### 小企鹅输入法（bibi/lexi）集成示例
 
 修改版小企鹅输入法 bibi 已集成说点啥外联（仓库内示例目录仍沿用旧名 `fcitx5-android-lexi-keyboard`）。
 
@@ -304,9 +314,20 @@ fcitx5-android-lexi-keyboard/app/src/main/java/org/fcitx/fcitx5/android/link/Asr
 - `-5`：提示“当前供应商不支持外部推送 PCM”
 - 录音权限由小企鹅侧自行申请；推送 PCM 模式下服务端不会回 `401/-4`
 
-## 使用建议
+### fxliang 语音插件协议（IVoiceInputProvider）
 
-### 客户端最佳实践
+fxliang 版小企鹅与 Foxy 输入法走独立的插件协议，与上方 `IExternalSpeechService` 不同：录音由输入法侧完成，PCM 推送给说点啥识别。
+
+- 服务组件：`com.brycewg.asrkb.api.FxliangFcitxVoiceInputProviderService`
+- 意图动作：`org.fcitx.fcitx5.android.plugin.VOICE_INPUT`（小企鹅）与 `com.fxliang.foxy.plugin.VOICE_INPUT`（Foxy），另有对应 debug 变体
+- 接口：`org.fcitx.fcitx5.android.common.ipc.IVoiceInputProvider` / `IVoiceInputCallback`（`isAvailable` / `startSession` / `feedAudio` / `endStream` 等）
+- 音频格式：PCM16LE / 16000 Hz / 单声道
+- 同样受「允许外部输入法联动（AIDL）」开关控制：未启用时 `isAvailable()` 返回 false，`startSession` 回调 `onError(403, "feature disabled")`
+- 识别与后处理复用 `ExternalSpeechSession`，供应商与流式决策、结果过滤与上文一致
+
+### 使用建议
+
+#### 客户端最佳实践
 
 1. 绑定服务时使用 `Context.BIND_AUTO_CREATE`，按 Pro → 开源顺序尝试。
 2. `startSession/startPcmSession` 成功后保存返回的 `sessionId`；不要自行生成或复用旧 id。

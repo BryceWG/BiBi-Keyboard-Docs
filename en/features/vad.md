@@ -1,10 +1,10 @@
-# Auto-stop on Silence (VAD)
+# Auto-stop on Silence
 
-Auto-stop on silence (Voice Activity Detection, VAD) can stop recording automatically after you stop speaking, so you don't need to tap "stop" manually.
+Auto-stop on silence stops recording automatically after you stop speaking, so you don't need to tap "stop" manually. Detection runs fully offline on your device (based on the Ten VAD model) and never uploads audio for this purpose.
 
-## How it works
+## Overview
 
-BiBi Keyboard uses **Ten VAD (sherpa-onnx)** to detect speech activity in real time:
+Auto-stop analyzes the recorded audio frame by frame in real time to detect whether you are speaking. The flow:
 
 ```mermaid
 flowchart TD
@@ -22,200 +22,90 @@ flowchart TD
   cont --> frame
 ```
 
-Press-and-hold recording, and AIDL sessions whose start/stop is controlled by the calling IME, suppress VAD auto-stop so recording does not end before you release.
-
 Core logic:
 
-1. Analyze audio continuously to detect whether you are speaking
+1. Analyze the recorded audio frame by frame in real time to detect whether you are speaking
 2. Start a timer when silence is detected
-3. When silence duration exceeds the configured window (e.g. 1.2s), stop recording
-4. Submit audio for recognition automatically
+3. When silence duration exceeds the "stop window" (1.2 s by default), stop recording and submit the audio for recognition automatically
 
-### VAD model
+Auto-stop is disabled in the following scenarios so recording does not end before you release:
 
-BiBi Keyboard uses **Ten VAD (sherpa-onnx)**, which is:
+- **Press-and-hold recording**: recording stops only when you release
+- **AIDL sessions controlled by an external IME**: start/stop is controlled by the calling IME
 
-- low-latency (real-time)
-- accurate (better speech vs noise separation)
-- fully offline (runs locally)
+Auto-stop works with all recognition modes: streaming recognition stops uploading the audio stream, while file-mode and local recognition submit the full audio.
 
-## Settings
+## Recording Auto-stop Mode
 
-All options are under `Settings → ASR Settings → Auto-stop on silence`:
+When recording ends automatically is controlled by "Recording auto-stop mode" under `Settings → Smart → Speech Recognition Settings → Auto-stop on Silence → Recording auto-stop mode`. Choose one of three:
 
-| Key                         | Type    | Range     | Default  | Description                                 |
-| -------------------------- | ------- | --------- | -------- | ------------------------------------------- |
-| `recordingAutoStopMode`    | String  | manual / silence / max_duration | `manual` | recording auto-stop mode                    |
-| `autoStopOnSilenceEnabled` | Boolean | -         | `false`  | master switch                               |
-| `autoStopSilenceWindowMs`  | Int     | 500-3000  | `1200`   | silence window threshold (ms)               |
-| `autoStopSilenceSensitivity` | Int   | 1-10      | `4`      | sensitivity (1=conservative, 10=sensitive)  |
-| `recordingMaxDurationMs`   | Int     | seconds slider | depends on setting | maximum duration for timeout stop          |
-| `skipEmptyAudioEnabled`    | Boolean | -         | `false`  | skip empty audio before non-streaming recognition |
-| `autoFilterSilentAudioSegments` | Boolean | -   | `false`  | remove silent parts before non-streaming recognition |
+- **Manual control** (default): recording stops only when you release the mic or tap it again; nothing stops it automatically.
+- **Stop when speech ends**: recording ends automatically after you stop speaking for a while. Good for daily input, short messages, and chat.
+- **Timeout stop**: recording ends when the "Maximum recording duration" is reached. It does not detect speech and is useful to prevent forgotten tap-to-toggle recordings.
 
-### 1. Recording auto-stop mode
+## Stop Parameters
 
-- Key: `recordingAutoStopMode`
-- Path: `Settings → ASR Settings → Recording auto-stop`
-- Behavior: choose "Manual stop", "Stop on silence", or "Timeout stop". "Stop on silence" uses the VAD parameters on this page; "Timeout stop" uses "Maximum recording duration".
+The following two options are shown only when "Recording auto-stop mode" is "Stop when speech ends":
 
-### 2. Enable switch
+| Option | Description | Default |
+| ------ | ----------- | ------- |
+| Stop window (ms) | how long to wait after silence before stopping, 300–5000 ms | 1200 |
+| Stop-recording sensitivity | 1–10; higher values stop sooner | 4 |
 
-- Key: `autoStopOnSilenceEnabled`
-- Default: off
+Sensitivity reference:
 
-### 3. Silence window
+| Level | Description | Best for |
+| ----- | ----------- | -------- |
+| 1–3 Conservative | stops only when it is very confident | noisy environments; quiet voice; frequent pauses |
+| 4–6 Balanced | balances accuracy and responsiveness | daily use, office/home |
+| 7–10 Sensitive | quick response; small pauses may trigger stop | quiet environments; continuous speech; fast input |
 
-- Key: `autoStopSilenceWindowMs`
-- Range: 500ms - 3000ms
-- Default: 1200ms
+### Recommended configs
 
-Suggested presets:
+- **Daily chat**: stop window 1000 ms, sensitivity 5 — stops after about 1 s of silence for quick responses.
+- **Dictation / documents**: stop window 1500 ms, sensitivity 4 — allows short pauses for thinking without frequent false stops.
+- **Meeting notes**: stop window 2000 ms, sensitivity 3 — avoids false stops when speakers pause; good for multi-person conversations.
 
-- **Fast**: 800ms (short phrases, chat)
-- **Balanced**: 1200ms (default)
-- **Relaxed**: 2000ms (long sentences with pauses)
+## Maximum Recording Duration
 
-### 4. Sensitivity
+Path: `Settings → Smart → Speech Recognition Settings → Auto-stop on Silence → Maximum recording duration`. Shown only when "Recording auto-stop mode" is "Timeout stop". Default is 120 seconds, adjustable from 30 to 600 seconds. Recording ends automatically (and is recognized) at this duration without any silence detection.
 
-- Key: `autoStopSilenceSensitivity`
-- Range: 1 - 10
-- Default: 4
+## Related Pre-recognition Options
 
-| Level              | Description                                 | Best for |
-| ------------------ | ------------------------------------------- | -------- |
-| **1-3 Conservative** | stop only when it is very confident         | noisy environments; quiet voice; frequent pauses |
-| **4-6 Balanced**     | balanced accuracy and responsiveness         | daily use |
-| **7-10 Sensitive**   | quick response; small pauses may trigger stop | quiet environment; fast input |
+The following two options live under `Settings → Input → Input Settings → Audio & External Link` and affect only non-streaming recognition (file upload or local full-audio inference); they do not change real-time streaming upload:
 
-### 5. Maximum recording duration
-
-- Key: `recordingMaxDurationMs`
-- Path: `Settings → ASR Settings → Recording auto-stop → Timeout stop → Maximum recording duration`
-- Behavior: when auto-stop mode is "Timeout stop", recording ends after this duration. It does not use VAD and is useful when you may forget to stop tap-to-toggle recording.
-
-### 6. Empty audio and silent-part filtering
-
-These options affect only non-streaming recognition (file upload or local full-audio inference). They do not change real-time streaming upload.
-
-- **Skip empty audio**: after recording stops, local VAD checks whether the audio contains almost no speech. If it is considered empty, ASR is not called.
-- **Auto filter silent parts**: removes long silent parts before recognition to shorten uploaded audio. It is useful for long recordings with obvious pauses.
+- **Auto discard invalid input**: after recording stops, the app checks locally whether the recording contains speech. If no speech is detected, the recording is discarded and never sent to the recognition provider, avoiding pointless requests.
+- **Auto filter silent parts**: before recognition, silent parts are removed locally to shorten the audio and possibly reduce upload time. Useful for long recordings with obvious pauses.
 
 ::: warning Note
 Both options are off by default. In noisy environments, with quiet speech, or when you pause for a long time, enable them carefully to avoid skipping or trimming useful speech.
 :::
 
-## Suggested configs
-
-### Daily chat
-
-```
-autoStopOnSilenceEnabled = true
-autoStopSilenceWindowMs = 1000  # 1s
-autoStopSilenceSensitivity = 5  # medium-high
-```
-
-### Dictation / documents
-
-```
-autoStopOnSilenceEnabled = true
-autoStopSilenceWindowMs = 1500  # 1.5s
-autoStopSilenceSensitivity = 4  # balanced
-```
-
-### Meeting notes
-
-```
-autoStopOnSilenceEnabled = true
-autoStopSilenceWindowMs = 2000  # 2s
-autoStopSilenceSensitivity = 3  # conservative
-```
-
-## Details
-
-### Detection interval
-
-VAD runs every **96ms**:
-
-```
-every 96ms → speech/silence → update silence timer → trigger when threshold reached
-```
-
-### Trigger conditions
-
-Auto-stop triggers only when:
-
-1. ✅ enabled (`autoStopOnSilenceEnabled = true`)
-2. ✅ VAD model initialized successfully
-3. ✅ continuous silence ≥ `autoStopSilenceWindowMs`
-4. ✅ currently recording
-
-### Works with all modes
-
-| Recognition mode | VAD auto-stop | Notes |
-| --------------- | ------------- | ----- |
-| **Streaming**   | ✅            | stops audio stream upload |
-| **File mode**   | ✅            | uploads full audio file after stop |
-| **Local**       | ✅            | submits audio to local engine |
-
 ## Troubleshooting
 
-### VAD does not stop recording
+### Auto-stop never triggers
 
-Checklist:
-
-1. ✅ enabled
-2. ✅ you paused long enough (pause ≥ window)
-3. ✅ environment not too noisy
-4. ✅ you are actually recording
-
-Try:
-
-```
-autoStopSilenceSensitivity = 6
-autoStopSilenceWindowMs = 1000
-```
+- Make sure "Recording auto-stop mode" is set to "Stop when speech ends"; other modes never stop by silence.
+- Background noise (fans, air conditioning, keyboard sounds) may be mistaken for speech. Try a lower "Stop-recording sensitivity".
+- Your pause must exceed the "Stop window"; try a smaller value.
 
 ### Stops unexpectedly while speaking
 
-Possible causes:
-
-- long pauses while speaking
-- sensitivity too high
-- voice too quiet / too far from mic
-
-Try:
-
-```
-autoStopSilenceSensitivity = 3
-autoStopSilenceWindowMs = 2000
-```
+- Long pauses, a quiet voice, or being far from the mic can trigger false stops.
+- Lower the "Stop-recording sensitivity" (e.g. 3) or raise the "Stop window" (e.g. 2000 ms).
 
 ### Background noise prevents stopping
 
-If noise is mistaken as speech:
-
-1. move to a quieter environment
-2. use a directional mic/noise-canceling headset
-3. lower sensitivity:
-   ```
-   autoStopSilenceSensitivity = 2
-   ```
-4. or disable VAD temporarily and stop manually
+- Move to a quieter environment, or use a directional mic / noise-canceling headset.
+- Lower the "Stop-recording sensitivity" (e.g. 2), or switch to "Manual control" for now.
 
 ### Feels too slow after you stop speaking
 
-Cause: silence window too long.
-
-Try:
-
-```
-autoStopSilenceWindowMs = 800
-```
+- Usually the "Stop window" is too long. For fast input, lower it to around 1000 ms (may stop more eagerly).
+- See "Recommended configs" above for a balanced setup per scenario.
 
 ## Related
 
-- [Recording Modes](./recording-modes.md)
-- [Voice Input Basics](./voice-input.md)
-- [Floating Ball](./floating-ball.md)
-
+- [Recording Modes](./recording-modes.md) - recording trigger styles that pair with auto-stop
+- [Voice Input Basics](./voice-input.md) - how recognition works
+- [Floating Ball](./floating-ball.md) - auto-stop in the floating ball

@@ -4,44 +4,29 @@ BiBi Keyboard Pro builds on the OSS version with more advanced capabilities for 
 
 ## Overview
 
-Pro includes these exclusive features:
+Pro includes these exclusive features, grouped in four categories that match the sections below:
+
+**Recognition & recording**
+
+- **Hotwords management**: provider-aware hotword adaptation (inject into engine, post-recognition similar-word replacement, polish prompt injection) to improve recognition for proper nouns
+- **Continuous speaking mode**: auto start/stop recording for hands-free multi-segment dictation
+- **Input field context**: AI post-processing can reference nearby text around the cursor for better continuity
+
+**Text processing**
 
 - **Offline Traditional Chinese conversion**: convert results to Traditional Chinese automatically
-- **Hotwords management**: provider-aware hotword adaptation to improve recognition for proper nouns
-- **Post-recognition similar-word replacement**: replace similar-sounding fragments with target hotwords via phoneme matching
-- **Learn hotwords from corrections**: create pending hotwords from corrections after dictation, with optional LLM-assisted filtering
-- **Hotword stats**: view trigger frequency and hit stats to keep improving your hotword list
-- **AI Assistant**: trigger voice commands with wake words, preset keywords, and fuzzy matching
-- **Input field context**: AI post-processing can reference nearby text around the cursor for better continuity
-- **App-specific prompts**: automatically switch AI prompt preset by foreground app
-- **Continuous speaking mode**: VAD auto start/stop without manual control
-- **Omni-direction cursor sliding**: enhanced cursor control with 4-direction sliding
-- **WebDAV auto backup**: cloud sync settings across devices
 - **Regex post-processing**: apply regex rules for text post-processing
+- **App-specific prompts**: automatically switch AI prompt preset by foreground app
+- **AI Assistant**: trigger voice commands with wake words, preset keywords, and fuzzy matching
+
+**Personalization**
+
 - **Advanced UI theming**: more color customization options
+- **Omni-direction cursor sliding**: enhanced cursor control with 4-direction sliding
 
-## Offline Traditional Chinese Conversion <Badge type="warning" text="Pro" />
+**Data**
 
-Automatically converts Simplified Chinese transcripts to Traditional Chinese.
-
-### Highlights
-
-- **Smart conversion**: offline conversion algorithm
-- **Seamless**: runs automatically without hurting recognition speed
-- **Global**: works for all providers and input scenarios
-
-### How to use
-
-1. Open BiBi Keyboard Pro settings
-2. Go to `Settings → Input Settings → Pro features → Convert to Traditional Chinese after recognition`
-3. Choose a rule:
-   - **Standard**
-   - **Taiwan usage**
-   - **Hong Kong usage**
-
-::: tip Note
-Conversion applies after all other text processing (including AI post-processing), ensuring final output is Traditional Chinese.
-:::
+- **WebDAV auto backup**: scheduled cloud backup across devices (see [Backup and Sync](/en/advanced/backup-restore))
 
 ## Hotwords Management <Badge type="warning" text="Pro" />
 
@@ -59,29 +44,15 @@ flowchart TD
   phoneme --> outReplaced[Output replaced text]
 ```
 
-### Highlights
-
-- **Multi-provider support**: auto-adapts hotword formats per ASR provider; selected local models now support hotwords too
-- **Before + after recognition**: hotwords first participate in recognition according to provider support; when enhancement is enabled, Pro also runs a pronunciation-similarity fallback after recognition
-- **Target word + aliases**: each hotword has up to 3 alias slots. The target word always occupies the first alias slot, and you can add 2 extra aliases
-- **Aliases participate in phoneme matching**: both the target word and extra aliases are matched after recognition; matches are replaced with the target word
-- **Injection control**: independently controls whether supported recognition engines receive hotwords, without disabling post-recognition replacement
-- **Hotword stats**: view trigger frequency and hit stats to iteratively tune your hotword list
-- **Linked with AI Assistant**: AI Assistant keywords can be auto-synced into the hotword list to reduce duplicate maintenance
-
-### How to use
-
-1. Open BiBi Keyboard Pro settings
-2. Go to `Settings → ASR Settings → Result Optimization (Pro)`
-3. Enable `Inject hotwords into recognition engines` so hotwords participate according to provider support
-4. Open `Hotword management` to add hotwords or batch-import them from the clipboard
-5. Long-press a hotword chip to edit aliases (`target | alias 2 | alias 3`)
-6. Enable `Replace similar words after recognition` if needed
-7. Review trigger frequency/hit stats on the management page and refine your list
-
-> Avoid too many hotwords. Per-provider limits apply and excessive lists may hurt performance.
-
 ### How it takes effect
+
+Hotwords have three combinable switches:
+
+- **Inject into the recognition engine** (`Inject hotwords into recognition engines`): hotwords participate in recognition according to provider support; selected local models support them too
+- **Post-recognition similar-word replacement** (`Replace similar words after recognition`): after recognition, similar-sounding fragments are replaced with the target hotword via phoneme matching
+- **Polish prompt injection** (`Add hotwords to the AI polishing prompt`): during AI polishing, enabled hotwords and their aliases are appended to the prompt as a structured word list, so the model can restore misheard proper nouns; independent of post-recognition replacement and may increase token usage. The sub-switch `Only include phonetically related hotwords` injects only hotwords phonetically close to the current transcript (Chinese and English only) to keep the prompt short
+
+Combinations of the first two switches:
 
 | Inject hotwords | Replace after recognition | Result |
 |-----------------|---------------------------|--------|
@@ -92,11 +63,30 @@ flowchart TD
 
 `Inject hotwords into recognition engines` is enabled by default. Actual support and quality still depend on the selected provider.
 
+Other capabilities:
+
+- **Target word + aliases**: each hotword has up to 3 alias slots. The target word always occupies the first alias slot, and you can add 2 extra aliases
+- **Aliases participate in phoneme matching**: both the target word and extra aliases are matched after recognition; matches are replaced with the target word
+- **Hotword stats**: view trigger frequency and hit stats to iteratively tune your hotword list
+- **Linked with AI Assistant**: AI Assistant keywords can be auto-synced into the hotword list to reduce duplicate maintenance
+
+How to use:
+
+1. Open BiBi Keyboard Pro settings
+2. Go to `Settings → Smart → ASR Settings → Result Optimization (Pro)`
+3. Enable `Inject hotwords into recognition engines` so hotwords participate according to provider support
+4. Open `Hotword management` to add hotwords or batch-import them from the clipboard
+5. Long-press a hotword chip to edit aliases (`target | alias 2 | alias 3`)
+6. Enable `Replace similar words after recognition` and/or `Add hotwords to the AI polishing prompt` as needed
+7. Review trigger frequency/hit stats on the management page and refine your list
+
+> Avoid too many hotwords. Per-provider limits apply and excessive lists may hurt performance.
+
 ### Learn hotwords from corrections
 
 When enabled, Pro compares a committed voice result with your subsequent correction and tries to extract content suitable for the hotword list.
 
-1. Open `Settings → ASR Settings → Result Optimization (Pro)`
+1. Open `Settings → Smart → ASR Settings → Result Optimization (Pro)`
 2. Enable `Learn hotwords from corrections`
 3. Optionally enable `Use an LLM to analyze corrections`; this requires a working LLM configuration
 4. Dictate through modified Fcitx5 / Trime, the latest IME Bridge, or an accessibility-assisted floating ball, then correct a recognition mistake
@@ -114,7 +104,9 @@ local rules remain available when the LLM fails;
 possible false learning, can be combined with manual confirmation to avoid accidentally adding temporary rewrites or common words as hotwords.
 :::
 
-### Alias examples
+### Examples and stats
+
+Alias examples:
 
 - **Fix similar-sounding words**: target word `音素`, extra aliases `因素` and `严肃`. If the transcript contains `因素`, it is replaced with `音素`.
 - **Shortcut phrase input**: target word `xxxx@qq.com`, extra alias `primary email`. When you say "primary email" and it is recognized, it is replaced with the real email address.
@@ -123,12 +115,12 @@ possible false learning, can be combined with manual confirmation to avoid accid
 `Replace similar words after recognition` works best for Chinese and English. For other languages, it may not work properly. It is best for proper nouns and frequent misrecognitions. Adding too many common words may cause unwanted replacements for similar-sounding text.
 :::
 
-### What’s new (more convenient)
+Convenience:
 
 - **Clear all + undo**: clear your hotwords in one tap, with an "Undo" action in the snackbar
 - **Add from selection menu**: select any text in any app, then choose "Add hotword to BiBi Keyboard" to add it instantly
 
-### Providers that support hotwords
+### Provider support
 
 | Provider     | Support | Max count                                              |
 | ------------ | ------- | ------------------------------------------------------ |
@@ -150,45 +142,9 @@ possible false learning, can be combined with manual confirmation to avoid accid
 When using Qwen3-ASR or FunASR Nano, changing hotwords may require the local model to be prepared again before the new list fully takes effect.
 :::
 
-## Input Field Context <Badge type="warning" text="Pro" />
-
-When using AI post-processing from the main keyboard, Pro can send text around the cursor as reference to the LLM. This helps the model understand continuity, terminology, and tone. When IME Bridge is enabled, floating-ball recordings can use the current input-field context too. See [IME Bridge Module](/en/advanced/ime-bridge#pro-input-field-context) for setup and privacy boundaries.
-
-### How to use
-
-1. Open `Settings → AI Feature Settings`
-2. Enable `Use input field context (Pro)`
-3. Dictate from the main keyboard with AI post-processing enabled. To use it from the floating ball, also enable `Settings → UI & Interaction → Floating Settings → IME bridge mode`
-
-::: warning Privacy
-This sends nearby input-field text to the selected LLM provider as reference. Enable it only when you trust that provider and the current content is appropriate to send.
-:::
-
-### Scope
-
-Input field context applies to AI post-processing after main-keyboard dictation and to floating-ball dictation when IME Bridge is enabled. MiMo multimodal ASR can also use Pro context information to improve proper nouns and scene-specific terms.
-
-## AI Assistant <Badge type="warning" text="Pro" />
-
-Trigger voice commands with a wake word, so AI can directly handle translation, writing, editing, summarization, and more.
-
-### Highlights
-
-- **Wake-word trigger**: say the wake word at the beginning of speech to enter AI Assistant flow
-- **Preset modes**: enable multiple presets at once (for example translation/writing/editing), then match by keywords
-- **Fuzzy matching**: wake words and preset keywords support fuzzy matching to reduce trigger failures caused by minor slips
-- **Customizable**: customize wake words, keywords, and prompts
-
-### How to use
-
-1. Open `Settings → AI Feature Settings`
-2. Enable `AI Assistant (Pro)`
-3. Configure wake words and preset keywords
-4. Speak in the form of "wake word + command" to trigger (for example: "Dian Dian, translate this into English")
-
 ## Continuous Speaking Mode <Badge type="warning" text="Pro" />
 
-Based on VAD (Voice Activity Detection): automatically starts on speech and stops on silence.
+A continuous dictation mode with automatic start/stop: after activation, recording starts when speech is detected and stops after silence, no repeated tapping needed.
 
 ```mermaid
 flowchart TD
@@ -204,19 +160,17 @@ flowchart TD
 
 ### Highlights
 
-- **Auto start**: after tapping mic, recording starts when speech is detected
+- **Auto start**: recording starts automatically when speech is detected after activation
 - **Auto stop**: stops when silence is detected and runs recognition
 - **Continuous**: multiple rounds without tapping repeatedly
-- **Tunable**: configurable silence window and sensitivity
+- **Follows auto-stop settings**: silence window and sensitivity follow `ASR Settings → Auto-stop on Silence`; no separate parameters
 
 ### How to use
 
 1. Open the BiBi Keyboard Pro panel
-2. Add the continuous mode button under `Settings → UI Settings → Custom keyboard layout`, then toggle it on the keyboard
-3. Start speaking
-4. Tune VAD parameters:
-   - **Silence window**: 0.5-3s (default 1.5s)
-   - **Sensitivity**: 1-10 (default 5)
+2. Add the continuous mode button under `Settings → UI Settings → Keyboard UI → Custom keyboard layout`, then toggle it on the keyboard
+3. Activate the mode via the button and start speaking; recording starts automatically on speech and stops after silence
+4. Tune the silence window (default 1200 ms) and sensitivity (default 4) under `Settings → Smart → ASR Settings → Auto-stop on Silence`
 
 The floating ball also supports continuous speaking mode, which is useful for dictating multiple segments in the current app or while using another IME. It keeps listening locally and submits each segment after silence. And you can toggle the switch in the floating ball menu.
 
@@ -227,42 +181,45 @@ The floating ball also supports continuous speaking mode, which is useful for di
 - It may take a word or two to detect speech and start recording; try to use locally captured pre-trigger audio to reduce dropped beginnings.
   :::
 
-## Omni-direction Cursor Sliding <Badge type="warning" text="Pro" />
+## Input Field Context <Badge type="warning" text="Pro" />
 
-Enables omni-direction cursor movement via sliding on the space bar.
+When using AI post-processing from the main keyboard, Pro can send text around the cursor as reference to the LLM. This helps the model understand continuity, terminology, and tone. With the `IME Hook module` enabled, floating-ball recordings can use the current input-field context too. See [IME Bridge Module](/en/advanced/ime-bridge#pro-input-field-context) for setup and privacy boundaries.
 
 ### How to use
 
-1. Enable `Settings → Input Settings → Pro features → Cursor sliding mode`
-2. On the keyboard, start from the space key area and swipe up to trigger cursor sliding
-3. The mic icon turns into four directional arrows
-4. Swipe up/down/left/right to move the cursor; the cursor follows your finger position
+1. Open `Settings → Smart → AI Feature Settings`
+2. Enable `Use input field context (Pro)`
+3. Dictate from the main keyboard with AI post-processing enabled. To use it from the floating ball, also enable `Settings → Input → More Input Methods → Advanced → IME Hook module`
 
-Swipe up from the space key to enter the mode. It is also available from the AI edit panel.
+::: warning Privacy
+This sends nearby input-field text to the selected LLM provider as reference. Enable it only when you trust that provider and the current content is appropriate to send.
+:::
 
-## WebDAV Auto Backup <Badge type="warning" text="Pro" />
+### Scope
 
-Automatically backs up all settings to WebDAV storage for multi-device sync.
+Input field context applies to AI post-processing after main-keyboard dictation and to floating-ball dictation when IME Bridge is enabled. MiMo multimodal ASR can also use Pro context information to improve proper nouns and scene-specific terms.
+
+## Offline Traditional Chinese Conversion <Badge type="warning" text="Pro" />
+
+Automatically converts Simplified Chinese transcripts to Traditional Chinese.
 
 ### Highlights
 
-- **Scheduled backup**
-- **Multi-device**: restore on another device by signing in with the same account
+- **Smart conversion**: offline conversion algorithm
+- **Seamless**: runs automatically without hurting recognition speed
+- **Global**: works for all providers and input scenarios
 
 ### How to use
 
 1. Open BiBi Keyboard Pro settings
-2. Go to `Settings → Backup`
-3. Enable `Auto backup`
-4. Fill in WebDAV:
-   - **Server URL**: e.g. `https://dav.example.com`
-   - **Username**
-   - **Password**
-   - **Backup interval**
-5. Check backup status and last backup time
+2. Go to `Settings → Input → Input Settings → Pro features → Convert recognition result to Traditional`
+3. Choose a rule:
+   - **Standard Traditional**
+   - **Taiwan usage**
+   - **Hong Kong usage**
 
-::: info Note
-WebDAV backup content is the same as manual backup. Only one config file is stored on the server.
+::: tip Note
+Conversion applies after all other text processing (including AI post-processing), ensuring final output is Traditional Chinese.
 :::
 
 ## Regex Post-processing <Badge type="warning" text="Pro" />
@@ -279,7 +236,7 @@ Apply regex rules to recognition results for advanced text transformations.
 ### How to use
 
 1. Open settings
-2. Go to `Settings → ASR Settings → Result Optimization (Pro)`
+2. Go to `Settings → Smart → ASR Settings → Result Optimization (Pro)`
 3. Enable and tap `Add rule` (or use `Templates`)
 4. Fill in:
    - **Pattern**: regex
@@ -300,7 +257,7 @@ Assign different AI post-processing prompt presets per app. Example: use "Genera
 
 ### How to use
 
-1. Open `Settings → AI Feature Settings`
+1. Open `Settings → Smart → AI Feature Settings`
 2. Tap "App-specific Prompt (Pro)"
 3. Enable "App-specific Prompt"
 4. Tap "Add app" and select a prompt preset for that app
@@ -308,6 +265,24 @@ Assign different AI post-processing prompt presets per app. Example: use "Genera
 ::: warning Notes
 This requires enabling BiBi Keyboard’s accessibility service to detect the foreground app. It does not read your chat content or screen text.
 :::
+
+## AI Assistant <Badge type="warning" text="Pro" />
+
+Trigger voice commands with a wake word, so AI can directly handle translation, writing, editing, summarization, and more.
+
+### Highlights
+
+- **Wake-word trigger**: say the wake word at the beginning of speech to enter AI Assistant flow
+- **Preset modes**: enable multiple presets at once (for example translation/writing/editing), then match by keywords
+- **Fuzzy matching**: wake words and preset keywords support fuzzy matching to reduce trigger failures caused by minor slips
+- **Customizable**: customize wake words, keywords, and prompts
+
+### How to use
+
+1. Open `Settings → Smart → AI Feature Settings`
+2. Enable `AI Assistant (Pro)`
+3. Configure wake words and preset keywords
+4. Speak in the form of "wake word + command" to trigger (for example: "Dian Dian, translate this into English")
 
 ## Advanced UI Theming <Badge type="warning" text="Pro" />
 
@@ -329,7 +304,7 @@ Pro adds:
 ### How to use
 
 1. Open settings
-2. Go to `Settings → Theme mode (Pro)`
+2. Go to `Settings → UI Settings → App UI → Theme mode (Pro)`
 3. Configure:
    - **Appearance**: system / light / dark / AMOLED black
    - **Monet**: whether to use wallpaper dynamic color
@@ -340,11 +315,25 @@ Pro adds:
 Choosing a custom key color overrides pure Material 3 dynamic color behavior. Restore the default key color to return to the default theme behavior.
 :::
 
+## Omni-direction Cursor Sliding <Badge type="warning" text="Pro" />
+
+Enables omni-direction cursor movement via sliding on the space bar.
+
+### How to use
+
+1. Enable `Settings → Input → Input Settings → Pro features → Cursor Glide Mode`
+2. On the keyboard, start from the space key area and swipe up to trigger cursor sliding
+3. The mic icon turns into four directional arrows
+4. Swipe up/down/left/right to move the cursor; the cursor follows your finger position
+
+Swipe up from the space key to enter the mode. It is also available from the AI edit panel.
+
+## WebDAV Auto Backup <Badge type="warning" text="Pro" />
+
+Automatically backs up all settings to WebDAV storage for multi-device sync. Enable it under `Settings → System → Backup and Sync → Auto Backup (Pro)`; the backup interval is an interval value plus a unit (hours/days), minimum 6 hours. The page shows the next scheduled backup time and the last backup status.
+
+See [Backup and Sync](/en/advanced/backup-restore) for configuration details and troubleshooting.
+
 ## Get Pro
 
-Pro is distributed via **Google Play**.
-
-See:
-
-- [Activation](./activation)
-- [Comparison](./comparison)
+Pro is distributed via **Google Play**. See [Activation](/en/pro/activation) for purchasing, and [OSS vs Pro Comparison](/en/pro/comparison) for feature differences.

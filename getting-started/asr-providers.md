@@ -4,7 +4,7 @@
 
 ## 开始前
 
-- 进入应用 `设置 → 语音识别设置`，在「ASR 服务商」中选择目标供应商
+- 进入应用 `设置 → 智能 → 语音识别设置`，在「语音识别服务商」中选择目标供应商
 - 云端供应商通常需要填写 `API Key` / `Access Token` 等凭证
 - 本地模型需先下载/导入模型文件（首次加载可能需要几秒）
 
@@ -16,19 +16,39 @@ API Key / Access Token 属于敏感信息，请勿截图公开或分享给他人
 
 | 供应商                                                                                       | 类型 | 流式支持 | 适合场景                                           |
 | -------------------------------------------------------------------------------------------- | ---- | -------- | -------------------------------------------------- |
-| **Volcengine**<br>火山引擎                                                                   | 云端 | ✅       | 追求低延迟与流式实时出字                           |
 | **SiliconFlow**<br>硅基流动                                                                  | 云端 | ❌       | 新手开箱即用 / 低成本                              |
-| **DashScope**<br>阿里云百炼（Qwen）                                                          | 云端 | ✅       | 性价比与识别效果均衡                               |
-| **Soniox**                                                                                   | 云端 | ✅       | 海外服务、流式稳定性较好                           |
-| **Gemini**                                                                                   | 云端 | ❌       | 小用量体验 / 文件识别                              |
+| **Volcengine**<br>火山引擎                                                                   | 云端 | ✅/❌      | 追求低延迟与流式实时出字                           |
 | **ElevenLabs**                                                                               | 云端 | ✅/❌    | 识别精度高，按模型区分流式                         |
 | **OpenAI**（兼容接口）                                                                       | 云端 | ✅/❌    | 使用 OpenAI/兼容端点，支持文件识别与 Realtime 流式 |
+| **OpenRouter**                                                                               | 云端 | ❌       | 使用 OpenRouter API Key 调用兼容 ASR 模型          |
+| **DashScope**<br>阿里云百炼（Qwen）                                                          | 云端 | ✅/❌      | 性价比与识别效果均衡                               |
+| **Gemini**                                                                                   | 云端 | ❌       | 小用量体验 / 文件识别                              |
+| **MiMo**<br>小米                                                                             | 云端 | ❌       | MiMo v2.5 ASR / 音频理解模型                       |
+| **Soniox**                                                                                   | 云端 | ✅/❌      | 海外服务、流式稳定性较好                           |
 | **StepAudio**                                                                                | 云端 | ❌       | 阶跃星辰在线 ASR，支持中英文与 ITN                 |
 | **Zhipu**<br>智谱 GLM                                                                        | 云端 | ❌       | 低成本、简单接入                                   |
-| **OpenRouter**                                                                               | 云端 | ❌       | 使用 OpenRouter API Key 调用兼容 ASR 模型          |
-| **MiMo**<br>小米                                                                              | 云端 | ❌       | MiMo v2.5 ASR / 音频理解模型                       |
 | **Cohere**                                                                                   | 云端 | ❌       | Cohere Transcribe 文件识别与多语言转写             |
 | **本地模型**（SenseVoice / FunASR Nano / Qwen3-ASR / Parakeet / FireRedASR V2 / X-ASR）      | 本地 | 部分 ✅  | 隐私优先、离线可用                                 |
+
+## 硅基流动（SiliconFlow）
+
+硅基流动提供**内置免费 ASR**（无需 Key）以及可选的付费模型。
+
+### 快速使用（无需 API Key）
+
+1. 在 `设置 → 智能 → 语音识别设置` 中选择 **SiliconFlow**
+2. 保持「免费 ASR」相关开关为开启
+3. 在可用的免费模型之间切换即可：`FunAudioLLM/SenseVoiceSmall`、`TeleAI/TeleSpeechASR`，以及 XingChen 系列（`XingChenAGI/XingChenASR-V3.2`、`XingChenASR-V3.2-Ultra`、`XingChenGSR-V1.0`）
+
+### 使用自有 API Key（可选）
+
+使用自己的 SiliconFlow API Key 时，除免费模型外还可使用付费模型：`Qwen/Qwen3-Omni-30B-A3B-Instruct`、`Qwen/Qwen3-Omni-30B-A3B-Thinking`、`Qwen/Qwen3-ASR-1.7B`。
+
+1. 注册并登录：[硅基流动官网](https://cloud.siliconflow.cn/)
+2. 在控制台进入「API 密钥」，创建并复制 Key
+3. 粘贴到说点啥对应的 SiliconFlow 配置项中
+
+![在控制台获取 API Key](/images/getting-started/asr-providers/siliconflow-api-key.png)
 
 ## 火山引擎（Volcengine）
 
@@ -52,7 +72,7 @@ API Key / Access Token 属于敏感信息，请勿截图公开或分享给他人
 
 ### 3. 在说点啥中配置
 
-1. 打开 `设置 → 语音识别设置`
+1. 打开 `设置 → 智能 → 语音识别设置`
 2. 选择 **Volcengine（火山引擎）**
 3. 将 `APP ID` 填入 `X-Api-App-Key`
 4. 将 `Access Token` 填入 `X-Api-Access-Key`
@@ -66,25 +86,53 @@ API Key / Access Token 属于敏感信息，请勿截图公开或分享给他人
 若创建应用时已同时开通流式与录音文件识别，二者使用同一套密钥，无需重复获取。
 :::
 
-## 硅基流动（SiliconFlow）
+## ElevenLabs
 
-硅基流动提供**内置免费 ASR**（无需 Key）以及可选的付费模型。
+ElevenLabs 的 `scribe_v1` 仅支持非流式，`scribe_v2` 仅支持流式。
 
-### 快速使用（无需 API Key）
+### 获取 API Key
 
-1. 在 `设置 → 语音识别设置` 中选择 **SiliconFlow**
-2. 保持「免费 ASR」相关开关为开启
-3. 在可用的免费模型之间切换即可：`FunAudioLLM/SenseVoiceSmall`、`TeleAI/TeleSpeechASR`，以及 XingChen 系列（`XingChenAGI/XingChenASR-V3.2`、`XingChenASR-V3.2-Ultra`、`XingChenGSR-V1.0`）
+1. 进入 API Keys 页面：[ElevenLabs API Keys](https://elevenlabs.io/app/settings/api-keys)
+2. 点击 Create Key
+3. 为 Key 开启 `Speech to Text` 权限
 
-### 使用自有 API Key（可选）
+![创建 Key](/images/getting-started/asr-providers/elevenlabs-create-key.png)
+![开启 Speech to Text 权限](/images/getting-started/asr-providers/elevenlabs-stt-permission.png)
 
-使用自己的 SiliconFlow API Key 时，除免费模型外还可使用付费模型：`Qwen/Qwen3-Omni-30B-A3B-Instruct`、`Qwen/Qwen3-Omni-30B-A3B-Thinking`、`Qwen/Qwen3-ASR-1.7B`。
+## OpenAI（兼容接口）
 
-1. 注册并登录：[硅基流动官网](https://cloud.siliconflow.cn/)
-2. 在控制台进入「API 密钥」，创建并复制 Key
-3. 粘贴到说点啥对应的 SiliconFlow 配置项中
+OpenAI 供应商支持使用 OpenAI 格式的 ASR 端点（也可填写兼容 OpenAI Audio Transcriptions、Chat Completions 或 Realtime 的第三方端点）。
 
-![在控制台获取 API Key](/images/getting-started/asr-providers/siliconflow-api-key.png)
+1. 在 `设置 → 智能 → 语音识别设置` 选择 **OpenAI**
+2. 通过「新增渠道」建立一个或多个 OpenAI ASR 配置，用于区分官方接口、代理接口或不同模型
+3. 填写：
+   - `ASR 端点`（如 `https://api.openai.com/v1/audio/transcriptions`、`https://api.openai.com/v1/chat/completions` 或兼容端点）
+   - `API Key`（请求自动携带，无需额外配置）
+   - `模型名称`（如 `gpt-4o-mini-transcribe` / `whisper-1`）
+4. 如果端点是多模态 Chat Completions 接口，开启「使用 Completions 接口」，并按需填写自定义 Prompt
+5. 如果端点支持 Realtime API，可开启「启用流式识别（Realtime）」以边说边显示结果
+
+![OpenAI 配置示例](/images/getting-started/asr-providers/openai-settings.png)
+
+::: tip 选择哪种 OpenAI 接口
+`audio/transcriptions` 适合标准转写模型；`chat/completions` 适合支持音频输入的多模态模型；Realtime 适合需要边说边出字的流式体验。需要确认你的 OpenAI 渠道支持哪种调用方式。
+:::
+
+::: info 自定义兼容端点
+使用自定义兼容的 `audio/transcriptions` 端点时，说点啥会上传 WAV 音频以提高兼容性；此时「上传音频前压缩」不会对该 OpenAI 自定义转写端点生效。
+:::
+
+## OpenRouter
+
+OpenRouter 供应商用于通过 OpenRouter 调用兼容的 ASR / 多模态转写模型，目前以非流式方式使用。
+
+1. 进入 OpenRouter 控制台创建 API Key：[OpenRouter Keys](https://openrouter.ai/settings/keys)
+2. 在 `设置 → 智能 → 语音识别设置` 中选择 **OpenRouter**
+3. 填写：
+   - `ASR Endpoint`（通常保持默认或填写兼容的 `/audio/transcriptions` 端点）
+   - `OpenRouter API Key`
+   - `模型`（例如 `qwen/qwen3-asr-flash-2026-02-10`）
+4. 保存后可先到 `设置 → 输入 → 录音测试` 验证是否可用
 
 ## 阿里云百炼（DashScope / Qwen）
 
@@ -99,51 +147,11 @@ API Key / Access Token 属于敏感信息，请勿截图公开或分享给他人
 
 ### 2. 在说点啥中配置
 
-1. 打开 `设置 → 语音识别设置`，选择 **DashScope（阿里云百炼）**
+1. 打开 `设置 → 智能 → 语音识别设置`，选择 **DashScope（阿里云百炼）**
 2. 填入 API Key 并保存
 3. 根据需要选择模型：
    - 流式：`Qwen-Audio-3.0-ASR-Flash-Streaming`（默认）、`Fun-ASR-Realtime`、`Qwen3-ASR-Flash-Realtime`
    - 非流式：`Qwen-Audio-3.0-ASR-Flash`（默认）、`Fun-ASR-Flash`、`Qwen3-ASR-Flash`、`Qwen3.5-Omni-Flash`、`Qwen3.5-Omni-Plus`
-
-## Cohere
-
-Cohere Transcribe 在说点啥中以非流式文件识别方式使用。
-
-1. 登录 [Cohere Dashboard](https://dashboard.cohere.com/api-keys)，创建并复制 Trial API Key
-2. 打开 `设置 → 语音识别设置`，选择 **Cohere**
-3. 填入 `Cohere API Key`
-4. 选择模型：
-   - `cohere-transcribe-03-2026`：通用多语言模型
-   - `cohere-transcribe-arabic-07-2026`：阿拉伯语 / 英语模型
-5. 选择与语音匹配的识别语言；若填写自定义模型 ID，请同时确认该模型接受所选语言代码
-
-::: tip 免费限制
-Cohere Trial API Key 限制为 5 RPM（每分钟请求数）。
-:::
-
-::: tip 语言选择
-通用模型支持中文、英语、阿拉伯语、日语、韩语及多种欧洲语言；阿拉伯语模型仅提供阿拉伯语和英语选项。
-:::
-
-## Soniox
-
-Soniox 支持流式与非流式；流式稳定性较好。
-
-### 获取 API Key
-
-1. 登录控制台：[Soniox Console](https://console.soniox.com)
-2. 在项目侧边栏进入 `API keys`
-3. 创建并复制 API KEY
-
-![进入 API keys](/images/getting-started/asr-providers/soniox-nav.png)
-
-### 识别模式
-
-在 Soniox 设置中可通过滑块调整「端点检测灵敏度」：
-
-- **低延迟**：更快的端点检测，适合实时输入
-- **默认**：平衡延迟与准确率
-- **高精度**：更敏感的端点检测，适合对准确率更敏感的场景
 
 ## Gemini
 
@@ -164,60 +172,12 @@ Gemini 适合小用量体验，通常以文件识别为主。
   - **识别语言**：自动、简体普通话、繁体粤语、美式英语、日语、韩语，或填写自定义 BCP-47 代码
   - **Smart 转录**：开启后移除语气词、纠正口误并重排格式（可能改变逐字内容）；关闭则逐字转录，保留语气词、重复和口误
 
-## ElevenLabs
-
-ElevenLabs 的 `scribe_v1` 仅支持非流式，`scribe_v2` 仅支持流式。
-
-### 获取 API Key
-
-1. 进入 API Keys 页面：[ElevenLabs API Keys](https://elevenlabs.io/app/settings/api-keys)
-2. 点击 Create Key
-3. 为 Key 开启 `Speech to Text` 权限
-
-![创建 Key](/images/getting-started/asr-providers/elevenlabs-create-key.png)
-![开启 Speech to Text 权限](/images/getting-started/asr-providers/elevenlabs-stt-permission.png)
-
-## OpenAI（兼容接口）
-
-OpenAI 渠道支持使用 OpenAI 格式的 ASR 端点（也可填写兼容 OpenAI Audio Transcriptions、Chat Completions 或 Realtime 的第三方端点）。
-
-1. 在 `设置 → 语音识别设置` 选择 **OpenAI**
-2. 通过「添加渠道」建立一个或多个 OpenAI ASR 配置，用于区分官方接口、代理接口或不同模型
-3. 填写：
-   - `ASR 端点`（如 `https://api.openai.com/v1/audio/transcriptions`、`https://api.openai.com/v1/chat/completions` 或兼容端点）
-   - `API Key`（Bearer）
-   - `模型名称`（如 `gpt-4o-mini-transcribe` / `whisper-1`）
-4. 如果端点是多模态 Chat Completions 接口，开启「使用 Completions 接口」，并按需填写自定义 Prompt
-5. 如果端点支持 Realtime API，可开启「启用流式识别（Realtime）」以边说边显示结果
-
-![OpenAI 配置示例](/images/getting-started/asr-providers/openai-settings.png)
-
-::: tip 选择哪种 OpenAI 接口
-`audio/transcriptions` 适合标准转写模型；`chat/completions` 适合支持音频输入的多模态模型；Realtime 适合需要边说边出字的流式体验。需要确认你的 OpenAI 渠道支持哪种调用方式。
-:::
-
-::: info 自定义兼容端点
-使用自定义兼容的 `audio/transcriptions` 端点时，说点啥会上传 WAV 音频以提高兼容性；此时「上传音频前压缩」不会对该 OpenAI 自定义转写端点生效。
-:::
-
-## OpenRouter
-
-OpenRouter 渠道用于通过 OpenRouter 调用兼容的 ASR / 多模态转写模型，目前以非流式方式使用。
-
-1. 进入 OpenRouter 控制台创建 API Key：[OpenRouter Keys](https://openrouter.ai/settings/keys)
-2. 在 `设置 → 语音识别设置` 中选择 **OpenRouter**
-3. 填写：
-   - `ASR Endpoint`（通常保持默认或填写兼容的 `/audio/transcriptions` 端点）
-   - `OpenRouter API Key`
-   - `模型`（例如 `qwen/qwen3-asr-flash-2026-02-10`）
-4. 保存后可先到 `设置首页 → 录音测试` 验证是否可用
-
 ## MiMo（小米）
 
-MiMo 渠道支持 `mimo-v2.5-asr` 与 `mimo-v2.5` 音频理解模型，适合希望尝试小米 MiMo 转写效果的用户。
+MiMo 供应商支持 `mimo-v2.5-asr` 与 `mimo-v2.5` 音频理解模型，适合希望尝试小米 MiMo 转写效果的用户。
 
 1. 准备 MiMo API Key
-2. 在 `设置 → 语音识别设置` 中选择 **MiMo**
+2. 在 `设置 → 智能 → 语音识别设置` 中选择 **MiMo**
 3. 选择请求端点：
    - Token Plan（中国大陆 / 新加坡 / 欧洲）
    - 按量付费
@@ -226,12 +186,32 @@ MiMo 渠道支持 `mimo-v2.5-asr` 与 `mimo-v2.5` 音频理解模型，适合希
 5. 选择模型、识别语言（自动 / 中文 / 英文）
 6. 使用 `mimo-v2.5` 音频理解模型时，可填写 System Prompt；如不需要推理过程，可开启「禁用推理」
 
+## Soniox
+
+Soniox 支持流式与非流式；流式稳定性较好。
+
+### 获取 API Key
+
+1. 登录控制台：[Soniox Console](https://console.soniox.com)
+2. 在项目侧边栏进入 `API keys`
+3. 创建并复制 API KEY
+
+![进入 API keys](/images/getting-started/asr-providers/soniox-nav.png)
+
+### 识别模式
+
+在 Soniox 设置中通过「识别模式」选择端点检测行为：
+
+- **低延迟**：更快的端点检测，适合实时输入
+- **默认**：平衡延迟与准确率
+- **高精度**：更敏感的端点检测，适合对准确率更敏感的场景
+
 ## StepAudio
 
 StepAudio 是阶跃星辰提供的在线 ASR 服务，目前在说点啥中以非流式方式使用。
 
 1. 进入阶跃星辰开放平台并创建 API Key：[StepFun 控制台](https://platform.stepfun.com/)
-2. 在 `设置 → 语音识别设置` 中选择 **StepAudio**
+2. 在 `设置 → 智能 → 语音识别设置` 中选择 **StepAudio**
 3. 选择请求端点：
    - 按量付费
    - Coding Plan
@@ -241,10 +221,30 @@ StepAudio 是阶跃星辰提供的在线 ASR 服务，目前在说点啥中以�
 
 ## 智谱 GLM
 
-智谱 GLM 渠道简单易用、价格较低，通常为非流式。
+智谱 GLM 供应商简单易用、价格较低，通常为非流式。
 
 1. 进入控制台获取 API Key：[智谱 BigModel 控制台](https://bigmodel.cn/usercenter/proj-mgmt/apikeys)
 2. 将 Key 填入说点啥对应的智谱配置项
+
+## Cohere
+
+Cohere Transcribe 在说点啥中以非流式文件识别方式使用。
+
+1. 登录 [Cohere Dashboard](https://dashboard.cohere.com/api-keys)，创建并复制 Trial API Key
+2. 打开 `设置 → 智能 → 语音识别设置`，选择 **Cohere**
+3. 填入 `Cohere API Key`
+4. 选择模型：
+   - `cohere-transcribe-03-2026`：通用多语言模型
+   - `cohere-transcribe-arabic-07-2026`：阿拉伯语 / 英语模型
+5. 选择与语音匹配的识别语言；若填写自定义模型 ID，请同时确认该模型接受所选语言代码
+
+::: tip 免费限制
+Cohere Trial API Key 限制为 5 RPM（每分钟请求数）。
+:::
+
+::: tip 语言选择
+通用模型支持中文、英语、阿拉伯语、日语、韩语及多种欧洲语言；阿拉伯语模型仅提供阿拉伯语和英语选项。
+:::
 
 ## 本地模型配置指南
 
@@ -252,12 +252,12 @@ StepAudio 是阶跃星辰提供的在线 ASR 服务，目前在说点啥中以�
 
 ### 模型选择建议
 
-- **SenseVoice**：非流式；速度快、均衡；支持语言设置
+- **SenseVoice（推荐）**：非流式；轻量速度快、均衡；支持语言设置
 - **FunASR Nano**：非流式；支持语言选择、原生 ITN，并提供 MLT Nano 多语言变体
-- **Qwen3-ASR**：非流式；本地 0.6B / 1.7B 模型，中文效果较好
+- **Qwen3-ASR（推荐）**：非流式；本地 0.6B / 1.7B 模型，中文效果较好
 - **Parakeet**：非流式；V3 适合多种欧洲语言，V2 适合英语
 - **FireRedASR V2**：非流式 / 伪流式；替代旧版 TeleSpeech，支持中英本地识别
-- **X-ASR**：本地流式；中英 480ms 模型，支持线程数、模型卸载策略与可选 ITN
+- **X-ASR（推荐）**：本地流式；中英 480ms 模型，支持线程数、模型卸载策略与可选 ITN
 
 ### 在应用内下载（推荐）
 
@@ -266,6 +266,10 @@ StepAudio 是阶跃星辰提供的在线 ASR 服务，目前在说点啥中以�
 3. 如已授予通知权限，可在通知栏查看下载与解压进度
 
 下载被取消或网络中断时，未完成的下载任务会暂存在本机；再次下载同一模型时会尝试从断点继续。缓存最长保留 7 天，总占用上限约 2 GB，超过限制时会优先清理较旧文件。若下载源不支持断点续传，应用会自动重新下载完整文件。
+
+::: tip 减小首次识别等待
+本地模型首次加载可能需要几秒钟。各本地供应商均支持「积极加载模型」选项：开启后会在键盘或悬浮球首次显示时提前加载模型，减小首次识别时的等待时间。
+:::
 
 ![模型管理页下载与进度](/images/getting-started/asr-providers/local-models-download.png)
 

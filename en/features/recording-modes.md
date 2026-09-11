@@ -23,12 +23,12 @@ flowchart TD
   tapBall --> stopHow
   holdBall --> stopHow
   stopHow{Auto-stop}
-  stopHow -->|Manual| userStop[Wait for user action]
-  stopHow -->|Silence| vad[Stop after silence window]
-  stopHow -->|Timeout| timeout[Stop at max duration]
+  stopHow -->|Manual control| userStop[Wait for user action]
+  stopHow -->|Stop when speech ends| vad[Stop after silence window]
+  stopHow -->|Timeout stop| timeout[Stop at max duration]
 ```
 
-Press-and-hold on the keyboard suppresses silence auto-stop until you release. "Continuous recording while visible" only buffers locally while the keyboard or floating ball is shown; audio before you press the mic is not uploaded.
+Press-and-hold on the keyboard suppresses auto-stop on silence until you release. "Continuous recording while visible" reduces the startup delay after you press the mic; see [Continuous Recording While Visible](#continuous-recording-while-visible) below.
 
 ## Press and hold (default)
 
@@ -40,8 +40,7 @@ Press-and-hold on the keyboard suppresses silence auto-stop until you release. "
 
 ### Setting
 
-- Key: `micTapToggleEnabled = false` (default)
-- Path: `Settings → ASR Settings → Tap mic to start/stop` (off)
+- Path: `Settings → Input → Input Settings → Input Behavior → Tap to start/stop recording` (off by default, i.e. press-and-hold)
 
 ### Pros / cons
 
@@ -74,8 +73,7 @@ Press-and-hold on the keyboard suppresses silence auto-stop until you release. "
 
 ### Setting
 
-- Key: `micTapToggleEnabled = true`
-- Path: `Settings → ASR Settings → Tap mic to start/stop` (on)
+- Path: `Settings → Input → Input Settings → Input Behavior → Tap to start/stop recording` (on)
 
 ### Pros / cons
 
@@ -103,21 +101,22 @@ Press-and-hold on the keyboard suppresses silence auto-stop until you release. "
 - long dictation (articles, reports)
 - meeting notes
 - record while doing other actions
-- combine with VAD auto-stop
 
-## Auto-stop Behavior
+## Working with Other Features
 
-Under `Settings → ASR Settings → Recording auto-stop`, choose when recording should end automatically:
+### Recording auto-stop mode
+
+Under `Settings → Smart → Speech Recognition Settings → Auto-stop on Silence → Recording auto-stop mode`, choose when recording should end automatically:
 
 | Mode | Description | Best for |
 | ---- | ----------- | -------- |
-| **Manual stop** | release the mic or tap it again to stop | precise manual control |
-| **Stop on silence** | stop after you stop speaking for a while | daily input, short messages, chat |
+| **Manual control** | release the mic or tap it again to stop | precise manual control |
+| **Stop when speech ends** | stop after you stop speaking for a while | daily input, short messages, chat |
 | **Timeout stop** | stop when "Maximum recording duration" is reached | avoiding forgotten tap-to-toggle recordings |
 
-"Timeout stop" does not detect speech; it only stops by duration. Use [Auto-stop on Silence (VAD)](./vad.md) when you want recording to stop based on pauses.
+"Timeout stop" does not detect speech; it only stops by duration. Use [Auto-stop on Silence](./vad.md) when you want recording to stop based on pauses.
 
-## Continuous Recording While Visible
+### Continuous recording while visible
 
 To make mic starts feel faster, enable `Settings → Input Settings → Continuous recording while visible`. When enabled, BiBi Keyboard records locally while the keyboard or floating ball is visible. Audio before you press the mic is not uploaded; it is used only to reduce startup latency after you trigger recognition.
 
@@ -125,27 +124,18 @@ To make mic starts feel faster, enable `Settings → Input Settings → Continuo
 This keeps the microphone listening locally while the keyboard or floating ball is visible, which may increase battery usage. Keep it off if you are sensitive to privacy or power consumption.
 :::
 
-## Quick Switch Button
+### Quick switch button
 
 If you often switch between short messages and long dictation, add the "Recording mode switch" action to your keyboard layout:
 
-1. Open `Settings → UI Settings → Custom keyboard layout`
+1. Open `Settings → Input → UI Settings → Keyboard UI → Custom keyboard layout`
 2. Pick an action-row or keyboard button position
 3. Set its action to `Recording mode switch`
 4. Return to the keyboard and tap it to switch between press-and-hold and tap-to-toggle recording
 
-## Works best with VAD
-
-Tap-to-toggle + auto-stop on silence (VAD) gives an experience close to continuous conversation:
-
-```
-Settings → ASR Settings → Tap mic to start/stop: ON
-Settings → ASR Settings → Auto-stop on silence (VAD): ON
-```
-
 ## Related
 
-- [Auto-stop on Silence (VAD)](./vad.md)
+- [Auto-stop on Silence](./vad.md)
 - [Floating Ball](./floating-ball.md)
 - [Gestures](./gestures.md)
 

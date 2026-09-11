@@ -2,6 +2,10 @@
 
 Speech presets let you create shortcut replacement rules for commonly used phrases. When the ASR result matches a trigger phrase, it is automatically replaced with your preset content, greatly improving repeated input efficiency.
 
+::: info Naming note
+The feature is called "Speech Presets" in the app and lives under `Settings → System → Other Settings → Speech Presets`. This page uses "speech presets" throughout.
+:::
+
 ## Overview
 
 ### How it works
@@ -35,43 +39,24 @@ Logic:
 - ✅ emoji combos: e.g. "haha" → "hahaha 😄"
   :::
 
-## Data & config
+## Data storage
 
-| Key                  | Type   | Description                                      |
-| ------------------- | ------ | ------------------------------------------------ |
-| `speechPresetsJson` | String | preset list JSON                                  |
-| `activeSpeechPresetId` | String | active preset id (reserved; currently unused)  |
+Presets are stored locally on the device. Each preset = Name (trigger) + Content (replacement text).
 
-### Preset data structure
-
-Each preset has 3 fields:
-
-```kotlin
-data class SpeechPreset(
-    val id: String,        // UUID
-    val name: String,      // trigger phrase (what you say)
-    val content: String    // replacement (what gets inserted)
-)
-```
-
-Example:
-
-```json
-{
-  "id": "550e8400-e29b-41d4-a716-446655440000",
-  "name": "my email",
-  "content": "example@domain.com"
-}
-```
+| Item            | Description                                                  |
+| --------------- | ------------------------------------------------------------ |
+| Preset list     | all preset data, included in config backup export/import     |
+| Current preset  | records the preset selected on the settings page; not used for matching |
 
 ## Usage
 
 ### Create a preset
 
-1. Open `Settings → Other features → Speech presets`
-2. Enter a trigger phrase (e.g. "my email")
-3. Enter replacement content (e.g. "example@domain.com")
-4. Tap "Add"
+1. Open `Settings → System → Other Settings → Speech Presets`
+2. Tap "Add" — a new preset is created and selected automatically
+3. Enter a trigger in "Preset name" (e.g. "my email")
+4. Enter the full text in "Preset content" (e.g. "example@domain.com")
+5. Edits are saved automatically
 
 ::: tip Naming tips
 
@@ -83,31 +68,39 @@ Example:
 ### Use a preset
 
 1. Use voice input as usual
-2. Speak the trigger phrase
-3. The transcript is replaced automatically
+2. Speak a preset's Name (e.g. "my email")
+3. The transcript is replaced with that preset's Content automatically
 4. The final text is inserted into the editor
+
+**Full flow example**:
+
+```
+You say: "my email"
+  ↓ [ASR]
+Transcript: "my email"
+  ↓ [Preset match]
+Hit preset: Name "my email" → Content "example@domain.com"
+  ↓ [Replace]
+Final output: "example@domain.com"
+```
 
 ### Edit a preset
 
-1. Open `Settings → Other features → Speech presets`
-2. Select a preset from the dropdown
-3. Modify trigger/content
-4. Tap "Update" (if available)
-
-::: warning Note
-Some versions may require deleting and re-adding a preset to modify it. Follow the actual UI behavior.
-:::
+1. Open `Settings → System → Other Settings → Speech Presets`
+2. Select the preset in the "Current preset" dropdown
+3. Modify "Preset name" or "Preset content"; edits are saved automatically
 
 ### Delete a preset
 
-1. Select the preset
-2. Tap "Delete" and confirm
+1. Open `Settings → System → Other Settings → Speech Presets`
+2. Select the preset in the "Current preset" dropdown
+3. Tap "Delete" and confirm
 
 ## Matching rules
 
 ### Exact match first
 
-1. **Exact match**: transcript equals trigger phrase exactly (including spaces and case)
+1. **Exact match**: transcript equals the preset Name exactly (including spaces and case)
 2. **Case-insensitive match**: same content but different case
 
 ### Examples
@@ -123,6 +116,8 @@ Some versions may require deleting and re-adding a preset to modify it. Follow t
 ## Practical examples
 
 ### Personal info
+
+#### Contact details
 
 ```json
 [
@@ -141,14 +136,42 @@ Some versions may require deleting and re-adding a preset to modify it. Follow t
 ]
 ```
 
+#### Social accounts
+
+```json
+[
+  {
+    "name": "my WeChat",
+    "content": "wxid_1234567890"
+  },
+  {
+    "name": "my Twitter",
+    "content": "@YourTwitterHandle"
+  },
+  {
+    "name": "my GitHub",
+    "content": "https://github.com/yourusername"
+  }
+]
+```
+
 ### Templates
+
+#### Email signature
 
 ```json
 [
   {
     "name": "email signature",
     "content": "Best regards,\\n\\nJohn Doe\\nSenior Engineer\\nACME Corp\\nPhone: +1-xxx\\nEmail: john@example.com"
-  },
+  }
+]
+```
+
+#### Disclaimer
+
+```json
+[
   {
     "name": "disclaimer",
     "content": "This message is for reference only and does not constitute investment advice."
@@ -186,6 +209,8 @@ Floating ball recording → ASR → preset match → insert into active editor
 
 ## Notes
 
+### Trigger design principles
+
 ::: warning Avoid conflicts
 
 - ❌ avoid very common phrases (e.g. "ok", "thanks")
@@ -203,7 +228,33 @@ Floating ball recording → ASR → preset match → insert into active editor
 
 ### Performance
 
-- **Count**: keep under ~50 presets (too many slows matching)
-- **Complexity**: linear scan, O(n)
+- **Count**: matching walks the preset list one by one, so a very large list may slightly affect performance
 - **Content length**: unlimited, but very long content may affect UX
 
+### Data safety
+
+- **Local storage**: all presets are stored on the device
+- **Backup**: back up your presets regularly with the in-app backup feature
+- **Privacy**: avoid storing sensitive information (e.g. passwords) in presets
+
+## FAQ
+
+### A preset does not trigger
+
+Checklist:
+
+1. ✅ the preset was added successfully (visible in the list)
+2. ✅ the trigger phrase is spelled correctly
+3. ✅ the transcript matches the preset Name (check spaces and punctuation)
+4. ✅ the transcript is trimmed (no leading/trailing spaces)
+
+Common causes:
+
+- Transcript contains punctuation: "my email." does not match "my email"
+- Transcript contains extra spaces: "my  email" does not match "my email"
+- Case mismatch: handled automatically; if it does not work, please report a bug
+
+## Related
+
+- [Voice Input Basics](./voice-input.md) - how recognition works
+- [AI Post-processing](./ai-postprocess.md) - what happens to preset content afterwards

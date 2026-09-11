@@ -42,7 +42,6 @@ flowchart TD
 同步由说点啥后台服务连服务器。剪贴板读写则取决于执行方式：说点啥是默认输入法时由本体读写；改版小企鹅/同文或 IME Bridge 时，由目标输入法进程读写（该键盘被回收后会暂停）。
 
 - 上传时使用内容 **SHA-256** 哈希值判断是否需要上传
-- 下载时记住最近处理的文件名，避免重复处理
 - 协议基于 SyncClipboard API：`PUT /SyncClipboard.json` 上传、`GET /SyncClipboard.json` 拉取；若 `Type` 为 `Image`/`File`，对应文件位于 `/file/<filename>`
 :::
 
@@ -50,9 +49,9 @@ flowchart TD
 
 ### 基本开关
 
-| 配置项                 | 类型    | 默认值 | 说明               |
-| ---------------------- | ------- | ------ | ------------------ |
-| `syncClipboardEnabled` | Boolean | false  | 启用剪贴板同步服务 |
+| 配置项 | 范围 | 默认值 | 说明 |
+|--------|------|--------|------|
+| 使用 SyncClipboard 同步粘贴板 | 开/关 | 关 | 启用剪贴板同步服务 |
 
 在 `设置 → 其他设置 → 剪贴板同步` 中启用此功能。
 
@@ -88,11 +87,11 @@ flowchart TD
 
 ### 服务器配置（SyncClipboard）
 
-| 配置项                    | 类型   | 必需 | 说明                                       |
-| ------------------------- | ------ | ---- | ------------------------------------------ |
-| `syncClipboardServerBase` | String | ✓    | 服务器基址或 `SyncClipboard.json` 完整地址 |
-| `syncClipboardUsername`   | String | ✓    | 服务端用户名（HTTP Basic Auth）            |
-| `syncClipboardPassword`   | String | ✓    | 服务端密码（HTTP Basic Auth）              |
+| 配置项 | 必需 | 说明 |
+|--------|------|------|
+| 服务器地址 | ✓ | 服务器基址或 `SyncClipboard.json` 完整地址（会自动拼接 `/SyncClipboard.json`） |
+| 用户名 | ✓ | 服务端用户名（HTTP Basic Auth） |
+| 密码 | ✓ | 服务端密码（HTTP Basic Auth） |
 
 服务器地址可以填写基址（推荐）或完整文件地址：
 

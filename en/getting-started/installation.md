@@ -76,21 +76,25 @@ After installation, enable BiBi Keyboard as a system input method:
 1. Open the current input method selector
 2. Choose "说点啥" / "BiBi Keyboard"
 
-### 3. One-tap Provider Setup
+## First Launch
+
+### One-tap provider setup
 
 BiBi Keyboard provides one-tap setup options for your first ASR configuration:
 
 1. Open the app
 2. A basic tutorial is shown on first launch
 3. Choose one of the recommended options:
-   - Use SiliconFlow built-in free service (recommended for new users)
-   - Configure a cloud provider with your own API key
-   - Configure local models (auto-download and use SenseVoice small)
+   - ⭐ Free Cloud Service (Recommended)
+   - ☁️ Online Model (Custom)
+   - 📦 Local Model
 4. Follow the in-app steps
+
+"Free Cloud Service" works out of the box with the built-in free recognition service; "Online Model (Custom)" requires your own API key; "Local Model" downloads and uses the offline SenseVoice Small model automatically.
 
 ### App language
 
-The interface can follow the system language, or you can choose Simplified Chinese, Traditional Chinese, Japanese, English, or Arabic under `Settings → Input Settings → App language`. ASR recognition language remains a separate setting under each provider.
+The interface can follow the system language, or you can choose Simplified Chinese, Traditional Chinese, Japanese, English, or Arabic under `Settings → Input → UI Settings → App UI → App Language`. ASR recognition language remains a separate setting under each provider.
 
 ## Grant Required Permissions
 
@@ -102,7 +106,7 @@ On first use, BiBi Keyboard may request the following permissions:
 | **INTERNET**                                                | access cloud ASR services              | Cloud ASR only |
 | **REQUEST_IGNORE_BATTERY_OPTIMIZATIONS**                    | keep background services running       | Recommended |
 | **SYSTEM_ALERT_WINDOW**                                     | show the floating ball                 | Floating ball only |
-| **BIND_ACCESSIBILITY_SERVICE**                              | insert results via floating ball       | Floating ball only |
+| **BIND_ACCESSIBILITY_SERVICE**                              | insert floating-ball results (or use the IME Hook module) | Needed for floating ball |
 | **POST_NOTIFICATIONS**                                      | show notifications                     | Optional |
 | **REQUEST_INSTALL_PACKAGES**                                | install update APKs                    | Optional |
 
@@ -118,7 +122,7 @@ If everything works, continue to [First Setup](./first-setup).
 
 ## Update checks
 
-OSS updates are distributed via GitHub Releases. By default, BiBi Keyboard checks for updates **once per day** when you first open Settings. You can turn it off under `Settings → About → Auto-check for updates`.
+OSS updates are distributed via GitHub Releases. By default, BiBi Keyboard checks for updates **once per day** when you first open Settings. You can turn it off under `Settings → System → About → Auto-check for updates`.
 
 ## FAQ
 

@@ -1,10 +1,12 @@
 # Pro 版激活指南
 
-说点啥 Pro 版通过 **Google Play 商店** 分发，支持两种付费/激活方式：
+说点啥 Pro 版通过 **Google Play 商店** 分发，支持三种付费/激活方式：
 
 - 直接在 Google Play 商店购买；
 - 在 Telegram 群组找群主购买激活码后，通过激活链接或者购买商品时使用激活码来完成购买。
 - 在开源版-关于-了解 Pro 弹窗中了解更多，并通过微信或支付宝付款码进行购买，将必要信息通过邮件发送给作者获取激活码。
+
+后两种方式本质上都是获得 Play 兑换码完成购买，只是获取渠道不同。
 
 ::: tip 提示
 激活码是指 Play 商店购买时可以使用的促销兑换码。
@@ -27,7 +29,7 @@
 Pro 版的 Package ID 为 `com.brycewg.asrkb.pro`，可以与开源版（`com.brycewg.asrkb`）同时安装。
 :::
 
-### 方式二：Telegram 群组激活码<Badge type="tip" text="推荐" />
+### 方式二：Telegram 群组激活码
 
 **价格**: ¥36 CNY
 

@@ -1,6 +1,6 @@
 # Privacy Policy
 
-**Last Updated: 2026-02-23**
+**Last Updated: 2026-09-11**
 
 ## Introduction
 
@@ -13,7 +13,7 @@ BiBi Keyboard is designed with privacy in mind. This page explains what data is 
 
 ## Anonymous Data Collection (Optional, Off by Default)
 
-The app includes an "Anonymous Data Collection" switch (`Settings -> Other Settings`). Data is uploaded only after you enable it.
+The app includes an "Anonymous Data Collection" switch (`Settings → System → Other Settings → Data Retention → Anonymous data collection`). Data is uploaded only after you enable it.
 
 ### 1. Daily anonymous report (when enabled)
 
@@ -30,7 +30,7 @@ Uploaded fields include:
   - ASR vendor ID (`vendorId`)
   - Audio duration (`audioMs`)
   - Processing duration (`procMs`)
-  - Source (`ime` / `floating` / `external`)
+  - Source (`source`: `ime` = in-keyboard / `floating` = floating ball / `external` = external IME call)
   - Whether AI post-processing was used (`aiProcessed`)
   - Character count (`charCount`)
 
@@ -61,6 +61,8 @@ The app updates an anonymous consent record with:
 - Recognition history (optional)
 - Usage statistics (optional)
 - Speech presets
+- Diagnostics log (view and export under `Settings → System → About`; detailed support logging must be enabled manually; contains no recognition text or keys)
+- API Log (opened from the recognition history page menu; stores request summaries only — no API keys, audio, or full text)
 - Pending analytics cache (only if anonymous collection is enabled)
 
 ## Third-Party Services

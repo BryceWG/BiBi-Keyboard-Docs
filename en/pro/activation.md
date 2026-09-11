@@ -1,10 +1,12 @@
 # Pro Activation
 
-BiBi Keyboard Pro is distributed via **Google Play**. There are multiple ways to purchase/activate:
+BiBi Keyboard Pro is distributed via **Google Play**. There are three ways to purchase/activate:
 
 - Buy directly in Google Play
 - Buy a promo/activation code via the Telegram group owner, then redeem it via an activation link or during purchase
 - Learn more in OSS `Settings → About → Learn about Pro`, and purchase via WeChat/Alipay QR payment; then email required info to the author to receive an activation code
+
+The latter two are both redeemed as Play promo codes; they only differ in where you obtain them.
 
 ::: tip Note
 "Activation code" here refers to a Google Play promotion redemption code.
@@ -27,7 +29,7 @@ Steps:
 Pro package is `com.brycewg.asrkb.pro` and can coexist with OSS (`com.brycewg.asrkb`).
 :::
 
-### Option 2: Telegram activation code <Badge type="tip" text="Recommended" />
+### Option 2: Telegram activation code
 
 **Price**: ¥36 CNY
 
@@ -46,7 +48,7 @@ Steps:
 Only buy activation codes from the official Telegram group. Beware of scams.
 :::
 
-### Option 3: In-app purchase via OSS
+### Option 3: Buy from within the open-source app
 
 **Price**: ¥36 CNY
 

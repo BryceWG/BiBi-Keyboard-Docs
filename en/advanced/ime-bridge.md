@@ -57,7 +57,7 @@ Keep BiBi Keyboard and IME Bridge reasonably up to date. Older bridge versions m
 3. Open its scope and select only the third-party keyboard(s) you want to bridge
 4. Do not add either the OSS or Pro BiBi Keyboard app to the scope
 5. Force-stop and reopen the target keyboard; reboot the device if it still does not activate
-6. Switch to the target keyboard, then refresh bridge status in BiBi Keyboard
+6. Switch to the target keyboard, then refresh the “IME Hook module status” in BiBi Keyboard
 
 ::: warning Minimal scope
 Do not select the Android system framework or unrelated apps. A wider scope does not add functionality and only loads the module into unnecessary processes.
@@ -76,10 +76,10 @@ LSPatch changes the APK signature. LSPosed modules may cause system instability 
 
 ## Enable it in BiBi Keyboard
 
-1. Open `Settings → UI & Interaction → Floating Settings`
-2. Enable “IME bridge text insertion” and “Record inside bridged IME” (optional, see below)
+1. Open `Settings → Input → More Input Methods → Advanced`
+2. Enable “IME Hook module” and “Record inside bridged IME” (optional, see below)
 3. Focus a normal text field and keep the target keyboard open
-4. Tap “IME bridge status” to refresh detection
+4. Tap “IME Hook module status” to refresh detection (tapping the status refreshes it)
 5. Confirm that it shows the correct target keyboard and an active input connection
 
 Floating-ball results now prefer insertion through the target IME. If the bridge is temporarily unavailable, BiBi Keyboard can still try Accessibility insertion or the clipboard fallback.
@@ -96,9 +96,9 @@ Password, payment, and other sensitive fields are intentionally blocked.
 
 ## Record inside a third-party IME
 
-This requires a recent IME Bridge and `PCM` shown as supported in bridge status.
+This requires a recent IME Bridge and the “Recording area” shown as available in the module status.
 
-1. Enable “Record inside bridged IME” under `Settings → UI & Interaction → Floating Settings`
+1. Enable “Record inside bridged IME” under `Settings → Input → More Input Methods → Advanced`
 2. In Android app permissions, allow the **target third-party keyboard** to use the microphone
 3. Focus a normal text field and hold the bridge area near the bottom center of the keyboard for about 0.2 seconds
 4. Start speaking when the recording waveform appears
@@ -154,10 +154,10 @@ Password and other sensitive fields, plus editors that disallow personalized lea
 | No active input connection | Focus a normal text field, keep the keyboard visible, and refresh status |
 | Waiting for input field | The module is detected but no writable editor is active; tap the text field again |
 | Sensitive field blocked | This is an intentional safety restriction; test in a normal text field |
-| `PCM` unsupported | Update IME Bridge, enable in-IME recording, and restart the target keyboard |
+| Recording area unavailable | Update IME Bridge, enable in-IME recording, and restart the target keyboard |
 | Target keyboard cannot record | Grant microphone permission to the target IME and make sure no other app owns the microphone exclusively |
 | Generic bottom trigger unsupported | The IME window is incompatible; keep text insertion only or try another keyboard |
-| Text still uses Accessibility | Check bridge status, current IME, and active input connection |
+| Text still uses Accessibility | Check the "IME Hook module status", the current IME, and the active input connection |
 | Stops working after an IME update | Restart the target process for LSPosed; patch the updated APK again for LSPatch |
 
 If the cause is still unclear, open `Settings Home → Recognition History`, tap `API Log`, and inspect it together with LSPosed logs to confirm that the module entered the correct IME process. Check logs for personal information before sharing them.
@@ -172,16 +172,7 @@ If the cause is still unclear, open `Settings Home → Recognition History`, tap
 
 ## IME Bridge vs AIDL integration
 
-```mermaid
-flowchart TD
-  need[Need voice on a third-party IME] --> who{Who starts recognition?}
-  who -->|Floating ball writes into current IME| bridge{Can install IME Bridge?}
-  bridge -->|yes| useBridge[Bridge: current IME inserts text]
-  bridge -->|no| a11y[Use Accessibility insertion]
-  who -->|IME's own voice key| aidl{IME already integrates AIDL?}
-  aidl -->|yes| useAidl[AIDL: IME receives the result]
-  aidl -->|no| other[Use floating ball or BiBi Keyboard]
-```
+Both cover third-party keyboard scenarios, but the initiator differs: AIDL integration is started by an IME that has integrated the BiBi Keyboard protocol (such as modified Fcitx/Trime, fxliang's Fcitx5, or Foxy) through its own voice key, while IME Bridge is started by the BiBi Keyboard floating ball and lets the current third-party keyboard write the recognition result. For help choosing between the two, see the "AIDL vs floating-ball IME bridge" decision flowchart in the [External IME Linking guide](/en/advanced/aidl-integration).
 
 | Item | IME Bridge | AIDL integration |
 | ---- | ---------- | ---------------- |
@@ -190,7 +181,7 @@ flowchart TD
 | Main entry point | Floating ball or bottom in-IME recording area | Voice entry provided by the calling IME |
 | Text delivery | Through the current IME's input connection | The caller receives recognition callbacks and handles the result |
 
-If you use fxliang Fcitx5 with built-in voice integration, prefer [AIDL Integration (Fcitx)](/en/advanced/aidl-integration).
+If you use fxliang Fcitx5 or the Foxy IME with built-in voice integration, prefer [External IME Linking (AIDL)](/en/advanced/aidl-integration).
 
 ## Related pages
 

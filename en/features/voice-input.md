@@ -19,7 +19,7 @@ mindmap
       External IME
     Stop
       Manual
-      Silence VAD
+      Auto-stop on silence
       Timeout
     Recognition
       Cloud or local
@@ -67,11 +67,11 @@ BiBi Keyboard supports **18** ASR providers, grouped into cloud and local:
 ¹ **Pseudo-streaming**: shows partial results based on VAD segmentation, but it is not true real-time streaming.
 
 ² Streaming mode has no duration limit (continuous recognition).
-
-The "Duration limit (non-streaming)" here is the app's **single-segment recording cap** used to control segmented recording behavior. It does not represent provider billing limits or total free quota. For example: Volcengine often provides ~20 hours of free quota for new users; SiliconFlow provides a built-in free ASR service with no total duration quota. For other providers, check their consoles for quota/billing.
 :::
 
-For more details on supported models, recommended configs and updated quotas, see the [Providers & Models Guide](https://brycewg.notion.site/bibi-keyboard-providers-guide).
+The "Duration limit (non-streaming)" here is the app's **single-segment recording cap** used to control segmented recording behavior. It does not represent provider billing limits or total free quota. For example: Volcengine often provides ~20 hours of free quota for new users; SiliconFlow provides a built-in free ASR service with no total duration quota. For other providers, check their consoles for quota/billing.
+
+For more details on supported models, recommended configs and updated quotas, see the [Providers & Models Guide](https://brycewg.notion.site/bibi-keyboard-providers-guide). For provider sign-up, configuration steps and local model downloads, see [First Setup](/en/getting-started/first-setup) and [ASR Providers](/en/getting-started/asr-providers).
 
 ## Cloud vs Local
 
@@ -124,7 +124,7 @@ For local non-streaming models, long audio is progressively processed in silence
 
 ::: tip Suggestions
 
-- For providers that support both modes, switch under `Settings → ASR Settings → [Provider Settings]`.
+- For providers that support both modes, switch under `Settings → Smart → Speech Recognition Settings → Speech Recognition Provider → [provider]`.
 - Streaming is great for long recordings and low-latency feedback.
 - File mode is great for short audio when accuracy matters more.
   :::
@@ -153,32 +153,6 @@ flowchart TD
 3. **Seamless UX**: UI stays in recording state without noticeable interruption
 4. **Merge results**: transcripts from segments are concatenated automatically
 
-### Per-provider segment limits (app-side cap)
-
-| Provider     | Segment cap | Notes                                                                 |
-| ------------ | ----------- | --------------------------------------------------------------------- |
-| Volcengine   | 1 hour      | Official max per request is ~2h; app uses 1h as a safety margin        |
-| SiliconFlow  | 20 min      | App default; unrelated to billing/quota                               |
-| ElevenLabs   | 20 min      | App default to avoid failures on very long audio                      |
-| OpenAI       | 20 min      | App default; tune model/usage as needed                               |
-| DashScope    | 3 min       | Default Qwen-Audio-3.0-ASR-Flash; app segment cap is 5 min            |
-| Gemini       | 4 hours     | Official max is ~9.5h; app uses 4h as a safety margin                 |
-| Soniox       | 1 hour      | No strict official max found; app defaults to 1h                      |
-| StepAudio    | 20 min      | App default, suitable for short and medium dictation                  |
-| OpenRouter   | 20 min      | App default for compatible file-transcription models                  |
-| MiMo         | 20 min      | App default for short/medium speech and audio-understanding models    |
-| SenseVoice   | 5 min       | Local performance cap to avoid excessive RAM/time                     |
-| FunASR Nano  | 5 min       | Local performance cap to avoid excessive RAM/time                     |
-| Qwen3-ASR    | 5 min       | Local performance cap to avoid excessive RAM/time                     |
-| Parakeet     | 5 min       | Local performance cap to avoid excessive RAM/time                     |
-| FireRedASR V2 | 5 min      | Local performance cap to avoid excessive RAM/time                     |
-
-::: warning Notes
-
-- Streaming engines (X-ASR, etc.) have **no duration limit**.
-- Segmented recording works only in non-streaming mode.
-- Each segment may incur a separate API call cost (for cloud providers).
-  :::
 
 ## Backup ASR Engine (Parallel Primary/Backup)
 
@@ -201,7 +175,7 @@ flowchart TD
 
 ### How to enable
 
-1. Open `Settings → ASR Settings`
+1. Open `Settings → Smart → Speech Recognition Settings`
 2. Find "Backup speech recognition engine" and enable "Enable backup engine"
 3. Tap "Backup provider" and choose a provider different from your primary one
 4. Make sure the backup provider is also configured (API key / local model files, etc.)
@@ -221,44 +195,16 @@ Online backup engines may still trigger extra API requests/cost. Local backup en
 
 ## Switching IME After Input
 
-Voice input is often used in chat apps, where you usually want to switch back to your favorite keyboard for quick edits. The related toggles live in `Settings → Input Settings`:
+Voice input is often used in chat apps, where you usually want to switch back to your favorite keyboard for quick edits. The related toggles live in `Settings → Input → Input Settings → Input Behavior`:
 
-- **Switch to specified IME after input**: once recognition (and optional AI post-processing) finishes and the preview text is settled, BiBi Keyboard switches to the IME chosen under `Switch target IME`; if none is set, it switches to the previously used IME. Empty results do not trigger a switch.
+- **Switch to specified IME after input**: once recognition (and optional AI post-processing) finishes and the preview text is settled, BiBi Keyboard switches to the IME chosen under `Target IME`; if none is set, it switches to the previously used IME. Empty results do not trigger a switch.
 - **Switch to specified IME when hidden**: when the BiBi Keyboard panel is hidden, it switches to the specified IME (or the previous IME if unset), handy for occasional voice input.
-
-## One-tap Setup Options
-
-### 1. Use the free service (recommended for beginners)
-
-No config needed:
-
-1. Open the app; it defaults to **SiliconFlow free service**
-2. Under `Settings → ASR Settings → SiliconFlow`, switch between free models such as `FunAudioLLM/SenseVoiceSmall` and `TeleAI/TeleSpeechASR`; with your own key, you can also choose Qwen3-Omni multimodal models
-
-### 2. Configure a cloud provider
-
-Using Volcengine as an example:
-
-1. Create an account in the [Volcengine console](https://console.volcengine.com/speech/app)
-2. Create an app and obtain `App Key` and `Access Key`
-3. In BiBi Keyboard, go to `Settings → ASR Settings → Provider` and select **Volcengine**
-4. Fill in credentials and save
-
-### 3. Auto-configure local models
-
-1. Download SenseVoice Small from the [model release](https://github.com/BryceWG/BiBi-Keyboard/releases/tag/models)
-2. Extract to `Android/data/com.brycewg.asrkb/files/sensevoice/`
-3. The app will automatically select **SenseVoice** under `Settings → ASR Settings → Provider`
-
-::: tip Tip
-First load of local models may take a few seconds. You can enable "Preload model" (SenseVoice / FunASR Nano / Qwen3-ASR / Parakeet / FireRedASR V2 / X-ASR all support it) so the model is loaded when the keyboard or floating ball is first shown, reducing the first-recognition latency.
-:::
 
 ## Local Punctuation (Optional)
 
 FireRedASR V2 can add punctuation with an extra **shared punctuation model**. If the model is missing, recognition still works, but results may look more "spoken" (less punctuated).
 
-1. Open `Settings → ASR Settings`
+1. Open `Settings → Smart → Speech Recognition Settings`
 2. Go to the `FireRedASR V2` section
 3. Under the punctuation model section, tap "Download model" (or import the ZIP)
 
@@ -270,12 +216,12 @@ When downloading local models, you can choose a download source and see latency.
 
 - **Continuous recording while visible**: `Settings → Input Settings → Continuous recording while visible`. BiBi Keyboard records locally while the keyboard or floating ball is visible so recognition can start faster after you press the mic, reducing recording latency; audio before the trigger is not uploaded.
 - **Offline denoise for non-streaming ASR**: `Settings → Input Settings → Offline denoise for non-streaming ASR` (applies to file-mode and local offline recognition)
-- **Compress audio before upload**: `Settings → ASR Settings → Compress audio before upload`. For supported online non-streaming providers, audio is encoded as M4A/AAC, OGG Opus, or WAV before upload to reduce request size and waiting time; custom compatible OpenAI transcription endpoints use WAV for better compatibility.
+- **Compress audio before upload**: `Settings → Input → Input Settings → Audio & External Link → Compress audio before upload`. For supported online non-streaming providers, audio is encoded as M4A/AAC, OGG Opus, or WAV before upload to reduce request size and waiting time; custom compatible OpenAI transcription endpoints use WAV for better compatibility.
 - **Remove trailing punctuation and emoji**: `Settings → Input Settings → Remove trailing punctuation and emoji`. Set a word/character threshold so short results drop trailing punctuation/emoji while longer text keeps its ending.
 
 ## Recognition History & Metrics
 
-You can view history records in `Settings Home → Recognition History`. History sources include:
+You can view history records in `Settings → Smart → Recognition History`. History sources include:
 
 - **Keyboard input**
 - **Floating ball input**
@@ -308,4 +254,4 @@ Recognition History also links to [API Log and Recording Test](/en/advanced/diag
 - [Floating Ball](./floating-ball.md) - voice input anywhere
 - [AI Post-processing](./ai-postprocess.md) - refine transcripts with LLM
 - [Recording Modes](./recording-modes.md) - press-and-hold vs tap-to-toggle
-- [Auto-stop on Silence (VAD)](./vad.md) - stop recording automatically
+- [Auto-stop on Silence](./vad.md) - stop recording automatically

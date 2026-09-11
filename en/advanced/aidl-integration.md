@@ -1,6 +1,13 @@
-# AIDL Integration (Fcitx / Trime Linking)
+# External IME Linking (AIDL)
 
-BiBi Keyboard (asr-keyboard) provides a standard AIDL-compatible service, allowing other apps (e.g. the [modified Fcitx5 IME](https://github.com/BryceWG/fcitx5-android-bibi-keyboard) and [modified Trime IME](https://github.com/BryceWG/trime-bibi-keyboard)) to use BiBi Keyboard's speech recognition.
+BiBi Keyboard (asr-keyboard) provides a standard AIDL service that lets other IMEs use its speech recognition. Four IMEs are currently supported:
+
+| IME | Protocol | Notes |
+| --- | -------- | ----- |
+| [Modified Fcitx5 IME](https://github.com/BryceWG/fcitx5-android-bibi-keyboard) | BiBi linking protocol | Long-press Space for voice input |
+| [Modified Trime IME](https://github.com/BryceWG/trime-bibi-keyboard) | BiBi linking protocol | Voice key / toolbar microphone |
+| [fxliang's Fcitx5 IME](https://github.com/fxliang/fcitx5-android) | fxliang voice plugin protocol | IME-side recording; BiBi Keyboard recognizes |
+| Foxy IME | fxliang voice plugin protocol | Pick BiBi Keyboard in its voice input plugin |
 
 The server side uses a hand-written Binder protocol, but it is fully compatible with AIDL-generated stubs/proxies. Clients can use `.aidl` generated code, or call it via raw Binder `transact` (as Fcitx/Trime do).
 
@@ -9,9 +16,9 @@ The server side uses a hand-written Binder protocol, but it is fully compatible 
 ```mermaid
 sequenceDiagram
   actor User as User
-  participant Ime as Modified IME
+  participant Ime as Linked IME
   participant Bibi as BiBi Keyboard
-  User->>Ime: Hold the voice key
+  User->>Ime: Press the voice key
   Ime->>Bibi: Start recognition
   Bibi->>Bibi: Recognize with current provider
   opt AI polish enabled
@@ -23,38 +30,41 @@ sequenceDiagram
 
 The ASR provider follows BiBi Keyboard's current settings. The calling IME cannot override it.
 
-Currently supported: modified Fcitx5 and modified Trime. Common steps:
+All linking methods depend on the same prerequisite switch (the only prerequisite; no floating ball or accessibility service needed):
 
 1. Install the latest BiBi Keyboard (OSS or Pro; Pro is preferred if installed)
-2. Enable external linking in BiBi Keyboard: `Settings → Input Settings → Allow external IME linking (AIDL)`
+2. Enable external linking in BiBi Keyboard: `Settings → Input → Input Settings → Audio & External Link → Allow external IME linking (AIDL)`
 
-**Fcitx5 Android:**
+### Modified Fcitx5
 
-3. Install the modified Fcitx IME: <https://github.com/BryceWG/fcitx5-android-bibi-keyboard/releases>
-4. In Fcitx, enable: `Settings → Virtual Keyboard → Long-press Space Bar Behavior → Voice Input (AIDL)`
-5. While using Fcitx, long-press Space to start voice input and release to finish
+1. Install the modified Fcitx IME: <https://github.com/BryceWG/fcitx5-android-bibi-keyboard/releases> (you need to uninstall the original Fcitx first and back up your data)
+2. In Fcitx, enable: `Settings → Virtual Keyboard → Long-press Space Bar Behavior → Voice Input (AIDL)`
+3. While using Fcitx, long-press Space to start voice input and release to finish
 
-**Trime:**
+### fxliang's Fcitx5
 
-3. Install the modified Trime IME: <https://github.com/BryceWG/trime-bibi-keyboard/releases>
-4. In Trime, enable: `Settings → General Settings → BiBi AIDL Voice Input`
-5. Usage:
+1. Install [fxliang's Fcitx5 IME](https://github.com/fxliang/fcitx5-android) (supported since BiBi Keyboard v4.0.1)
+2. In its voice input settings, choose "BiBi Keyboard Link" as the recognition provider
+3. Start recording from the IME's own voice key: recording happens on the IME side, while recognition and AI polish run in BiBi Keyboard following its current settings
+
+### Trime
+
+1. Install the modified Trime IME: <https://github.com/BryceWG/trime-bibi-keyboard/releases>
+2. In Trime, enable: `Settings → General Settings → BiBi AIDL Voice Input`
+3. Usage:
    - Long-press a key that has `VOICE_ASSIST` to start recording, then release to finish
    - If your current theme has no `VOICE_ASSIST` long-press entry, enable the "Toolbar microphone button" in Trime settings; tap once to start, tap again to stop and commit
+
+### Foxy IME
+
+1. Enable the voice input plugin in Foxy IME and choose BiBi Keyboard as the recognition provider
+2. You can then invoke BiBi Keyboard recognition from Foxy's voice input, following BiBi Keyboard's current ASR and AI post-processing settings
 
 ### More external linking capabilities
 
 - **Clipboard sync**: the latest modified Fcitx5 / Trime can enable “BiBi Keyboard clipboard sync” in their clipboard settings. Clipboard sync must also be configured and enabled in BiBi Keyboard; see [Clipboard Sync](/en/advanced/clipboard-sync#modified-fcitx5-trime-setup).
 - **Pro input-field context**: when Pro's input-field context option is enabled, the modified IME supplies limited cursor-adjacent text when requested for AI post-processing.
 - **Pro learn hotwords from corrections**: when enabled in Pro, the modified IME briefly observes corrections after a voice result is committed and reports the settled edit from the same input field. Password, email, URL, phone fields are excluded.
-- **Foxy IME voice input plugin**: BiBi Keyboard can also serve as the provider for the Foxy IME voice input plugin. Once the plugin is enabled in the Foxy IME, it can call BiBi Keyboard for recognition, following the current ASR and AI post-processing settings.
-
-**Package priority** (same as Fcitx implementation):
-
-1. `com.brycewg.asrkb.pro`
-2. `com.brycewg.asrkb`
-
-Clients should try binding in this order and prefer the installed Pro package (same interface and behavior).
 
 ::: tip AIDL vs floating-ball IME bridge
 AIDL linking is for modified IMEs such as Fcitx/Trime to actively call BiBi Keyboard recognition. IME Bridge instead uses LSPosed/LSPatch so the floating ball can send results through the current third-party keyboard. They serve different setups; most users only need the one that matches their IME workflow. See [IME Bridge Module](/en/advanced/ime-bridge).
@@ -72,6 +82,13 @@ flowchart TD
 :::
 
 ## Developer Guide
+
+### Package priority
+
+1. `com.brycewg.asrkb.pro`
+2. `com.brycewg.asrkb`
+
+Clients should try binding in this order and prefer the installed Pro package (same interface and behavior).
 
 ### Service interface (IExternalSpeechService)
 
@@ -138,9 +155,9 @@ fun onError(sessionId: Int, code: Int, message: String)
 fun onAmplitude(sessionId: Int, amplitude: Float)
 ```
 
-## Key Methods
+### Key Methods
 
-### startSession (server-recording)
+#### startSession (server-recording)
 
 BiBi Keyboard handles recording and audio upload.
 
@@ -162,7 +179,7 @@ When `SpeechConfig.vendorId == "mock"`, it skips real recording:
 the server directly calls `onPartial("【testing】...")` and `onFinal("External AIDL integration OK (mock)")` without needing record permission.
 :::
 
-### startPcmSession / writePcm / finishPcm (client-pushed PCM)
+#### startPcmSession / writePcm / finishPcm (client-pushed PCM)
 
 The client records audio and pushes PCM frames to BiBi Keyboard (Fcitx uses this mode).
 
@@ -179,7 +196,7 @@ Notes:
 - Recommended format: `PCM16LE / 16000Hz / mono`, around 200ms per frame. The server currently does not strictly validate sample rate/channels, but mismatches may hurt results for some engines.
 - `finishPcm(sessionId)` is equivalent to `stopSession(sessionId)` and indicates end of audio input, waiting for final result.
 
-### Optional input context and correction reporting (Pro 4.3.0+)
+#### Optional input context and correction reporting (Pro 4.3.0+)
 
 After starting a session, call `getInputRequirements(sessionId)` and inspect its bit mask:
 
@@ -196,25 +213,25 @@ When bit 1 is active, the client may briefly observe the same input target after
 These three transactions are Pro extensions. Treat an unknown transaction or a `0` result as “no optional input requested” and continue the original ASR flow. An older service must not make recording fail.
 :::
 
-### stopSession / cancelSession
+#### stopSession / cancelSession
 
 Both are `void`; no success status is returned.
 
 - `stopSession`: end input and enter processing; later you will receive `onFinal` or `onError`.
 - `cancelSession`: cancel and cleanup; it is not guaranteed that `onFinal` will never be called (AIDL notes "final result not guaranteed").
 
-### isRecording / isAnyRecording
+#### isRecording / isAnyRecording
 
 - `isRecording(sessionId)`: whether the given session is recording/accepting input.
 - `isAnyRecording()`: whether any active session exists.
 
-### getVersion
+#### getVersion
 
-Returns semantic version name (`BuildConfig.VERSION_NAME`), e.g. `"1.6.0"`.
+Returns semantic version name (`BuildConfig.VERSION_NAME`), e.g. `"4.4.5"`.
 
-## Callback States & Errors
+### Callback States & Errors
 
-### onState: state values
+#### onState: state values
 
 | state (Int) | Meaning         | Common message       |
 | ----------- | --------------- | -------------------- |
@@ -223,7 +240,7 @@ Returns semantic version name (`BuildConfig.VERSION_NAME`), e.g. `"1.6.0"`.
 | `2`         | processing      | `processing`         |
 | `3`         | error           | error text           |
 
-### onError: code values
+#### onError: code values
 
 | code  | Meaning                                                     |
 | ----- | ----------------------------------------------------------- |
@@ -231,15 +248,7 @@ Returns semantic version name (`BuildConfig.VERSION_NAME`), e.g. `"1.6.0"`.
 | `403` | external linking is disabled                                |
 | `500` | server internal error (engine/network/etc.)                 |
 
-## Enable Requirements
-
-External AIDL linking requires:
-
-- `Prefs.externalAidlEnabled == true`
-
-Settings entry: `Settings → Input Settings → External IME linking`.
-
-## Vendor & Streaming Mode Decision
+### Vendor & Streaming Mode Decision
 
 External calls always follow BiBi Keyboard's current settings (ignore SpeechConfig).
 
@@ -249,14 +258,15 @@ External calls always follow BiBi Keyboard's current settings (ignore SpeechConf
 - **DashScope**: `prefs.dashStreamingEnabled`
 - **Soniox**: `prefs.sonioxStreamingEnabled`
 - **ElevenLabs**: `prefs.elevenStreamingEnabled`
-- **OpenAI / Gemini / SiliconFlow / Zhipu / OpenRouter / MiMo / StepAudio**: fixed non-streaming file engines
+- **OpenAI**: follows the in-app OpenAI streaming (Realtime) switch, for all invocation sources
+- **Gemini / SiliconFlow / Zhipu GLM / OpenRouter / Xiaomi MiMo / StepAudio / Cohere**: fixed non-streaming file engines
 
 **Local vendors**:
 
 - **X-ASR**: streaming only
 - **SenseVoice / FunASR Nano / Qwen3-ASR / Parakeet / FireRedASR V2**: non-streaming file engines (pseudo-streaming is UI-only and not exposed externally)
 
-## Result Filters
+### Result Filters
 
 Final results (`onFinal`) go through unified post-filters:
 
@@ -266,7 +276,7 @@ Final results (`onFinal`) go through unified post-filters:
 
 Entry points: `AsrFinalFilters.applySimple` / `AsrFinalFilters.applyWithAi`.
 
-## Session Cleanup
+### Session Cleanup
 
 Server removes the session and releases resources:
 
@@ -276,7 +286,7 @@ Server removes the session and releases resources:
 
 Clients should proactively call `cancelSession` on window/focus changes to avoid dangling sessions.
 
-## Fcitx (bibi/lexi) Integration Example
+### Fcitx (bibi/lexi) Integration Example
 
 The modified Fcitx IME (bibi) integrates BiBi Keyboard linking. The example directory in this repo still uses the old name `fcitx5-android-lexi-keyboard`.
 
@@ -304,7 +314,20 @@ Error handling:
 - `-5`: show "current vendor doesn't support pushed PCM"
 - record permission is handled by Fcitx; pushed PCM mode won't return `401/-4` from server
 
-## Best Practices
+### fxliang voice plugin protocol (IVoiceInputProvider)
+
+fxliang's Fcitx5 and Foxy IME use a separate plugin protocol, different from `IExternalSpeechService` above: recording happens on the IME side, and PCM frames are pushed to BiBi Keyboard for recognition.
+
+- Service component: `com.brycewg.asrkb.api.FxliangFcitxVoiceInputProviderService`
+- Intent actions: `org.fcitx.fcitx5.android.plugin.VOICE_INPUT` (Fcitx5) and `com.fxliang.foxy.plugin.VOICE_INPUT` (Foxy), plus debug variants
+- Interfaces: `org.fcitx.fcitx5.android.common.ipc.IVoiceInputProvider` / `IVoiceInputCallback` (`isAvailable` / `startSession` / `feedAudio` / `endStream`, etc.)
+- Audio format: PCM16LE / 16000 Hz / mono
+- Gated by the same "Allow external IME linking (AIDL)" switch: when disabled, `isAvailable()` returns false and `startSession` calls back `onError(403, "feature disabled")`
+- Recognition and post-processing reuse `ExternalSpeechSession`; vendor/streaming decisions and result filters match the sections above
+
+### Best Practices
+
+#### Client guidelines
 
 1. Bind with `Context.BIND_AUTO_CREATE` and try Pro → OSS in order.
 2. Store returned `sessionId` after `startSession/startPcmSession`. Do not generate/reuse ids.

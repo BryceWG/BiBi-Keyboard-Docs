@@ -3,7 +3,7 @@
 AI post-processing uses a Large Language Model (LLM) to refine ASR transcripts. Typical improvements include removing filler words, fixing typos, adjusting punctuation, and polishing tone, making voice typing smoother and more natural.
 
 ::: info Naming note
-Since v4.4.2, the settings entry is `Settings → AI Feature Settings`, and the UI refers to this feature as "AI polish". Both names mean the same feature.
+Since v4.4.2, the settings entry is `Settings → Intelligence → AI Feature Settings`, and the UI refers to this feature as "AI polish". Both names mean the same feature.
 :::
 
 ## Quick Setup
@@ -12,7 +12,7 @@ Since v4.4.2, the settings entry is `Settings → AI Feature Settings`, and the 
 
 BiBi Keyboard ships with **SiliconFlow free service**. No API key is required:
 
-1. Open `Settings → AI Feature Settings`
+1. Open `Settings → Intelligence → AI Feature Settings`
 2. Enable "AI post-processing"
 3. Ensure vendor is **SF_FREE** (default)
 4. Pick a prompt preset (recommended: "General post-process")
@@ -32,23 +32,23 @@ Example with DeepSeek:
 
 1. Sign up at https://platform.deepseek.com/
 2. Create an API key and add credits
-3. In `Settings → AI Feature Settings`:
+3. In `Settings → Intelligence → AI Feature Settings`:
    - Vendor: **DEEPSEEK**
    - API key: paste your key
-   - Model: e.g. `deepseek-chat`
-   - Temperature: recommended `0.2`
+   - Model: e.g. `deepseek-v4-flash`
+   - Temperature: default `1.0`
 4. Save and test
 
 ### Configure a custom vendor
 
 For any OpenAI-compatible API:
 
-1. Vendor: **CUSTOM**
+1. Vendor: **CUSTOM** under `Settings → Intelligence → AI Feature Settings`
 2. Fill in:
    - **Endpoint**: e.g. `https://your-api.com/v1`
    - **API key**
-   - **Model**: e.g. `gpt-3.5-turbo`
-   - **Temperature**: recommended `0.2`
+   - **Model**: e.g. `gpt-5-luna`
+   - **Temperature**: default `1.0`
 3. Save and test
 
 ::: warning Custom endpoint requirements
@@ -84,11 +84,11 @@ flowchart TD
   ok -->|no| simpleOut
 ```
 
-Deep-thinking threshold: `0` always enables it; the maximum never enables it; values in between enable it only when the recognized length exceeds the threshold. On timeout, cancel, or hiding the keyboard, the original text is committed.
+The "Deep-thinking threshold allows it" step above is controlled by the "Deep thinking threshold" slider; see [Deep Thinking & Reasoning Params](#deep-thinking-reasoning-params) below.
 
 ## Streaming Preview & Typewriter Effect
 
-When your LLM vendor supports streaming output, AI post-processing can show a **live preview** while the model is generating. You can toggle the "typewriter effect" under `Settings → AI Feature Settings` to make the preview output smoother.
+When your LLM vendor supports streaming output, AI post-processing can show a **live preview** while the model is generating. You can toggle the "Typewriter effect (post-processing output)" under `Settings → Intelligence → AI Feature Settings` to make the preview output smoother.
 
 ::: info Note
 The typewriter effect only affects how the streaming preview is displayed. It does not change the final inserted text. When the typewriter effect is off, the polished text is committed all at once when polishing finishes.
@@ -100,7 +100,18 @@ The typewriter effect only affects how the streaming preview is displayed. It do
 - **No fallback after cancel**: canceling a polish no longer triggers an extra non-streaming request.
 - **Closing the keyboard cancels polishing**: hiding the keyboard cancels an in-progress polish and commits the original text, so the next mic press keeps responding.
 
-### Recommended use cases
+## Usage
+
+AI polish can be triggered in several ways:
+
+| Trigger               | Description                                                       | Best for                      |
+| --------------------- | ----------------------------------------------------------------- | ----------------------------- |
+| **Automatic polish**  | runs automatically after each voice input when "Enable AI post-processing" is on | daily use; output is final    |
+| **Keyboard "AI polish" button** | tap the "AI polish" button on the keyboard to polish the current transcript manually | one-off polish |
+| **AI Edit**           | select text and open AI Edit; choose a prompt preset for the edit | iterative edits / retrying    |
+| **History re-polish** | re-polish a past transcript from recognition history              | retry with a different prompt |
+
+## When to use it
 
 ::: tip Good for
 
@@ -115,32 +126,6 @@ The typewriter effect only affects how the streaming preview is displayed. It do
 - Casual chat (spoken style may feel more natural)
 - Very short input (single word, numbers)
 - Latency-sensitive scenarios
-  :::
-
-## Supported LLM Providers
-
-BiBi Keyboard supports **13** LLM providers. All of them use an OpenAI-compatible API format:
-
-When choosing an LLM provider in settings, configured/available providers are grouped before unconfigured ones, making daily switching quicker.
-
-| Vendor                         | Sign-up link                                     |
-| ------------------------------ | ------------------------------------------------ |
-| **SF_FREE** (SiliconFlow Free) | https://cloud.siliconflow.cn/i/g8thUcWa          |
-| **DEEPSEEK**                   | https://platform.deepseek.com/                   |
-| **ZHIPU**                      | https://bigmodel.cn/usercenter/proj-mgmt/apikeys |
-| **MOONSHOT**                   | https://platform.moonshot.cn/console/api-keys    |
-| **VOLCENGINE**                 | https://console.volcengine.com/ark               |
-| **DASHSCOPE**                  | https://bailian.console.aliyun.com/              |
-| **OPENAI**                     | https://platform.openai.com/signup               |
-| **GEMINI**                     | https://aistudio.google.com/apikey               |
-| **GROQ**                       | https://console.groq.com/keys                    |
-| **CEREBRAS**                   | https://cloud.cerebras.ai/platform               |
-| **FIREWORKS**                  | https://fireworks.ai/                            |
-| **OHMYGPT**                    | https://x.dogenet.win/i/CXuHm49s                 |
-| **CUSTOM**                     | -                                                |
-
-::: info Reasoning mode
-Some providers expose a "thinking/reasoning" mode. The model reasons before producing output, which can help for complex editing but usually increases latency and token usage.
 :::
 
 ## Prompt Presets
@@ -159,103 +144,23 @@ BiBi Keyboard includes 5 built-in prompt presets and supports custom ones.
 
 ### Custom prompts
 
-Go to `Settings → AI Feature Settings → Prompt presets`:
+Go to `Settings → Intelligence → AI Feature Settings → Polish prompt presets`:
 
-1. Tap "Add preset"
+1. Tap "Add Preset"
 2. Write your prompt (role, task, rules, output format, etc.)
 3. Save and apply quickly in AI Edit
 
 ### AI Edit system prompt
 
-The AI Edit panel uses a separate system prompt to understand the "edit the current text according to my instruction" task. Customize it under `Settings → AI Feature Settings → AI edit system prompt`; leave it empty to use the built-in default.
+The AI Edit panel uses a separate system prompt to understand the "edit the current text according to my instruction" task. Customize it under `Settings → Intelligence → AI Feature Settings → AI edit system prompt`; leave it empty to use the built-in default.
 
 Use this for long-term role/rule/output-format constraints. One-off edit instructions (for example, "translate to English and simplify") should still be spoken in the AI Edit panel.
 
-## AI Assistant <Badge type="warning" text="Pro" />
+## Deep Thinking & Reasoning Params
 
-AI Assistant can automatically match preset modes by wake word and keywords, then apply the mapped AI post-processing prompt.
+### Deep thinking threshold
 
-### Highlights
-
-- **Wake-word trigger**: if the transcript starts with a wake word, AI Assistant flow starts automatically
-- **Preset modes**: configure different processing modes for different scenarios and bind each one to a prompt preset
-- **Keyword matching**: selects the most suitable mode based on preset keywords
-- **Fuzzy matching**: supports fuzzy matching for wake words and preset keywords, so natural spoken variants can still trigger
-- **Customizable**: wake words, keywords, and prompt rules for each mode are all customizable
-
-## Input Field Context <Badge type="warning" text="Pro" />
-
-When recording from the main keyboard, Pro can send text around the cursor as reference for AI post-processing. This helps the model keep continuity, terminology, and tone consistent with the surrounding text. Floating-ball recordings can also use this context when IME Bridge is enabled.
-
-::: warning Privacy
-Input field context is sent only as reference for AI post-processing. Enable it only when you trust the selected LLM provider. The final AI output should still contain only the processed text for the current ASR result.
-:::
-
-## Hotword Enhancement <Badge type="warning" text="Pro" />
-
-With `Inject hotwords into recognition engines` enabled, Pro hotwords can participate before recognition according to provider support. You can independently enable `Replace similar words after recognition` for a phoneme-similarity fallback. 
-The target word always acts as one alias, and you can add two more aliases; the target word and aliases all participate in phoneme matching, then matches are replaced with the target word.
-
-Example: target word `音素` can have aliases `因素` and `严肃`; if the transcript contains `因素`, it is replaced with `音素`. You can also set the target word to `xxxx@qq.com` and alias to `primary email` for shortcut phrase input.
-
-## Configuration
-
-### Basic
-
-| Key                         | Type      | Default        | Description                                       |
-| --------------------------- | --------- | -------------- | ------------------------------------------------- |
-| `postProcessEnabled`        | Boolean   | `false`        | master switch                                     |
-| `postprocTypewriterEnabled` | Boolean   | `true`         | typewriter effect for streaming preview (UI only) |
-| `llmVendor`                 | LlmVendor | `SF_FREE`      | selected LLM vendor                               |
-| `llmEndpoint`               | String    | vendor default | API endpoint (auto for built-in vendors)          |
-| `llmApiKey`                 | String    | `""`           | API key (not needed for free service)             |
-| `llmModel`                  | String    | vendor default | model name                                        |
-| `llmTemperature`            | Float     | `0.2`          | temperature (0-2; lower = more deterministic)     |
-
-### Advanced
-
-| Key                      | Type   | Default | Description                                              |
-| ------------------------ | ------ | ------- | -------------------------------------------------------- |
-| `postprocSkipUnderChars` | Int    | `0`     | skip AI post-processing if shorter than this (0=disable) |
-| `reasoningCharThreshold` | Int    | `300`   | reasoning character threshold (0=always, 300=never)      |
-| `aiEditSystemPrompt`     | String | default | system prompt used by AI Edit; empty means built-in default |
-| `activePromptId`         | String | `""`    | active prompt preset id                                  |
-| `promptPresetsJson`      | String | `""`    | prompt preset list JSON                                  |
-
-::: info Temperature hints
-
-- **0 - 0.3**: highly consistent, good for precise edits
-- **0.4 - 0.7**: balanced creativity and stability
-- **0.8 - 2.0**: more creative but less stable
-  :::
-
-## Reasoning Mode Support
-
-Different vendors control reasoning mode in different ways:
-
-| Vendor         | Control method | Supported models                  | Notes                               |
-| -------------- | -------------- | --------------------------------- | ----------------------------------- |
-| **DEEPSEEK**   | model choice   | deepseek-reasoner                 | choose the reasoner model           |
-| **MOONSHOT**   | model choice   | kimi-k2-thinking                  | choose the thinking model           |
-| **SF_FREE**    | toggle param   | Qwen3 series, DeepSeek-V3.1, etc. | enable "Reasoning mode" in settings |
-| **GEMINI**     | toggle param   | gemini-2.5-flash+                 | `reasoning_effort` param            |
-| **GROQ**       | toggle param   | qwen3-32b, gpt-oss series         | `reasoning_effort` param            |
-| **CEREBRAS**   | toggle param   | gpt-oss-120b                      | `reasoning_effort` param            |
-| **VOLCENGINE** | toggle param   | doubao-seed series, deepseek      | `thinking.type` param               |
-| **ZHIPU**      | toggle param   | glm-4.6, glm-4.5 series           | `thinking.type` param               |
-| **OHMYGPT**    | toggle param   | gemini-2.5, claude, gpt-5 series  | `reasoning_effort` param            |
-
-::: info When to use reasoning mode
-
-- ✅ complex rewrites (technical terms, strict formatting)
-- ✅ tasks needing reasoning (e.g. to-do extraction)
-- ✅ multi-step transformations (e.g. translate + polish)
-- ❌ simple filler-word removal (extra latency without benefit)
-  :::
-
-## Reasoning Character Threshold
-
-For vendors with reasoning mode enabled, the "Reasoning character threshold" slider in `Settings → AI Feature Settings` decides whether the model thinks deeply based on the **character count of the recognized text**:
+In `Settings → Intelligence → AI Feature Settings`, the "Deep thinking threshold" slider decides whether the model thinks deeply based on the **character count of the recognized text**:
 
 | Slider position        | Behavior                                                                  |
 | ---------------------- | ------------------------------------------------------------------------- |
@@ -263,15 +168,51 @@ For vendors with reasoning mode enabled, the "Reasoning character threshold" sli
 | Middle values          | reasoning is enabled only when the recognized text exceeds the threshold; shorter input is returned directly for lower latency |
 | Far right (Never)      | reasoning is never enabled                                                |
 
-The threshold is stored per LLM vendor. Legacy "Reasoning mode" toggles migrate automatically: previously on means "always", previously off means "never".
+The threshold is stored per LLM provider. Legacy "deep thinking" toggles migrate automatically: previously on means "always", previously off means "never".
 
 ::: tip Tip
 Everyday short phrases do not need deep thinking and answer faster without it. For long rewrites or complex tasks, lower the threshold so the model thinks only when there is enough content.
 :::
 
-## Model Selection & Fetching Model List
+### Providers with reasoning support
 
-In `Settings → AI Feature Settings`, you can tap "Fetch model list" to query available models from your vendor and add commonly used ones into the in-app dropdown.
+Some providers expose a "thinking/reasoning" mode. The model reasons before producing output, which can help for complex editing but usually increases latency and token usage. Different providers control it in different ways. Whether reasoning actually runs is decided by the "Deep thinking threshold" slider above; reasoning params are attached only when the selected model supports reasoning and the threshold allows it.
+
+### Custom reasoning params (JSON)
+
+For some providers, reasoning mode exposes JSON fields like "Reasoning params (on/off)" to attach extra parameters depending on whether reasoning is enabled.
+
+- Leave it empty if you're not sure (defaults are fine)
+- Must be valid JSON objects (example: `{"reasoning_effort":"medium"}`)
+- Parameter names depend on vendor documentation
+
+### When to use reasoning
+
+Reasoning mode suits complex rewrites (technical terms, strict formatting), tasks that need logical reasoning (e.g. to-do extraction), and multi-step transformations (e.g. translate + polish). Simple filler-word removal does not benefit from it and only adds latency.
+
+## Providers & Models
+
+BiBi Keyboard supports **13** LLM providers. All of them use an OpenAI-compatible API format:
+
+When choosing an LLM provider in settings, configured/available providers are grouped before unconfigured ones, making daily switching quicker.
+
+| Vendor                         | Sign-up link                                     |
+| ------------------------------ | ------------------------------------------------ |
+| **SF_FREE** (SiliconFlow Free) | https://cloud.siliconflow.cn/i/g8thUcWa          |
+| **DEEPSEEK**                   | https://platform.deepseek.com/                   |
+| **ZHIPU**                      | https://bigmodel.cn/usercenter/proj-mgmt/apikeys |
+| **MOONSHOT**                   | https://platform.moonshot.cn/console/api-keys    |
+| **VOLCENGINE**                 | https://console.volcengine.com/ark               |
+| **DASHSCOPE**                  | https://dashscope.aliyun.com/                    |
+| **OPENAI**                     | https://platform.openai.com/signup               |
+| **GEMINI**                     | https://aistudio.google.com/apikey               |
+| **GROQ**                       | https://console.groq.com/keys                    |
+| **CEREBRAS**                   | https://cloud.cerebras.ai/platform               |
+| **FIREWORKS**                  | https://fireworks.ai/login                       |
+| **OHMYGPT**                    | https://x.dogenet.win/i/CXuHm49s                 |
+| **CUSTOM**                     | -                                                |
+
+In `Settings → Intelligence → AI Feature Settings`, you can tap "Fetch model list" to query available models from your provider and add commonly used ones into the in-app dropdown.
 
 During the LLM test, you can cancel the current request at any time to quickly adjust settings and retry. A successful test shows a timing breakdown so you can see where time is spent:
 
@@ -280,26 +221,40 @@ During the LLM test, you can cancel the current request at any time to quickly a
 - **Connection reuse**: whether the test reused an existing connection or created a new one
 
 ::: tip Tip
-For **CUSTOM** vendors, if your backend has a default model, the model field can be left empty. If the test call fails, fill in the required model name as your provider expects.
+For **CUSTOM** providers, if your backend has a default model, the model field can be left empty. If the test call fails, fill in the required model name as your provider expects.
 :::
 
-## Advanced: Custom Reasoning Params (JSON)
+## Pro Features
 
-For some vendors, reasoning mode exposes JSON fields like "Reasoning params (on/off)" to attach extra parameters depending on whether reasoning is enabled.
+The following features are only available in the Pro edition.
 
-- Leave it empty if you’re not sure (defaults are fine)
-- Must be valid JSON objects (example: `{"reasoning_effort":"medium"}`)
-- Parameter names depend on vendor documentation
+### AI Assistant <Badge type="warning" text="Pro" />
 
-## Tips
+AI Assistant can automatically match preset modes by wake word and keywords, then apply the mapped AI post-processing prompt. When the transcript starts with the wake word (the default is localized: "点点" in Chinese, "BB" in English), the AI Assistant flow starts automatically.
 
-There are three ways to trigger AI post-processing:
+- **Preset modes**: configure multiple presets and **enable several at once**, each bound to a prompt preset for a different scenario
+- **Keyword matching**: selects the most suitable mode based on preset keywords
+- **Fuzzy matching**: supports fuzzy matching for wake words and preset keywords, so natural spoken variants can still trigger
+- **Customizable**: wake words, keywords, and prompt rules for each mode are all customizable
 
-| Trigger               | Description                                                       | Best for                      |
-| --------------------- | ----------------------------------------------------------------- | ----------------------------- |
-| **Auto post-process** | runs automatically after each voice input                         | daily use; output is final    |
-| **AI Edit**           | select text and open AI Edit; choose a prompt preset for the edit | iterative edits / retrying    |
-| **Skip short input**  | set a minimum length threshold to skip AI for short phrases       | avoid overhead on tiny inputs |
+### Per-app Prompts <Badge type="warning" text="Pro" />
+
+Pro can bind a polish prompt to each foreground app: when a selected app (e.g. a chat app or browser) is in the foreground, AI polish after recording automatically applies the prompt preset mapped to that app, so you no longer need to switch prompts by hand.
+
+### Input Field Context <Badge type="warning" text="Pro" />
+
+When recording from the main keyboard, Pro can send text around the cursor as reference for AI post-processing. This helps the model keep continuity, terminology, and tone consistent with the surrounding text. Floating-ball recordings can also use this context when IME Bridge is enabled.
+
+::: warning Privacy
+Input field context is sent only as reference for AI post-processing. Enable it only when you trust the selected LLM provider. The final AI output should still contain only the processed text for the current ASR result.
+:::
+
+### Hotword Enhancement <Badge type="warning" text="Pro" />
+
+With "Inject hotwords into recognition engines" enabled, Pro hotwords can participate before recognition according to provider support. You can independently enable "Replace similar words after recognition" for a phoneme-similarity fallback.
+The target word always acts as one alias, and you can add two more aliases; the target word and aliases all participate in phoneme matching, then matches are replaced with the target word.
+
+Example: target word `音素` can have aliases `因素` and `严肃`; if the transcript contains `因素`, it is replaced with `音素`. You can also set the target word to `xxxx@qq.com` and alias to `primary email` for shortcut phrase input.
 
 ## Troubleshooting
 
@@ -307,9 +262,9 @@ There are three ways to trigger AI post-processing:
 
 Checklist:
 
-1. ✅ enabled (`postProcessEnabled = true`)
-2. ✅ input length ≥ `postprocSkipUnderChars`
-3. ✅ vendor config is valid (API key works if needed)
+1. ✅ the master switch is on (`Settings → Intelligence → AI Feature Settings → Enable AI post-processing`)
+2. ✅ input length reaches the "Skip AI post-processing if shorter than" threshold
+3. ✅ provider config is valid (API key works if needed)
 4. ✅ network works
 5. ✅ quota not exhausted
 
@@ -326,9 +281,9 @@ Possible causes:
 
 Ideas:
 
-1. Switch to faster vendors (Groq, Cerebras)
+1. Switch to faster providers (Groq, Cerebras)
 2. Use smaller models (e.g. Qwen3-8B instead of 235B)
-3. Disable reasoning mode
+3. Disable deep thinking
 4. Simplify the prompt
 
 ## Related

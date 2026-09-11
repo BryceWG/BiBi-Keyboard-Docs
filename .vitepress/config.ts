@@ -72,7 +72,7 @@ export default withMermaid(defineConfig({
               { text: '悬浮球功能', link: '/features/floating-ball' },
               { text: 'AI 后处理', link: '/features/ai-postprocess' },
               { text: '录音模式', link: '/features/recording-modes' },
-              { text: '智能静音判停', link: '/features/vad' },
+              { text: '录音判停', link: '/features/vad' },
               { text: '手势操作', link: '/features/gestures' },
               { text: '语音预设', link: '/features/speech-presets' }
             ]
@@ -81,11 +81,11 @@ export default withMermaid(defineConfig({
             text: '高级功能',
             collapsed: false,
             items: [
-              { text: 'AIDL 通信（小企鹅联动）', link: '/advanced/aidl-integration' },
+              { text: '外部输入法联动（AIDL）', link: '/advanced/aidl-integration' },
               { text: 'IME Bridge 模块', link: '/advanced/ime-bridge' },
               { text: '剪贴板同步', link: '/advanced/clipboard-sync' },
               { text: '识别历史与诊断', link: '/advanced/diagnostics' },
-              { text: '备份与恢复', link: '/advanced/backup-restore' }
+              { text: '配置备份', link: '/advanced/backup-restore' }
             ]
           },
           {
@@ -166,7 +166,7 @@ export default withMermaid(defineConfig({
               { text: 'Floating Ball', link: '/en/features/floating-ball' },
               { text: 'AI Post-processing', link: '/en/features/ai-postprocess' },
               { text: 'Recording Modes', link: '/en/features/recording-modes' },
-              { text: 'Auto-stop on Silence (VAD)', link: '/en/features/vad' },
+              { text: 'Auto-stop on Silence', link: '/en/features/vad' },
               { text: 'Gestures', link: '/en/features/gestures' },
               { text: 'Speech Presets', link: '/en/features/speech-presets' }
             ]
@@ -175,11 +175,11 @@ export default withMermaid(defineConfig({
             text: 'Advanced',
             collapsed: false,
             items: [
-              { text: 'AIDL Integration (Fcitx)', link: '/en/advanced/aidl-integration' },
+              { text: 'External IME Linking (AIDL)', link: '/en/advanced/aidl-integration' },
               { text: 'IME Bridge Module', link: '/en/advanced/ime-bridge' },
               { text: 'Clipboard Sync', link: '/en/advanced/clipboard-sync' },
               { text: 'History & Diagnostics', link: '/en/advanced/diagnostics' },
-              { text: 'Backup & Restore', link: '/en/advanced/backup-restore' }
+              { text: 'Backup and Sync', link: '/en/advanced/backup-restore' }
             ]
           },
           {

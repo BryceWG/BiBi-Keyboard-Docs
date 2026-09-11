@@ -11,19 +11,19 @@ Backspace supports multiple modes: single-char delete, continuous delete, clear 
 | Gesture       | Action            | Notes                                |
 | ------------ | ----------------- | ------------------------------------ |
 | **Tap**      | delete one char    | standard backspace                   |
-| **Long-press** | continuous delete | deletes one char every 50ms          |
+| **Long-press** | continuous delete | deletes repeatedly at the system key-repeat rate |
 | **Swipe up** | clear all text     | deletes all content in the editor    |
 | **Swipe left** | clear all text    | same as swipe up                     |
 | **Swipe down** | undo              | undo last change (up to 3 steps)     |
+| **Swipe down after clearing** | restore cleared text | after clearing, keep holding and swipe down to restore the text from before the clear |
 
 #### Avoiding false triggers
 
 To reduce accidental actions:
 
-1. **Long-press priority**: press > 500ms to count as long-press
-2. **Distance threshold**: swipe distance must be > 50dp (~8mm)
-3. **Direction clarity**: swipe angle must match the target direction
-4. **Cancel**: moving back to origin cancels the gesture
+1. **Long-press priority**: continuous delete starts after the system long-press duration
+2. **Distance threshold**: a movement must exceed the system touch-slop threshold to count as a swipe
+3. **Direction clarity**: the swipe direction must clearly dominate
 
 ### Tips
 
@@ -36,8 +36,10 @@ Hold backspace → swipe up → release
 #### Undo a mistake
 
 ```
-Hold backspace → swipe down → release
+Hold backspace → swipe up to clear → keep holding and swipe down → release
 ```
+
+This restores the text from before the clear. You can also hold backspace again and swipe down to undo the last change.
 
 #### Typical flow
 
@@ -96,7 +98,13 @@ BiBi Keyboard uses a stack:
 See [Recording Modes](./recording-modes.md).
 :::
 
+### Cursor Glide Mode <Badge type="warning" text="Pro" />
+
+When enabled: swipe up on the Space key to arm the mode, then slide on the mic button to move the cursor precisely. Left/right works in any text field; up/down requires a multi-line editor. When disabled, the keyboard's normal cursor controls are used.
+
 ### Floating ball gestures
+
+#### Basic
 
 - **Tap**: start recording
 - **Long-press then drag toward center**: open radial menu

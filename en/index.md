@@ -44,41 +44,27 @@ features:
     details: Real-time streaming transcription while you speak for lower latency and better feedback.
 
   - icon: 🎨
-    title: Material 3 Design
-    details: Material 3 UI with dynamic color (Monet) and dark mode, blending nicely with the system.
+    title: Excellent UI Design
+    details: Miuix and Material 3 design style, dark mode, beautiful and modern UI, support dynamic color, blending nicely with the system.
 
   - icon: 🔧
     title: Highly Customizable
     details: Tune recording modes, keyboard height, gestures, punctuation keys and more to match your workflow.
 
   - icon: 🐧
-    title: Fcitx (Little Penguin) Linking
-    details: Supports linking with Fcitx input method via AIDL for voice input inside Fcitx.
+    title: Fcitx / Trime Linking
+    details: Supports linking with Fcitx (Little Penguin) and Trime input methods via AIDL for voice input inside those keyboards.
 ---
 
 ## Quick Overview
 
 BiBi Keyboard (说点啥) is a voice-first Android IME. It integrates multiple mainstream ASR providers and local offline models to deliver high-quality speech recognition across apps.
 
-### Key Highlights
-
-- **18 ASR providers**: Volcengine, SiliconFlow, OpenAI, OpenRouter, MiMo, Cohere, StepAudio, Gemini, ElevenLabs, DashScope, Soniox, Zhipu GLM, and more
-- **Local offline models**: SenseVoice, FunASR Nano, Qwen3-ASR, Parakeet, FireRedASR V2, X-ASR (no network required)
-- **AI post-processing**: use LLMs to refine recognition results
-- **Multiple recording modes**: press-and-hold, tap-to-toggle
-- **Privacy-first**: can work fully offline once configured
-- **Open-source & free**: core features are open-source and free to use
-- **Smart VAD**: auto-stop recording on silence
-- **Segmented recording**: auto-split long audio seamlessly
-- **Floating ball voice input**: voice input from anywhere
-- **Gestures**: swipe up to clear, swipe down to undo, swipe left to delete, etc.
-- **Material 3**: modern UI with dynamic color
-
 ### System Requirements
 
 - **Android**: Android 8.0 (API 26) and above
-- **CPU ABI**: arm64-v8a / armeabi-v7a (limited local models support)
-- **RAM**: 12GB+ recommended for local models
+- **CPU ABI**: arm64-v8a / armeabi-v7a (some local models do not support 32-bit)
+- **RAM**: local models are memory-hungry; on low-end devices prefer smaller models
 - **Storage**: at least 50MB (local models require extra 100MB-1GB)
 - **Network**: required for cloud ASR; local models can work offline
 
