@@ -61,9 +61,30 @@ AI 后处理功能使用大型语言模型（LLM）对 ASR 识别结果进行智
 
 ### 工作流程
 
+```mermaid
+flowchart TD
+  asr[识别最终文本] --> empty{为空?}
+  empty -->|是| outEmpty[不上屏]
+  empty -->|否| trim{开启去尾标点?}
+  trim -->|是| doTrim[去掉句末标点和 emoji]
+  trim -->|否| base[进入匹配]
+  doTrim --> base
+  base --> preset{整句命中语音预设?}
+  preset -->|是| presetOut[直接提交预设内容]
+  preset -->|否| skip{字数低于跳过阈值?}
+  skip -->|是| simpleOut[提交当前文本]
+  skip -->|否| llmOn{已开启润色且有可用 LLM?}
+  llmOn -->|否| simpleOut
+  llmOn -->|是| deep{深度思考阈值允许?}
+  deep -->|是| llmThink[带深度思考润色]
+  deep -->|否| llmNormal[普通润色]
+  llmThink --> ok{润色成功?}
+  llmNormal --> ok
+  ok -->|是| finalOut[提交润色结果]
+  ok -->|否| simpleOut
 ```
-语音录音 → ASR 识别 → [AI 后处理] → 提交文本
-```
+
+深度思考阈值：滑到 0 始终开启，拉到上限则始终关闭，中间值仅在识别字数超过阈值时启用。润色超时、取消或收起键盘时会提交原文。
 
 ## 流式输出预览与打字机效果
 

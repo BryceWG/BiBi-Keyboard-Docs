@@ -10,6 +10,27 @@ Voice input has three stages:
 2. **Recognition**: audio is sent to an ASR engine (cloud or local) and transcribed into text.
 3. **Output**: the transcript can optionally be refined by AI post-processing, then inserted into the current editor.
 
+```mermaid
+mindmap
+  root((Voice input))
+    Entry
+      BiBi Keyboard
+      Floating ball
+      External IME
+    Stop
+      Manual
+      Silence VAD
+      Timeout
+    Recognition
+      Cloud or local
+      Streaming or file
+      Optional backup engine
+    Before insert
+      Speech presets
+      AI polish
+    Insert
+```
+
 ## Supported ASR Providers
 
 BiBi Keyboard supports **18** ASR providers, grouped into cloud and local:
@@ -114,6 +135,19 @@ For non-streaming engines, if a recording exceeds the app's single-segment limit
 
 ### How it works
 
+```mermaid
+flowchart TD
+  rec[Non-streaming recording] --> check{Near segment cap?}
+  check -->|yes| split[Cut segment and recognize in background]
+  split --> rec
+  check -->|no| wait{Recording stopped?}
+  wait -->|no| rec
+  wait -->|yes| last[Recognize the last segment]
+  split --> merge[Concatenate segments in order]
+  last --> merge
+  merge --> out[Insert the full text]
+```
+
 1. **Auto split**: near the limit, the current segment is cut and a new segment starts
 2. **Background upload**: segments are uploaded/recognized in background while recording continues
 3. **Seamless UX**: UI stays in recording state without noticeable interruption
@@ -149,6 +183,21 @@ For non-streaming engines, if a recording exceeds the app's single-segment limit
 ## Backup ASR Engine (Parallel Primary/Backup)
 
 If your primary ASR occasionally times out or fails, you can enable a **backup ASR engine**. BiBi Keyboard records only once, then decides whether to run the backup in parallel or use lazy local fallback based on the selected engines and settings. If primary returns a usable result in time, it uses primary; otherwise it falls back to the backup result.
+
+```mermaid
+flowchart TD
+  start[Start recognition] --> backupOn{Backup enabled and different?}
+  backupOn -->|no| primaryOnly[Primary engine only]
+  backupOn -->|yes| kind{Backup is a local model?}
+  kind -->|no| parallel[Primary and backup run together]
+  kind -->|yes| resid{Local backup mode}
+  resid -->|Keep resident| parallel
+  resid -->|On demand| lazy[Wait for primary, then start local backup]
+  parallel --> pick[Use primary if it returns in time, otherwise backup]
+  lazy --> pick
+  primaryOnly --> result[Recognized text]
+  pick --> result
+```
 
 ### How to enable
 

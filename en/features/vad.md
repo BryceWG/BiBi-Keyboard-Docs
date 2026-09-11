@@ -6,9 +6,23 @@ Auto-stop on silence (Voice Activity Detection, VAD) can stop recording automati
 
 BiBi Keyboard uses **Ten VAD (sherpa-onnx)** to detect speech activity in real time:
 
+```mermaid
+flowchart TD
+  frame[Recording] --> suppress{Auto-stop suppressed?}
+  suppress -->|yes| cont[Keep recording]
+  suppress -->|no| speech{Speech detected?}
+  speech -->|yes| reset[Reset silence timer]
+  speech -->|no| debounce{Still in initial debounce?}
+  debounce -->|yes| cont
+  debounce -->|no| acc[Accumulate silence]
+  acc --> win{Silence window reached?}
+  win -->|yes| stopRec[Auto-stop and recognize]
+  win -->|no| cont
+  reset --> cont
+  cont --> frame
 ```
-Record → analyze audio in real time → detect speech/silence → accumulate silence time → reach threshold → auto stop
-```
+
+Press-and-hold recording, and AIDL sessions whose start/stop is controlled by the calling IME, suppress VAD auto-stop so recording does not end before you release.
 
 Core logic:
 

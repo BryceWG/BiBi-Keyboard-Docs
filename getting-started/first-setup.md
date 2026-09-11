@@ -2,6 +2,18 @@
 
 安装完说点啥后，您需要配置一个 ASR 供应商才能开始使用语音识别功能。新用户首次打开应用时会看到基础引导页和推荐配置方案，本页将指导您完成更多个性化设置。
 
+```mermaid
+flowchart TD
+  install[安装并启用输入法] --> pick{选 ASR 供应商}
+  pick -->|新手| sf[硅基流动内置免费]
+  pick -->|要流式| volc[火山引擎]
+  pick -->|要离线| local[SenseVoice 等本地模型]
+  sf --> optional[可选开启 AI 润色]
+  volc --> optional
+  local --> optional
+  optional --> test[打开输入框试录一句]
+```
+
 ## 选择 ASR 供应商
 
 说点啥支持 18 个 ASR 供应商，包括云端服务和本地模型。对于首次使用，我们推荐以下方案：

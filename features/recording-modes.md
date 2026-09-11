@@ -9,6 +9,27 @@
 | **长按说话** | 按住麦克风按钮录音，松开停止 | 传统习惯，精确控制   |
 | **点按切换** | 点击麦克风按钮开始/停止      | 长文本输入，解放双手 |
 
+```mermaid
+flowchart TD
+  start[开始说话] --> where{入口}
+  where -->|键盘| ime{点按切换?}
+  ime -->|关| hold[按住录音 松手停止]
+  ime -->|开| tap[点按开始 再点停止]
+  where -->|悬浮球| ball{长按悬浮球录音?}
+  ball -->|关| tapBall[点按开始或停止]
+  ball -->|开| holdBall[长按开始 松手停止]
+  hold --> stopHow
+  tap --> stopHow
+  tapBall --> stopHow
+  holdBall --> stopHow
+  stopHow{自动停止方式}
+  stopHow -->|手动| userStop[只听用户操作]
+  stopHow -->|静音停止| vad[开口后静音达阈值则停]
+  stopHow -->|超时停止| timeout[到达最长时长则停]
+```
+
+键盘长按说话会抑制静音判停，松手才停止。「可见时持续录音」只在键盘或悬浮球可见时本地缓冲，点麦前的音频不会上传。
+
 ## 长按说话模式（默认）
 
 ### 使用方法

@@ -4,6 +4,22 @@ This page collects common BiBi Keyboard issues and practical troubleshooting ste
 
 ## Voice recognition fails
 
+```mermaid
+flowchart TD
+  fail[Recognition fails] --> mic{Microphone permission granted?}
+  mic -->|no| grantMic[Grant it and retry]
+  mic -->|yes| kind{Cloud or local?}
+  kind -->|cloud| net{Network, API key, and quota OK?}
+  net -->|no| fixCloud[Fix network, key, or quota]
+  net -->|yes| env
+  kind -->|local| model{Model downloaded or imported?}
+  model -->|no| dl[Finish model setup first]
+  model -->|yes| env
+  env{"Too short, noisy, or silent?"}
+  env -->|yes| retry[Try a short sentence in a quieter place]
+  env -->|no| log[Export diagnostic logs]
+```
+
 1. Check microphone permission.
 2. For cloud ASR, confirm network connectivity, API key validity, and account quota.
 3. For local models, confirm the model has been downloaded or imported.

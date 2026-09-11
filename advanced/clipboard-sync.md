@@ -27,10 +27,23 @@
 
 ::: info 工作原理
 
+```mermaid
+flowchart TD
+  local[本机剪贴板变化] --> hash{内容是否已同步过?}
+  hash -->|是| skip[跳过]
+  hash -->|否| put[上传到服务器]
+  server[服务器有新内容] --> rt{支持实时?}
+  rt -->|是| recv[立即接收]
+  rt -->|否| poll[按间隔拉取]
+  recv --> apply[写入本机剪贴板或下载附件]
+  poll --> apply
+```
+
+同步由说点啥后台服务连服务器。剪贴板读写则取决于执行方式：说点啥是默认输入法时由本体读写；改版小企鹅/同文或 IME Bridge 时，由目标输入法进程读写（该键盘被回收后会暂停）。
+
 - 上传时使用内容 **SHA-256** 哈希值判断是否需要上传
 - 下载时记住最近处理的文件名，避免重复处理
 - 协议基于 SyncClipboard API：`PUT /SyncClipboard.json` 上传、`GET /SyncClipboard.json` 拉取；若 `Type` 为 `Image`/`File`，对应文件位于 `/file/<filename>`
-
 :::
 
 ## 配置方式

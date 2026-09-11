@@ -1,9 +1,23 @@
 import { defineConfig } from 'vitepress'
+import { withMermaid } from 'vitepress-plugin-mermaid'
 
-export default defineConfig({
+export default withMermaid(defineConfig({
   vite: {
     server: {
-      host: '127.0.0.1'
+      host: '127.0.0.1',
+      port: 4000
+    },
+    // Pre-bundle mermaid so Vite does not serve its CJS deps (dayjs) raw in
+    // dev, which otherwise throws and leaves every page as a white screen.
+    optimizeDeps: {
+      include: [
+        'mermaid',
+        'dayjs',
+        'debug',
+        '@braintree/sanitize-url',
+        'cytoscape',
+        'cytoscape-cose-bilkent'
+      ]
     }
   },
 
@@ -212,4 +226,4 @@ export default defineConfig({
       }
     }
   }
-})
+}))

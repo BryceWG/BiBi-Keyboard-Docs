@@ -9,6 +9,27 @@ BiBi Keyboard provides two microphone trigger modes, plus optional auto-stop beh
 | **Press and hold** | hold the mic button to record; release to stop | classic IME feel; precise control |
 | **Tap to toggle**  | tap the mic button to start/stop               | long dictation; hands-free |
 
+```mermaid
+flowchart TD
+  start[Start speaking] --> where{Entry}
+  where -->|Keyboard| ime{Tap to toggle?}
+  ime -->|off| hold[Hold to record, release to stop]
+  ime -->|on| tap[Tap to start, tap again to stop]
+  where -->|Floating ball| ball{Hold floating ball to record?}
+  ball -->|off| tapBall[Tap to start or stop]
+  ball -->|on| holdBall[Hold to start, release to stop]
+  hold --> stopHow
+  tap --> stopHow
+  tapBall --> stopHow
+  holdBall --> stopHow
+  stopHow{Auto-stop}
+  stopHow -->|Manual| userStop[Wait for user action]
+  stopHow -->|Silence| vad[Stop after silence window]
+  stopHow -->|Timeout| timeout[Stop at max duration]
+```
+
+Press-and-hold on the keyboard suppresses silence auto-stop until you release. "Continuous recording while visible" only buffers locally while the keyboard or floating ball is shown; audio before you press the mic is not uploaded.
+
 ## Press and hold (default)
 
 ### How to use

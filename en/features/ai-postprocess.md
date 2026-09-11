@@ -61,9 +61,30 @@ For any OpenAI-compatible API:
 
 ### Pipeline
 
+```mermaid
+flowchart TD
+  asr[Final transcript] --> empty{Empty?}
+  empty -->|yes| outEmpty[Do not insert]
+  empty -->|no| trim{Trim trailing punctuation?}
+  trim -->|yes| doTrim[Strip trailing punctuation and emoji]
+  trim -->|no| base[Match presets]
+  doTrim --> base
+  base --> preset{Exact speech-preset match?}
+  preset -->|yes| presetOut[Insert preset content]
+  preset -->|no| skip{Shorter than skip threshold?}
+  skip -->|yes| simpleOut[Insert current text]
+  skip -->|no| llmOn{Polish on and LLM available?}
+  llmOn -->|no| simpleOut
+  llmOn -->|yes| deep{Deep-thinking threshold allows it?}
+  deep -->|yes| llmThink[Polish with deep thinking]
+  deep -->|no| llmNormal[Normal polish]
+  llmThink --> ok{Polish succeeded?}
+  llmNormal --> ok
+  ok -->|yes| finalOut[Insert polished text]
+  ok -->|no| simpleOut
 ```
-Recording → ASR → [AI post-processing] → Insert text
-```
+
+Deep-thinking threshold: `0` always enables it; the maximum never enables it; values in between enable it only when the recognized length exceeds the threshold. On timeout, cancel, or hiding the keyboard, the original text is committed.
 
 ## Streaming Preview & Typewriter Effect
 

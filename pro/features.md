@@ -47,6 +47,18 @@ Pro 版包含以下独有功能:
 
 管理自定义热词，提升专有名词、品牌名、人名等特殊词汇的识别准确率。
 
+```mermaid
+flowchart TD
+  asr[识别过程] --> inject{向引擎注入热词?}
+  inject -->|开| withHot[识别时带上热词]
+  inject -->|关| raw[按普通识别]
+  withHot --> post
+  raw --> post{识别后近音替换?}
+  post -->|开| phoneme[按发音把别名换成目标词]
+  post -->|关| out[输出识别文本]
+  phoneme --> outReplaced[输出替换后的文本]
+```
+
 ### 功能特点
 
 - **多供应商支持**: 自动适配不同 ASR 供应商的热词格式，部分本地模型也已支持热词
@@ -179,6 +191,18 @@ LLM 不可用时自动退回本地规则；
 
 基于 VAD（Voice Activity Detection）的自动录音模式，检测到语音自动开始，检测到静音自动停止。
 
+```mermaid
+flowchart TD
+  on[开启畅说] --> listen[本地持续监听]
+  listen --> speech{检测到开口?}
+  speech -->|否| listen
+  speech -->|是| rec[开始本段录音]
+  rec --> silence{静音达到阈值?}
+  silence -->|否| rec
+  silence -->|是| seg[结束本段并识别上屏]
+  seg --> listen
+```
+
 ### 功能特点
 
 - **自动开始**: 点击麦克风后，检测到语音自动开始录音
@@ -214,6 +238,8 @@ LLM 不可用时自动退回本地规则；
 2. 在键盘面板上，才空格位置开始上滑触发光标滑动功能
 3. 麦克风按钮会变成四个方向的箭头图标，表示可以滑动
 4. 从光标当前位置，向上/下/左/右滑动以移动光标，输入框中的光标会跟随手指位置移动而相应移动
+
+空格上滑即可进入滑动模式；AI 编辑面板也可以进入该模式。
 
 ## WebDAV 自动备份 <Badge type="warning" text="Pro" />
 

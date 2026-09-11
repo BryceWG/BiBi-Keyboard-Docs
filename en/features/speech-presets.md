@@ -6,8 +6,15 @@ Speech presets let you create shortcut replacement rules for commonly used phras
 
 ### How it works
 
-```
-Voice input → ASR → exact match preset trigger → replace with preset content → insert
+```mermaid
+flowchart TD
+  asr[ASR output] --> exact{Exact match to a trigger?}
+  exact -->|yes| replace[Replace with preset content]
+  exact -->|no| case{Same ignoring case?}
+  case -->|yes| replace
+  case -->|no| keep[Keep original text]
+  replace --> skipAi[Skip AI polish]
+  keep --> next[Continue polish or insert]
 ```
 
 Logic:

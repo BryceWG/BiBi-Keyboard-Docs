@@ -2,6 +2,18 @@
 
 After installing BiBi Keyboard (说点啥), you need to configure an ASR provider before you can start using voice recognition. New users will see a basic onboarding guide and recommended setup options on first launch. This page covers the full setup flow and some common tweaks.
 
+```mermaid
+flowchart TD
+  install[Install and enable the IME] --> pick{Choose an ASR provider}
+  pick -->|New user| sf[SiliconFlow built-in free]
+  pick -->|Want streaming| volc[Volcengine]
+  pick -->|Want offline| local[SenseVoice or other local models]
+  sf --> optional[Optionally enable AI polish]
+  volc --> optional
+  local --> optional
+  optional --> test[Open a text field and try a short recording]
+```
+
 ## Choose an ASR Provider
 
 BiBi Keyboard supports 18 ASR providers, including cloud services and local models. For the first setup, these are recommended:

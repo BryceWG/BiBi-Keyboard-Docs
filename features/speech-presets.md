@@ -6,8 +6,15 @@
 
 ### 工作原理
 
-```
-语音输入 → ASR 识别 → 完整匹配预设触发词 → 替换为预设内容 → 提交
+```mermaid
+flowchart TD
+  asr[ASR 输出] --> exact{与某条触发词完全相同?}
+  exact -->|是| replace[替换为预设内容]
+  exact -->|否| case{忽略大小写后相同?}
+  case -->|是| replace
+  case -->|否| keep[保留原文]
+  replace --> skipAi[跳过 AI 润色]
+  keep --> next[继续后续润色或上屏]
 ```
 
 **核心逻辑**：

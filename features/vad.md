@@ -8,9 +8,23 @@
 
 智能判停基于 **Ten VAD（sherpa-onnx）** 实现实时语音活动检测：
 
+```mermaid
+flowchart TD
+  frame[正在录音] --> suppress{当前模式禁止自动停?}
+  suppress -->|是| cont[继续录]
+  suppress -->|否| speech{检测到说话?}
+  speech -->|是| reset[清零静音计时]
+  speech -->|否| debounce{刚开始且尚未开口?}
+  debounce -->|是| cont
+  debounce -->|否| acc[累计静音时长]
+  acc --> win{达到判停时间?}
+  win -->|是| stopRec[自动停止并识别]
+  win -->|否| cont
+  reset --> cont
+  cont --> frame
 ```
-录音 → 实时分析音频 → 检测说话/静音 → 累计静音时长 → 达到阈值 → 自动停止
-```
+
+长按说话，以及由外部输入法控制开始/停止的 AIDL 会话，会禁止 VAD 自动停止，避免还没松手就被判停。
 
 核心逻辑：
 

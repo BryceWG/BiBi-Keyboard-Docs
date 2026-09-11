@@ -27,13 +27,26 @@ An independent background service manages sync, so the floating ball does not ne
 
 ::: info How it works
 
+```mermaid
+flowchart TD
+  local[Local clipboard changes] --> hash{Already synced?}
+  hash -->|yes| skip[Skip]
+  hash -->|no| put[Upload to the server]
+  server[Server has new content] --> rt{Realtime supported?}
+  rt -->|yes| recv[Receive immediately]
+  rt -->|no| poll[Pull on an interval]
+  recv --> apply[Write clipboard or download attachment]
+  poll --> apply
+```
+
+BiBi Keyboard's background service talks to the server. Clipboard read/write depends on the execution mode: the BiBi Keyboard IME when it is the default keyboard; a modified Fcitx/Trime or IME Bridge otherwise (paused if that IME process is reclaimed).
+
 - Upload: uses **SHA-256** hash of content to decide whether upload is needed
 - Download: remembers the last handled file name to avoid duplicate processing
 - Protocol basics:
   - `PUT /SyncClipboard.json` upload
   - `GET /SyncClipboard.json` pull
   - if `Type` is `Image`/`File`, the file is under `/file/<filename>`
-
 :::
 
 ## Configuration

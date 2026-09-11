@@ -22,6 +22,16 @@ The floating ball is a draggable circular button overlay. It provides:
 | **Processing** | recognizing; processing animation continues from the recording visual state |
 | **Done**       | checkmark; result has been inserted     |
 
+```mermaid
+flowchart TD
+  idle[Idle] -->|tap or hold| rec[Recording]
+  rec -->|stop| proc[Processing]
+  rec -->|cancel| idle
+  proc -->|success| doneNode[Done]
+  proc -->|fail| idle
+  doneNode --> idle
+```
+
 ## Settings
 
 Basic options are under `Settings → UI & Interaction → Floating Settings`:
@@ -34,7 +44,7 @@ Basic options are under `Settings → UI & Interaction → Floating Settings`:
 | `floatingBallSizeDp`                 | Int     | `44`    | size (28-96dp)                          |
 | `floatingBallHoldToRecordEnabled`    | Boolean | `false` | hold to record; release to stop         |
 | `floatingBallDirectDragEnabled`      | Boolean | `true`  | drag to move without long-press         |
-| `floatingWriteTextCompatEnabled`     | Boolean | `true`  | compatibility mode (select-all + paste) |
+| `floatingWriteTextCompatEnabled`     | Boolean | `true`  | accessibility write compatibility optimization (placeholder before recording in selected apps) |
 | `floatingImeBridgeEnabled`           | Boolean | `false` | IME bridge mode (requires a compatible LSPosed / LSPatch module) |
 | `imeBridgePcmRecordingEnabled`       | Boolean | `false` | record by holding inside a compatible bridged IME |
 
@@ -70,6 +80,19 @@ Enhanced keep-alive depends on privileged capabilities (Shizuku or root). Enable
   - On (default): show only when the keyboard panel is visible
   - Off: always show; when keyboard hidden, it becomes semi-transparent and sticks to the edge
 
+```mermaid
+flowchart TD
+  check[Check visibility] --> en{Floating ball enabled?}
+  en -->|no| hide[Hide]
+  en -->|yes| overlay{Overlay permission granted?}
+  overlay -->|no| hide
+  overlay -->|yes| imeOnly{Only show when keyboard is visible?}
+  imeOnly -->|no| show[Show floating ball]
+  imeOnly -->|yes| vis{Keyboard visible or busy recording?}
+  vis -->|yes| show
+  vis -->|no| hide
+```
+
 #### 3. Transparency
 
 - Range: 0.2 (20%) to 1.0 (opaque)
@@ -88,10 +111,11 @@ Enhanced keep-alive depends on privileged capabilities (Shizuku or root). Enable
 
 #### 6. Compatibility mode
 
-- Path: `Settings → UI & Interaction → Floating Settings → Write-text compatibility mode`
+- Path: `Settings → UI & Interaction → Floating Settings → Accessibility write compatibility optimization`
 - Behavior:
-  - On (default): uses "Select-all + Paste" strategy for better compatibility
-  - Off: uses standard Accessibility APIs (faster, but may not work in some apps)
+  - On (default): in apps you select, a placeholder is inserted before recording to reduce leftover hint text in the final result
+  - Off: skip the pre-recording placeholder. Results still follow the insertion fallback chain below; this is not a switch to a separate "standard IME API"
+  - Enabling "Use Android 13 Accessibility IME API" disables this placeholder automatically
 
 #### 7. IME bridge mode
 
@@ -117,6 +141,28 @@ After enabling bridge text insertion, you can also enable `Record inside bridged
 - Off (default): results are inserted through the traditional Accessibility API. Streaming preview stays available and works with the write-compatibility optimization, suitable for typical apps and older systems.
 - On: on Android 13 and later, results are inserted first via the new Accessibility API. This works better in terminals, editors, and similar special cases. The write-compatibility optimization is disabled automatically, and streaming preview is unavailable.
 
+Results actually follow the fallback chain below. When IME Bridge is ready, the current keyboard inserts the text; otherwise Accessibility is used. A later step runs only if the previous one fails.
+
+```mermaid
+flowchart TD
+  start[Result ready to insert] --> bridge{IME Bridge ready?}
+  bridge -->|yes| brOk[Insert via current IME]
+  brOk -->|fail| brInsertFail[Show a toast, do not fall back to Accessibility]
+  bridge -->|no| a11y{Accessibility enabled?}
+  a11y -->|no| clipToast[Copy to clipboard and toast]
+  a11y -->|yes| pasteOnly{Clipboard-only package?}
+  pasteOnly -->|yes| clipToast
+  pasteOnly -->|no| newApi{Android 13 API on and OS 13+?}
+  newApi -->|yes| ime[Insert recognized text only]
+  ime -->|success| doneNode[Done]
+  ime -->|fail| setText
+  newApi -->|no| setText[Replace the whole field]
+  setText -->|success| cursor[Optionally restore cursor]
+  setText -->|fail| paste[Paste recognized text]
+  paste -->|success| restoreClip[Restore clipboard]
+  paste -->|fail| clipToast
+```
+
 #### 9. Edge semi-hidden and anchor positioning
 
 - Behavior:
@@ -124,11 +170,11 @@ After enabling bridge text insertion, you can also enable `Record inside bridged
   - On portrait/landscape rotation, it tries to keep the original edge side and relative height to reduce unexpected jumps to center
 
 ::: tip About compatibility mode
-Accessibility does not provide a true IME-style "insert text" API. Some apps (e.g. WeChat, QQ, some games) may restrict accessibility text input, causing insertion failure. Compatibility mode can mitigate such cases, but it is not perfect.
+Accessibility does not provide a true IME-style "insert text" API. Some apps (e.g. WeChat, QQ, some games) may restrict accessibility text input, causing insertion failure. Compatibility optimization can reduce leftover hint text in selected apps, but insertion still follows the fallback chain above and is not perfect.
 
-For best reliability, prefer using the BiBi Keyboard IME, or use Fcitx5 AIDL linking.
+For best reliability, prefer the BiBi Keyboard IME, IME Bridge, or Fcitx5 AIDL linking.
 
-You can configure the target package list in Settings (one per line; supports prefix match).
+You can configure the target package list in Settings (one per line; supports prefix match). You can also mark selected apps as clipboard-only so results are copied instead of inserted.
 :::
 
 ## Permissions

@@ -6,6 +6,23 @@ The server side uses a hand-written Binder protocol, but it is fully compatible 
 
 ## User Guide
 
+```mermaid
+sequenceDiagram
+  actor User as User
+  participant Ime as Modified IME
+  participant Bibi as BiBi Keyboard
+  User->>Ime: Hold the voice key
+  Ime->>Bibi: Start recognition
+  Bibi->>Bibi: Recognize with current provider
+  opt AI polish enabled
+    Bibi->>Bibi: Polish the text
+  end
+  Bibi-->>Ime: Return final text
+  Ime->>User: Insert
+```
+
+The ASR provider follows BiBi Keyboard's current settings. The calling IME cannot override it.
+
 Currently supported: modified Fcitx5 and modified Trime. Common steps:
 
 1. Install the latest BiBi Keyboard (OSS or Pro; Pro is preferred if installed)
@@ -41,6 +58,17 @@ Clients should try binding in this order and prefer the installed Pro package (s
 
 ::: tip AIDL vs floating-ball IME bridge
 AIDL linking is for modified IMEs such as Fcitx/Trime to actively call BiBi Keyboard recognition. IME Bridge instead uses LSPosed/LSPatch so the floating ball can send results through the current third-party keyboard. They serve different setups; most users only need the one that matches their IME workflow. See [IME Bridge Module](/en/advanced/ime-bridge).
+
+```mermaid
+flowchart TD
+  need[Need voice on a third-party IME] --> who{Who starts recognition?}
+  who -->|Floating ball writes into current IME| bridge{Can install IME Bridge?}
+  bridge -->|yes| useBridge[Bridge: current IME inserts text]
+  bridge -->|no| a11y[Use Accessibility insertion]
+  who -->|IME's own voice key| aidl{IME already integrates AIDL?}
+  aidl -->|yes| useAidl[AIDL: IME receives the result]
+  aidl -->|no| other[Use floating ball or BiBi Keyboard]
+```
 :::
 
 ## Developer Guide

@@ -172,6 +172,17 @@ If the cause is still unclear, open `Settings Home → Recognition History`, tap
 
 ## IME Bridge vs AIDL integration
 
+```mermaid
+flowchart TD
+  need[Need voice on a third-party IME] --> who{Who starts recognition?}
+  who -->|Floating ball writes into current IME| bridge{Can install IME Bridge?}
+  bridge -->|yes| useBridge[Bridge: current IME inserts text]
+  bridge -->|no| a11y[Use Accessibility insertion]
+  who -->|IME's own voice key| aidl{IME already integrates AIDL?}
+  aidl -->|yes| useAidl[AIDL: IME receives the result]
+  aidl -->|no| other[Use floating ball or BiBi Keyboard]
+```
+
 | Item | IME Bridge | AIDL integration |
 | ---- | ---------- | ---------------- |
 | Target IME | A third-party keyboard that can be hooked through LSPosed/LSPatch | An IME that actively integrates BiBi Keyboard's AIDL protocol |

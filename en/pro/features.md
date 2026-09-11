@@ -47,6 +47,18 @@ Conversion applies after all other text processing (including AI post-processing
 
 Manage custom hotwords to improve recognition of proper nouns, brand names, names, etc.
 
+```mermaid
+flowchart TD
+  asr[Recognition] --> inject{Inject hotwords into the engine?}
+  inject -->|on| withHot[Recognition uses hotwords]
+  inject -->|off| raw[Ordinary recognition]
+  withHot --> post
+  raw --> post{Replace similar words after recognition?}
+  post -->|on| phoneme[Replace aliases with the target word]
+  post -->|off| out[Output recognized text]
+  phoneme --> outReplaced[Output replaced text]
+```
+
 ### Highlights
 
 - **Multi-provider support**: auto-adapts hotword formats per ASR provider; selected local models now support hotwords too
@@ -178,6 +190,18 @@ Trigger voice commands with a wake word, so AI can directly handle translation, 
 
 Based on VAD (Voice Activity Detection): automatically starts on speech and stops on silence.
 
+```mermaid
+flowchart TD
+  on[Enable continuous speaking] --> listen[Listen locally]
+  listen --> speech{Speech detected?}
+  speech -->|no| listen
+  speech -->|yes| rec[Start this segment]
+  rec --> silence{Silence window reached?}
+  silence -->|no| rec
+  silence -->|yes| seg[Stop, recognize, and insert]
+  seg --> listen
+```
+
 ### Highlights
 
 - **Auto start**: after tapping mic, recording starts when speech is detected
@@ -213,6 +237,8 @@ Enables omni-direction cursor movement via sliding on the space bar.
 2. On the keyboard, start from the space key area and swipe up to trigger cursor sliding
 3. The mic icon turns into four directional arrows
 4. Swipe up/down/left/right to move the cursor; the cursor follows your finger position
+
+Swipe up from the space key to enter the mode. It is also available from the AI edit panel.
 
 ## WebDAV Auto Backup <Badge type="warning" text="Pro" />
 

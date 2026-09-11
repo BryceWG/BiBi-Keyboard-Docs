@@ -6,6 +6,23 @@
 
 ## 用户使用指南
 
+```mermaid
+sequenceDiagram
+  actor User as 用户
+  participant Ime as 修改版输入法
+  participant Bibi as 说点啥
+  User->>Ime: 长按语音键
+  Ime->>Bibi: 开始识别
+  Bibi->>Bibi: 按当前供应商识别
+  opt 已开启 AI 润色
+    Bibi->>Bibi: 润色文本
+  end
+  Bibi-->>Ime: 返回最终文本
+  Ime->>User: 上屏
+```
+
+供应商跟随说点啥当前设置，不会被输入法传入的供应商覆盖。
+
 目前支持修改版小企鹅输入法（Fcitx5）与修改版同文输入法（Trime）。通用步骤如下：
 
 1. 下载并安装说点啥最新版（开源版或 Pro 版均可，优先调用 Pro 版）
@@ -41,6 +58,17 @@
 
 ::: tip 与悬浮球输入法桥接的区别
 AIDL 联动适合修改版小企鹅/同文等输入法主动调用说点啥识别能力；IME Bridge 则通过 LSPosed / LSPatch 让说点啥悬浮球把结果交给当前第三方输入法写入。两者可以服务不同场景，普通用户通常只需按所用输入法选择其中一种。详见 [IME Bridge 模块](/advanced/ime-bridge)。
+
+```mermaid
+flowchart TD
+  need[要用第三方输入法语音] --> who{谁发起识别?}
+  who -->|说点啥悬浮球写入当前键盘| bridge{能安装 IME Bridge?}
+  bridge -->|是| useBridge[用 Bridge 由当前输入法插入]
+  bridge -->|否| a11y[用无障碍写入]
+  who -->|输入法自己的语音键| aidl{输入法已集成 AIDL?}
+  aidl -->|是| useAidl[用 AIDL 回调给输入法上屏]
+  aidl -->|否| other[改用悬浮球或说点啥键盘]
+```
 :::
 
 ## 开发者指南

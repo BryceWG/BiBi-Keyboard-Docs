@@ -172,6 +172,17 @@ Pro 版开启 AI 后处理的「输入框上下文」后，悬浮球可通过 IM
 
 ## 与 AIDL 联动的区别
 
+```mermaid
+flowchart TD
+  need[要用第三方输入法语音] --> who{谁发起识别?}
+  who -->|说点啥悬浮球写入当前键盘| bridge{能安装 IME Bridge?}
+  bridge -->|是| useBridge[用 Bridge 由当前输入法插入]
+  bridge -->|否| a11y[用无障碍写入]
+  who -->|输入法自己的语音键| aidl{输入法已集成 AIDL?}
+  aidl -->|是| useAidl[用 AIDL 回调给输入法上屏]
+  aidl -->|否| other[改用悬浮球或说点啥键盘]
+```
+
 | 项目 | IME Bridge | AIDL 联动 |
 | ---- | ---------- | --------- |
 | 适用输入法 | 可通过 LSPosed / LSPatch Hook 的第三方输入法 | 已主动集成说点啥 AIDL 协议的输入法 |
