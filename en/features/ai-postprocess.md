@@ -75,14 +75,20 @@ flowchart TD
   skip -->|yes| simpleOut[Insert current text]
   skip -->|no| llmOn{Polish on and LLM available?}
   llmOn -->|no| simpleOut
-  llmOn -->|yes| deep{Deep-thinking threshold allows it?}
+  llmOn -->|yes| autoSel{Auto-select preset enabled?}
+  autoSel -->|yes| select[Classify & match best preset]
+  autoSel -->|no| useDefault[Use default preset]
+  select --> skipPolish{Matched Skip Polish?}
+  skipPolish -->|yes| simpleOut
+  skipPolish -->|no/failed| applyPrompt[Apply selected/default prompt]
+  useDefault --> applyPrompt
+  applyPrompt --> deep{Deep-thinking threshold allows it?}
   deep -->|yes| llmThink[Polish with deep thinking]
   deep -->|no| llmNormal[Normal polish]
   llmThink --> ok{Polish succeeded?}
   llmNormal --> ok
   ok -->|yes| finalOut[Insert polished text]
   ok -->|no| simpleOut
-```
 
 The "Deep-thinking threshold allows it" step above is controlled by the "Deep thinking threshold" slider; see [Deep Thinking & Reasoning Params](#deep-thinking-reasoning-params) below.
 
@@ -128,6 +134,54 @@ AI polish can be triggered in several ways:
 - Latency-sensitive scenarios
 :::
 
+## AI Polishing Preset Selection
+
+Voice input scenarios and intents can differ widely from moment to moment: casual thoughts may need "General post-process", foreign conversations may need "Translate to English", and meetings may require "Extract to-dos" or "Extract key points". Furthermore, when the speech recognition result is already clean and clear, skipping polish entirely produces the best output without extra wait time.
+
+BiBi Keyboard provides **AI Polishing Preset Selection**: before polishing runs, a classification model automatically matches the most suitable prompt preset based on the transcript and each preset's scenario description (Skill). When the content is already clear and accurate, it can also automatically skip polishing.
+
+### Configuration
+
+Path: `Settings → Intelligence → AI Feature Settings → AI polishing preset selection`
+
+1. **Main Switch**: turn on "Automatic polishing preset selection"
+2. **Select Candidates**: check at least 2 candidates from your configured prompt presets
+   - Checked regular presets must have a non-empty **Skill description** explaining when and how to apply them
+   - Built-in special candidate "**Skip Polish**": when the recognized text is already accurate, natural, and ready to use, the system skips polishing and inserts the original text directly, saving time and tokens
+3. **Select Model**:
+   - Defaults to "Follow default polishing model"
+   - Can be pointed to a fast, lightweight classification model (from any configured LLM vendor, or the dedicated TypeSafe Jev decision classifier), separating routing decisions from the heavy polishing model
+
+### Preset Skill Descriptions
+
+When editing any preset in `Settings → Intelligence → AI Feature Settings → Polish prompt presets`, you can fill in a "Skill description" in addition to the prompt content.
+
+The 5 built-in presets include default Skill descriptions:
+
+- **General post-process**: Use when the transcript contains filler words, repetitions, self-corrections, or recognition errors that need cleanup while preserving meaning and tone.
+- **Basic polishing**: Use when the transcript needs ordinary correction, punctuation, and natural wording, without a clear translation, extraction, or task-list intent.
+- **Translate to English**: Use when the user clearly intends to translate the content into English.
+- **Extract key points**: Use when the user asks for a summary or key points, or when long content should be condensed into concise points.
+- **Extract to-dos**: Use when the user asks for a to-do list or the content contains tasks, owners, dates, or other action items to extract.
+
+### Effect Preview
+
+After configuring candidate presets and a selector model, tap "Effect preview":
+
+1. The preview page loads recent recognition history
+2. Select a few past transcripts and tap "Start classification"
+3. Review the matched preset (or skip polish determination), routing latency in milliseconds, and status for each record, allowing you to fine-tune Skills and candidates before using them daily
+
+### History Integration
+
+When automatic selection is enabled, the recognition history details display a selection snapshot:
+
+- Notes which preset was chosen, whether polish was skipped, or if a fallback to the default preset occurred
+- Separates "Select Prompt" latency from "AI Polish" latency in the stage timeline
+
+### Fallback & Safety
+
+- If the classification request times out (guarded by an 8-second ceiling), errors out, or returns unrecognized output, the app gracefully falls back to the currently active default prompt preset for standard polishing without interrupting your dictation flow.
 ## Prompt Presets
 
 BiBi Keyboard includes 5 built-in prompt presets and supports custom ones.
@@ -142,21 +196,23 @@ BiBi Keyboard includes 5 built-in prompt presets and supports custom ones.
 | **Extract key points**   | meeting notes     | extract key info into a bullet list                   |
 | **Extract to-dos**       | task tracking     | identify tasks and generate a checklist               |
 
-### Custom prompts
+### Custom prompts & Full-screen editor
 
 Go to `Settings → Intelligence → AI Feature Settings → Polish prompt presets`:
 
 1. Tap "Add Preset"
-2. Write your prompt (role, task, rules, output format, etc.)
-3. Save and apply quickly in AI Edit
-
+2. Write your prompt title, prompt content, and Skill description
+3. Tap the **full-screen editor icon** next to the prompt text box to compose long or intricate prompts comfortably
+4. Save and apply quickly in the keyboard or AI Edit
 ### AI Edit system prompt
 
 The AI Edit panel uses a separate system prompt to understand the "edit the current text according to my instruction" task. Customize it under `Settings → Intelligence → AI Feature Settings → AI edit system prompt`; leave it empty to use the built-in default.
 
 Use this for long-term role/rule/output-format constraints. One-off edit instructions (for example, "translate to English and simplify") should still be spoken in the AI Edit panel.
 
-## Deep Thinking & Reasoning Params
+## Advanced Parameters & Reasoning
+
+Under `Settings → Intelligence → AI Feature Settings`, the temperature slider and reasoning settings are organized into a clean "More parameters" sheet to keep the main settings page concise.
 
 ### Deep thinking threshold
 
@@ -233,10 +289,10 @@ The following features are only available in the Pro edition.
 AI Assistant can automatically match preset modes by wake word and keywords, then apply the mapped AI post-processing prompt. When the transcript starts with the wake word (the default is localized: "点点" in Chinese, "BB" in English), the AI Assistant flow starts automatically.
 
 - **Preset modes**: configure multiple presets and **enable several at once**, each bound to a prompt preset for a different scenario
+- **Independent model**: assign a dedicated LLM model specifically for the AI Assistant in `AI Assistant Mode Settings`, decoupled from the default polishing model
 - **Keyword matching**: selects the most suitable mode based on preset keywords
 - **Fuzzy matching**: supports fuzzy matching for wake words and preset keywords, so natural spoken variants can still trigger
 - **Customizable**: wake words, keywords, and prompt rules for each mode are all customizable
-
 ### Per-app Prompts <Badge type="warning" text="Pro" />
 
 Pro can bind a polish prompt to each foreground app: when a selected app (e.g. a chat app or browser) is in the foreground, AI polish after recording automatically applies the prompt preset mapped to that app, so you no longer need to switch prompts by hand.
@@ -245,10 +301,11 @@ Pro can bind a polish prompt to each foreground app: when a selected app (e.g. a
 
 When recording from the main keyboard, Pro can send text around the cursor as reference for AI post-processing. This helps the model keep continuity, terminology, and tone consistent with the surrounding text. Floating-ball recordings can also use this context when IME Bridge is enabled.
 
-::: warning Privacy
-Input field context is sent only as reference for AI post-processing. Enable it only when you trust the selected LLM provider. The final AI output should still contain only the processed text for the current ASR result.
-:::
+When "AI polishing preset selection" is active, the classification model also takes surrounding input context into account, making preset routing even more accurate to the current context.
 
+::: warning Privacy
+Input field context is sent only as reference for AI post-processing and preset selection. Enable it only when you trust the selected LLM provider. The final AI output should still contain only the processed text for the current ASR result.
+:::
 ### Hotword Enhancement <Badge type="warning" text="Pro" />
 
 With "Inject hotwords into recognition engines" enabled, Pro hotwords can participate before recognition according to provider support. You can independently enable "Replace similar words after recognition" for a phoneme-similarity fallback.

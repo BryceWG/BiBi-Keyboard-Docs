@@ -10,14 +10,14 @@ Pro includes these exclusive features, grouped in four categories that match the
 
 - **Hotwords management**: provider-aware hotword adaptation (inject into engine, post-recognition similar-word replacement, polish prompt injection) to improve recognition for proper nouns
 - **Continuous speaking mode**: auto start/stop recording for hands-free multi-segment dictation
-- **Input field context**: AI post-processing can reference nearby text around the cursor for better continuity
+- **Input field context**: AI post-processing and preset auto-selection can reference nearby text around the cursor for better continuity and context-aware routing
 
 **Text processing**
 
 - **Offline Traditional Chinese conversion**: convert results to Traditional Chinese automatically
 - **Regex post-processing**: apply regex rules for text post-processing
 - **App-specific prompts**: automatically switch AI prompt preset by foreground app
-- **AI Assistant**: trigger voice commands with wake words, preset keywords, and fuzzy matching
+- **AI Assistant**: trigger voice commands with wake words, preset keywords, and an independent model
 
 **Personalization**
 
@@ -88,7 +88,7 @@ When enabled, Pro compares a committed voice result with your subsequent correct
 
 1. Open `Settings → Smart → ASR Settings → Result Optimization (Pro)`
 2. Enable `Learn hotwords from corrections`
-3. Optionally enable `Use an LLM to analyze corrections`; this requires a working LLM configuration
+3. Optionally enable `Use an LLM to analyze corrections`; this requires a working LLM configuration and supports assigning an independent model specifically for correction analysis instead of following the default polishing model
 4. Dictate through modified Fcitx5 / Trime, the latest IME Bridge, or an accessibility-assisted floating ball, then correct a recognition mistake
 5. Return to “Learned hotwords awaiting confirmation” to approve or remove candidates
 
@@ -199,6 +199,8 @@ This sends nearby input-field text to the selected LLM provider as reference. En
 
 Input field context applies to AI post-processing after main-keyboard dictation and to floating-ball dictation when IME Bridge is enabled. MiMo multimodal ASR can also use Pro context information to improve proper nouns and scene-specific terms.
 
+Additionally, when "AI polishing preset selection" is enabled, the classification model references this input context as well, matching the best prompt preset according to the current conversation or document surroundings.
+
 ## Offline Traditional Chinese Conversion <Badge type="warning" text="Pro" />
 
 Automatically converts Simplified Chinese transcripts to Traditional Chinese.
@@ -275,6 +277,7 @@ Trigger voice commands with a wake word, so AI can directly handle translation, 
 - **Wake-word trigger**: say the wake word at the beginning of speech to enter AI Assistant flow
 - **Preset modes**: enable multiple presets at once (for example translation/writing/editing), then match by keywords
 - **Fuzzy matching**: wake words and preset keywords support fuzzy matching to reduce trigger failures caused by minor slips
+- **Independent model**: assign a dedicated model specifically for the AI Assistant, decoupled from the default polishing model
 - **Customizable**: customize wake words, keywords, and prompts
 
 ### How to use

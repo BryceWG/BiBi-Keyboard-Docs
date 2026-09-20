@@ -72,6 +72,7 @@ When trying it for the first time, change only a few blocks before doing a full 
 | Clipboard | open the clipboard panel to browse and insert recent clips |
 | Hide keyboard | minimize the keyboard |
 | Auto-stop on silence | quickly enable/disable "stop when speech ends" |
+| Keep screen on while recording | toggle "Keep screen on while recording" to prevent the screen from sleeping during recording |
 | Recording mode | quickly switch between press-and-hold and tap-to-toggle recording |
 | Floating keyboard | toggle the floating keyboard window |
 | Auto enter after input | toggle automatic sending; when on, every recognition (and optional AI post-processing) finishes with an automatic Enter/send action. You can also enable it under `Settings → Input → Input Settings → Input Behavior → Auto enter after input`; to send only one result, leave it off and swipe right on the microphone while recording |
@@ -88,7 +89,7 @@ When trying it for the first time, change only a few blocks before doing a full 
 | AI edit | AI info, Microphone, Back to main keyboard, Apply preset prompt, Select all, Backspace, Move cursor left/right, Copy, Paste, Number pad, Toggle selection mode, Space, Move to start/end |
 | Recording | Swipe Left Cancel, Swipe Right Send |
 
-If an action is stateful (e.g. Selection Mode or Auto-stop on silence), the icon reflects the current state (highlighted/dimmed).
+If an action is stateful (e.g. Selection Mode, Auto-stop on silence, or Keep screen on while recording), the icon reflects the current state (highlighted/dimmed or switching to a filled icon).
 
 ## IME Switching Tips
 

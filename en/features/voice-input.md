@@ -120,7 +120,7 @@ For more details on supported models, recommended configs and updated quotas, se
 - ⚠️ duration limit (see tables above)
 - ⚠️ recognition starts only after recording stops
 
-For local non-streaming models, long audio is progressively processed in silence-based chunks after recording stops to reduce the load of a single inference pass and requires no extra setting.
+To reduce waiting time on long recordings, **both online and local non-streaming recognition support progressive segmented recognition**: the system detects natural pauses during recording, divides the audio into separate segments, and progressively sends them for recognition in the background. When recording stops, only the trailing segment needs final processing, delivering text much faster.
 
 ::: tip Suggestions
 

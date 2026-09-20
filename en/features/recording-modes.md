@@ -124,6 +124,14 @@ To make mic starts feel faster, enable `Settings → Input Settings → Continuo
 This keeps the microphone listening locally while the keyboard or floating ball is visible, which may increase battery usage. Keep it off if you are sensitive to privacy or power consumption.
 :::
 
+### Keep screen on while recording
+
+During long dictation or when thinking while speaking, the screen might timeout and lock due to inactivity.
+
+You can enable `Settings → Input → Input Settings → Input Behavior → Keep screen on while recording` (off by default). When enabled, the screen stays awake while recording in either the keyboard or the floating ball, preventing unexpected screen shutoff; once recording ends or is cancelled, normal system screen sleep behavior resumes.
+
+You can also add the "Keep screen on while recording" extension button to your custom keyboard layout to toggle this setting directly while typing.
+
 ### Quick switch button
 
 If you often switch between short messages and long dictation, add the "Recording mode switch" action to your keyboard layout:

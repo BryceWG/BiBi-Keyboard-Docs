@@ -151,7 +151,7 @@ DashScope offers good accuracy and cost efficiency, with partial streaming suppo
 2. Paste the API key and save
 3. Choose a model:
    - Streaming: `Qwen-Audio-3.0-ASR-Flash-Streaming` (default), `Fun-ASR-Realtime`, or `Qwen3-ASR-Flash-Realtime`
-   - Non-streaming: `Qwen-Audio-3.0-ASR-Flash` (default), `Fun-ASR-Flash`, `Qwen3-ASR-Flash`, `Qwen3.5-Omni-Flash`, or `Qwen3.5-Omni-Plus`
+   - Non-streaming: `Qwen-Audio-3.0-ASR-Flash` (default), `Fun-ASR-Flash`, `Qwen3-ASR-Flash`, `Qwen3.8-Omni-Flash`, `Qwen3.5-Omni-Flash`, or `Qwen3.5-Omni-Plus`
 
 ## Gemini
 
@@ -217,7 +217,7 @@ StepAudio is StepFun's online ASR service. In BiBi Keyboard it is currently used
    - Coding Plan
    - Custom
 4. Paste the `StepFun API Key` for the current endpoint. API keys are stored separately per endpoint preset, so re-check it after switching endpoints
-5. Choose the `stepaudio-2.5-asr` model, language (Chinese / English / Auto), and enable ITN if needed
+5. Choose the model (`stepaudio-2.5-asr`, `stepaudio-3-asr-max`, or a custom model ID), language (Chinese / English / Auto), and enable ITN if needed
 
 ## Zhipu GLM
 

@@ -151,7 +151,7 @@ OpenRouter 供应商用于通过 OpenRouter 调用兼容的 ASR / 多模态转�
 2. 填入 API Key 并保存
 3. 根据需要选择模型：
    - 流式：`Qwen-Audio-3.0-ASR-Flash-Streaming`（默认）、`Fun-ASR-Realtime`、`Qwen3-ASR-Flash-Realtime`
-   - 非流式：`Qwen-Audio-3.0-ASR-Flash`（默认）、`Fun-ASR-Flash`、`Qwen3-ASR-Flash`、`Qwen3.5-Omni-Flash`、`Qwen3.5-Omni-Plus`
+   - 非流式：`Qwen-Audio-3.0-ASR-Flash`（默认）、`Fun-ASR-Flash`、`Qwen3-ASR-Flash`、`Qwen3.8-Omni-Flash`、`Qwen3.5-Omni-Flash`、`Qwen3.5-Omni-Plus`
 
 ## Gemini
 
@@ -217,7 +217,7 @@ StepAudio 是阶跃星辰提供的在线 ASR 服务，目前在说点啥中以�
    - Coding Plan
    - 自定义
 4. 填入当前端点对应的 `StepFun API Key`。不同端点预设会分别保存 Key，切换端点后请重新确认
-5. 选择 `stepaudio-2.5-asr` 模型、识别语言（中文 / 英文 / 自动）并按需开启 ITN
+5. 选择模型（`stepaudio-2.5-asr`、`stepaudio-3-asr-max` 或自定义模型 ID）、识别语言（中文 / 英文 / 自动）并按需开启 ITN
 
 ## 智谱 GLM
 

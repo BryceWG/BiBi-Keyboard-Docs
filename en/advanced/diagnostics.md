@@ -27,15 +27,19 @@ History details for newer records provide a **stage timeline** that breaks elaps
 
 - **Audio input**: time spent capturing the recording
 - **Speech recognition**: time the ASR engine took to return results
-- **Post-processing**: local text filtering / regex post-processing
+- **Select prompt**: time spent by the classification model matching a prompt preset when "AI polishing preset selection" is enabled
 - **AI polish**: the LLM polish stage (when enabled and attempted)
+- **Post-processing**: local text filtering / regex post-processing
 - **Text delivery**: time committing the result into the input field
-
 Records created by earlier versions show a note that stage timings were not saved.
 
 ### Failed records
 
 Records that failed, timed out, or were canceled are kept as well, with the failure reason shown (such as invalid credentials, microphone in use, network unavailable, or recognition timeout). Records that still have their recording audio can be retried via re-recognition.
+
+### Automatic selection snapshot
+
+If "AI polishing preset selection" was active during a voice input, the history record includes a selection snapshot: recording which preset was chosen, whether polish was automatically skipped, or why classification failed.
 
 ## API Log
 

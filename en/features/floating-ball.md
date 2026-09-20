@@ -138,6 +138,14 @@ flowchart TD
   paste -->|fail| clipToast
 ```
 
+### Insertion methods & advanced options
+
+The floating ball inserts results at the active cursor via the accessibility service. Configure behavior under `Settings → Input → More Input Methods → Floating Ball Settings → Advanced Features`:
+
+- **Use Android 13 Accessibility IME API** (Android 13 and later): inserts text directly via Android 13's Accessibility IME API, improving reliability in terminal emulators, code editors, and complex web views. When enabled, streaming preview is disabled, and "Text input compatibility optimization" is automatically bypassed.
+- **Text input compatibility optimization**: attempts to avoid mixing placeholder hint text with recognized results in traditional accessibility insertion mode.
+- **Copy to clipboard only**: copies recognition results directly to the clipboard with a toast notification instead of typing them into the active app.
+
 ::: tip Tip
 The compatibility optimization can reduce leftover hint text in some apps, but insertion still follows the fallback chain above and is not perfect. For best reliability, prefer the BiBi Keyboard IME, the IME Hook module, or Fcitx5 AIDL linking.
 :::
