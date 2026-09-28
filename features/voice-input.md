@@ -43,7 +43,7 @@ mindmap
 | **SiliconFlow**<br>硅基流动 | ❌       | 20 分钟            | 内置免费 ASR 服务（SenseVoiceSmall / TeleSpeechASR），支持 Qwen3-Omni 多模态转写（需自有 Key） |
 | **ElevenLabs**              | ✅       | 20 分钟            | 高精度英文识别，支持文件与流式                                                                 |
 | **OpenAI**                  | ✅       | 20 分钟            | 默认 `gpt-4o-mini-transcribe`，支持多渠道配置与 Realtime 流式识别                              |
-| **DashScope**<br>阿里云百炼 | ✅       | 5 分钟             | Qwen-Audio-3.0 / Fun-ASR / Qwen3-ASR / Qwen3.5-Omni，支持流式与非流式                          |
+| **Alibaba Qianwen**<br>阿里千问（原 DashScope） | ✅       | 5 分钟             | Qwen-Audio-3.0 / Qwen-Audio-3.1 / Fun-ASR / Qwen3-ASR / Qwen3.5-Omni，支持流式与非流式                          |
 | **Gemini**<br>Google        | ❌       | 4 小时             | 基于文件的多模态语音理解                                                                       |
 | **Soniox**                  | ✅       | 1 小时             | 支持多语言提示，流式与文件双模式                                                               |
 | **StepAudio**               | ❌       | 20 分钟            | StepAudio 2.5 在线 ASR，支持中文、英文与 ITN                                                    |
@@ -71,7 +71,7 @@ mindmap
 
 表格中的“时长限制（非流式）”指的是**应用内单段录音的上限**，用于控制分段录音行为，并不代表各家收费套餐或免费额度的上限。目前火山引擎通常会为新用户赠送约 20 小时的免费识别时长；硅基流动提供内置免费 ASR 服务且没有总时长额度限制，其他供应商的配额/计费请以各自控制台为准。
 
-更多关于各供应商支持的模型、推荐配置，可参考整理的 [提供商与模型指南](https://brycewg.notion.site/bibi-keyboard-providers-guide)。各供应商的注册、配置与本地模型下载步骤，参见[首次设置](/getting-started/first-setup)与[供应商配置](/getting-started/asr-providers)。
+各供应商的注册、配置与本地模型下载步骤，参见[首次设置](/getting-started/first-setup)与[供应商配置](/getting-started/asr-providers)。
 
 ## 云端 vs 本地识别
 
@@ -102,7 +102,7 @@ mindmap
 
 **支持的引擎**：
 
-- 云端：Volcengine、Soniox、DashScope、ElevenLabs、OpenAI Realtime
+- 云端：Volcengine、Soniox、阿里千问（原 DashScope）、ElevenLabs、OpenAI Realtime
 - 本地：X-ASR
 
 ### 非流式识别（文件上传）

@@ -30,7 +30,7 @@ BiBi Keyboard supports 18 ASR providers, including cloud services and local mode
 If this is your first time, start with **SiliconFlow**. The app enables the built-in free ASR/LLM by default, so you can try it without signup or API keys.
 :::
 
-For other providers (Volcengine, DashScope, Soniox, Gemini, ElevenLabs, OpenAI, StepAudio, Zhipu, and local models), see [ASR Provider Setup](/en/getting-started/asr-providers).
+For other providers (Volcengine, Alibaba Qianwen, Soniox, Gemini, ElevenLabs, OpenAI, StepAudio, Zhipu, and local models), see [ASR Provider Setup](/en/getting-started/asr-providers).
 
 ::: tip Provider grouping
 In ASR and AI post-processing settings, providers are grouped by "configured" and "not configured". Providers with valid keys or installed local models appear first, making daily switching easier.

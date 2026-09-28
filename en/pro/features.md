@@ -76,11 +76,19 @@ How to use:
 2. Go to `Settings → Smart → ASR Settings → Result Optimization (Pro)`
 3. Enable `Inject hotwords into recognition engines` so hotwords participate according to provider support
 4. Open `Hotword management` to add hotwords or batch-import them from the clipboard
-5. Long-press a hotword chip to edit aliases (`target | alias 2 | alias 3`)
+5. Tap a hotword entry to edit it: enter the **target word**, **alias 2**, and **alias 3** (format: `target | alias 2 | alias 3`), and pick or create a **group**
 6. Enable `Replace similar words after recognition` and/or `Add hotwords to the AI polishing prompt` as needed
 7. Review trigger frequency/hit stats on the management page and refine your list
 
 > Avoid too many hotwords. Per-provider limits apply and excessive lists may hurt performance.
+
+### Group management
+
+When your hotword list grows, organize it with groups:
+
+- In `Hotword management`, you can create a group or edit (rename) one; hotwords are listed under a **group name · count** header that can be collapsed, and hotwords without a group appear under "Ungrouped"
+- When adding or editing a hotword, assign it to a group in the dialog; you can change the group at any time
+- Groups are for organizing and managing the list; each hotword still participates in recognition, replacement, and prompt injection according to its own enabled state
 
 ### Learn hotwords from corrections
 
@@ -125,7 +133,7 @@ Convenience:
 | Provider     | Support | Max count                                              |
 | ------------ | ------- | ------------------------------------------------------ |
 | Volcengine   | ✅      | 100 tokens (bidirectional streaming) / 5000            |
-| DashScope    | ✅      | 10000 tokens                                           |
+| Alibaba Qianwen (DashScope) | ✅      | 10000 tokens                                           |
 | Soniox       | ✅      | 8000 tokens                                            |
 | SiliconFlow  | ✅      | almost unlimited (SenseVoice/TeleSpeech not supported) |
 | StepAudio    | ✅      | hotword array only; no extra context injection         |

@@ -34,7 +34,7 @@ flowchart TD
 
 ## Setup & Configuration
 
-Floating-ball settings live under `Settings → Input → More Input Methods`, which is divided into three sections: "Floating Ball Settings", "Volume Key Recording Mode", and "Advanced".
+Floating-ball settings live under `Settings → Input → More Input Methods`, which is divided into four sections: "Floating Ball Settings", "Volume Key Recording Mode", "Shake Recording", and "Advanced".
 
 ### Floating Ball Settings
 
@@ -94,6 +94,23 @@ If you prefer physical buttons, you can use volume keys to start or stop voice r
 
 ::: warning Permission note
 Volume key recording uses the Accessibility Service to detect keyboard visibility and volume-key clicks.
+:::
+
+### Shake Recording
+
+If you'd rather not tap the floating ball, enable Shake Recording: shake the phone to start or stop recording. Useful when the phone is on a desk or when tapping is inconvenient.
+
+1. Open `Settings → Input → More Input Methods → Shake Recording`
+2. Enable "Shake to start or stop recording"
+3. Adjust the other options as needed:
+   - **Shake sensitivity**: Very sensitive / Sensitive / Default / Conservative / Very conservative. Move toward "Conservative" if it triggers too often, or toward "Sensitive" if it is hard to trigger
+   - **Feedback when recording starts or stops**: plays a sound and/or vibration on start and stop
+   - **Stop recording when keyboard disappears**: on by default; recording stops automatically when the keyboard is hidden
+
+Like volume key recording, enabling Shake Recording requires the Accessibility Service permission.
+
+::: warning Note
+Shake detection relies on the accelerometer. Body movement while walking or riding may be recognized as shakes; if it triggers too often, lower the sensitivity.
 :::
 
 ### Advanced
@@ -178,7 +195,7 @@ The floating ball requires the following system permissions:
 
 ### 2. Accessibility permission
 
-**Purpose**: insert recognition result into the active editor.
+**Purpose**: insert recognition result into the active editor. Floating ball, volume-key, and shake recording also rely on this service.
 
 **How to grant**:
 

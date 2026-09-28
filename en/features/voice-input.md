@@ -43,7 +43,7 @@ BiBi Keyboard supports **18** ASR providers, grouped into cloud and local:
 | **SiliconFlow**                   | ❌        | 20 min                         | Built-in free ASR (SenseVoiceSmall / TeleSpeechASR); supports Qwen3-Omni transcription (own key)     |
 | **ElevenLabs**                    | ✅        | 20 min                         | High-accuracy English; supports both file and streaming                                               |
 | **OpenAI**                        | ✅        | 20 min                         | Default `gpt-4o-mini-transcribe`; supports multiple channels and Realtime streaming                    |
-| **DashScope (Alibaba)**           | ✅        | 5 min                          | Qwen-Audio-3.0 / Fun-ASR / Qwen3-ASR / Qwen3.5-Omni; streaming and non-streaming                    |
+| **Alibaba Qianwen** (formerly DashScope) | ✅ | 5 min | Qwen-Audio-3.0 / Qwen-Audio-3.1 / Fun-ASR / Qwen3-ASR / Qwen3.5-Omni; streaming and non-streaming |
 | **Gemini (Google)**               | ❌        | 4 hours                        | File-based multimodal speech understanding                                                            |
 | **Soniox**                        | ✅        | 1 hour                         | Supports multi-language prompts; both streaming and file modes                                         |
 | **StepAudio**                     | ❌        | 20 min                         | StepAudio 2.5 online ASR with Chinese/English and ITN                                                  |
@@ -71,7 +71,7 @@ BiBi Keyboard supports **18** ASR providers, grouped into cloud and local:
 
 The "Duration limit (non-streaming)" here is the app's **single-segment recording cap** used to control segmented recording behavior. It does not represent provider billing limits or total free quota. For example: Volcengine often provides ~20 hours of free quota for new users; SiliconFlow provides a built-in free ASR service with no total duration quota. For other providers, check their consoles for quota/billing.
 
-For more details on supported models, recommended configs and updated quotas, see the [Providers & Models Guide](https://brycewg.notion.site/bibi-keyboard-providers-guide). For provider sign-up, configuration steps and local model downloads, see [First Setup](/en/getting-started/first-setup) and [ASR Providers](/en/getting-started/asr-providers).
+For provider sign-up, configuration steps and local model downloads, see [First Setup](/en/getting-started/first-setup) and [ASR Providers](/en/getting-started/asr-providers).
 
 ## Cloud vs Local
 
@@ -102,7 +102,7 @@ For more details on supported models, recommended configs and updated quotas, se
 
 **Supported engines**:
 
-- Cloud: Volcengine, Soniox, DashScope, ElevenLabs, OpenAI Realtime
+- Cloud: Volcengine, Soniox, Alibaba Qianwen (formerly DashScope), ElevenLabs, OpenAI Realtime
 - Local: X-ASR
 
 ### Non-streaming recognition (file upload)

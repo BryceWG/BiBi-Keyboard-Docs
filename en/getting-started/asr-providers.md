@@ -21,7 +21,7 @@ API keys and access tokens are sensitive. Do not share them publicly. If you sus
 | **ElevenLabs**                                                                             | Cloud | ✅/❌      | High accuracy (model-dependent)                      |
 | **OpenAI** (compatible)                                                                    | Cloud | ✅/❌      | OpenAI/compatible file or Realtime transcription     |
 | **OpenRouter**                                                                             | Cloud | ❌         | Use an OpenRouter API key with compatible ASR models |
-| **DashScope (Alibaba)**                                                                    | Cloud | ✅/❌      | Balanced accuracy and cost                           |
+| **Alibaba Qianwen** (formerly DashScope)                                                    | Cloud | ✅/❌      | Balanced accuracy and cost                           |
 | **Gemini**                                                                                 | Cloud | ❌         | Small usage / file-based recognition                 |
 | **MiMo (Xiaomi)**                                                                          | Cloud | ❌         | MiMo v2.5 ASR / audio-understanding models           |
 | **Soniox**                                                                                 | Cloud | ✅/❌      | Stable streaming, international usage                |
@@ -134,24 +134,23 @@ OpenRouter lets BiBi Keyboard call compatible ASR / multimodal transcription mod
    - `Model` (for example `qwen/qwen3-asr-flash-2026-02-10`)
 4. Save, then use `Settings → Input → Recording Test` to verify the setup
 
-## DashScope (Alibaba Bailian / Qwen)
+## Alibaba Qianwen (formerly DashScope)
 
-DashScope offers good accuracy and cost efficiency, with partial streaming support.
+Alibaba Qianwen offers good accuracy and cost efficiency, with partial streaming support. In the app, this provider was renamed from "DashScope" to **Alibaba Qianwen**, and the request endpoints moved to Qianwen domains.
 
 ### 1. Create an API key
 
-1. Open: https://bailian.console.aliyun.com/?tab=model#/api-key
+1. Open the API keys page: https://platform.qianwenai.com/home/api-keys
 2. Create and copy an API key
-
-![DashScope API key](/images/getting-started/asr-providers/dashscope-api-key.png)
 
 ### 2. Configure in BiBi Keyboard
 
-1. Open `Settings → Smart → Speech Recognition Settings` and select **DashScope**
+1. Open `Settings → Smart → Speech Recognition Settings` and select **Alibaba Qianwen**
 2. Paste the API key and save
-3. Choose a model:
-   - Streaming: `Qwen-Audio-3.0-ASR-Flash-Streaming` (default), `Fun-ASR-Realtime`, or `Qwen3-ASR-Flash-Realtime`
-   - Non-streaming: `Qwen-Audio-3.0-ASR-Flash` (default), `Fun-ASR-Flash`, `Qwen3-ASR-Flash`, `Qwen3.8-Omni-Flash`, `Qwen3.5-Omni-Flash`, or `Qwen3.5-Omni-Plus`
+3. Pick a **Request endpoint** region: Mainland China (`maas.qianwenaiapi.com`, default) or International (`maas.qwencloudapi.com`)
+4. Choose a model:
+   - Streaming: `Qwen-Audio-3.0-ASR-Flash-Streaming` (default), `Qwen-Audio-3.1-ASR-Flash-Streaming`, `Qwen-Audio-3.1-ASR-Flash-Message`, `Fun-ASR-Realtime`, or `Qwen3-ASR-Flash-Realtime`
+   - Non-streaming: `Qwen-Audio-3.0-ASR-Flash` (default), `Qwen-Audio-3.1-ASR-Flash`, `Fun-ASR-Flash`, `Qwen3-ASR-Flash`, `Qwen3.8-Omni-Flash`, `Qwen3.5-Omni-Flash`, or `Qwen3.5-Omni-Plus`
 
 ## Gemini
 

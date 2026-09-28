@@ -89,6 +89,7 @@ flowchart TD
   llmNormal --> ok
   ok -->|yes| finalOut[Insert polished text]
   ok -->|no| simpleOut
+```
 
 The "Deep-thinking threshold allows it" step above is controlled by the "Deep thinking threshold" slider; see [Deep Thinking & Reasoning Params](#deep-thinking-reasoning-params) below.
 
@@ -152,6 +153,18 @@ Path: `Settings → Intelligence → AI Feature Settings → AI polishing preset
    - Defaults to "Follow default polishing model"
    - Can be pointed to a fast, lightweight classification model (from any configured LLM vendor, or the dedicated TypeSafe Jev decision classifier), separating routing decisions from the heavy polishing model
 
+### TypeSafe Jev Decision Classifier
+
+Jev (model `jev-latest`) is a decision-only classification model: it is used **only** for preset matching in "Automatic polishing preset selection" and **cannot** be used for conversation or text polishing. It fits the "lightweight model routes, heavy model polishes" setup by separating preset classification from polishing cost.
+
+1. In "AI polishing preset selection → Select Model", choose **TypeSafe Jev decision classifier**
+2. In the "Jev classifier credentials" section, pick a **TypeSafe channel**:
+   - **TypeSafe**: the official Jev channel; enter a TypeSafe API key
+   - **OpenRouter**: call Jev through OpenRouter; enter an OpenRouter API key
+   - **Cloudflare**: call Jev through the Cloudflare channel; enter a Cloudflare API key and Cloudflare account ID
+   - **Custom (TypeSafe-compatible)**: enter a TypeSafe-compatible endpoint and model ID
+3. Save and verify the behavior via "Effect preview" in "AI Polishing Preset Selection → Effect preview"
+
 ### Preset Skill Descriptions
 
 When editing any preset in `Settings → Intelligence → AI Feature Settings → Polish prompt presets`, you can fill in a "Skill description" in addition to the prompt content.
@@ -171,6 +184,7 @@ After configuring candidate presets and a selector model, tap "Effect preview":
 1. The preview page loads recent recognition history
 2. Select a few past transcripts and tap "Start classification"
 3. Review the matched preset (or skip polish determination), routing latency in milliseconds, and status for each record, allowing you to fine-tune Skills and candidates before using them daily
+4. When the selector model is TypeSafe Jev, each result also shows a match confidence percentage, so you can judge how reliable the classification is
 
 ### History Integration
 
@@ -259,7 +273,7 @@ When choosing an LLM provider in settings, configured/available providers are gr
 | **ZHIPU**                      | https://bigmodel.cn/usercenter/proj-mgmt/apikeys |
 | **MOONSHOT**                   | https://platform.moonshot.cn/console/api-keys    |
 | **VOLCENGINE**                 | https://console.volcengine.com/ark               |
-| **DASHSCOPE**                  | https://dashscope.aliyun.com/                    |
+| **DASHSCOPE** (Alibaba Qianwen)     | https://platform.qianwenai.com/home/api-keys      |
 | **OPENAI**                     | https://platform.openai.com/signup               |
 | **GEMINI**                     | https://aistudio.google.com/apikey               |
 | **GROQ**                       | https://console.groq.com/keys                    |

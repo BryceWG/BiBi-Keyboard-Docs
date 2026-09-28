@@ -21,7 +21,7 @@ API Key / Access Token 属于敏感信息，请勿截图公开或分享给他人
 | **ElevenLabs**                                                                               | 云端 | ✅/❌    | 识别精度高，按模型区分流式                         |
 | **OpenAI**（兼容接口）                                                                       | 云端 | ✅/❌    | 使用 OpenAI/兼容端点，支持文件识别与 Realtime 流式 |
 | **OpenRouter**                                                                               | 云端 | ❌       | 使用 OpenRouter API Key 调用兼容 ASR 模型          |
-| **DashScope**<br>阿里云百炼（Qwen）                                                          | 云端 | ✅/❌      | 性价比与识别效果均衡                               |
+| **Alibaba Qianwen**<br>阿里千问（原 DashScope）                                                            | 云端 | ✅/❌      | 性价比与识别效果均衡                               |
 | **Gemini**                                                                                   | 云端 | ❌       | 小用量体验 / 文件识别                              |
 | **MiMo**<br>小米                                                                             | 云端 | ❌       | MiMo v2.5 ASR / 音频理解模型                       |
 | **Soniox**                                                                                   | 云端 | ✅/❌      | 海外服务、流式稳定性较好                           |
@@ -134,24 +134,23 @@ OpenRouter 供应商用于通过 OpenRouter 调用兼容的 ASR / 多模态转�
    - `模型`（例如 `qwen/qwen3-asr-flash-2026-02-10`）
 4. 保存后可先到 `设置 → 输入 → 录音测试` 验证是否可用
 
-## 阿里云百炼（DashScope / Qwen）
+## 阿里千问（Alibaba Qianwen，原 DashScope）
 
-识别精度不错、性价比高；支持非流式，流式部分支持。
+识别精度不错、性价比高；支持非流式，流式部分支持。应用内该供应商名称已由「DashScope（阿里云百炼）」更名为**阿里千问（Alibaba Qianwen）**，请求端点也切换为千问域名。
 
 ### 1. 创建并复制 API Key
 
-1. 进入控制台 API Key 页面：[阿里云百炼控制台](https://bailian.console.aliyun.com/?tab=model#/api-key)
+1. 进入 API Key 页面：[阿里千问开放平台](https://platform.qianwenai.com/home/api-keys)
 2. 创建并复制 API Key
-
-![创建 DashScope API Key](/images/getting-started/asr-providers/dashscope-api-key.png)
 
 ### 2. 在说点啥中配置
 
-1. 打开 `设置 → 智能 → 语音识别设置`，选择 **DashScope（阿里云百炼）**
+1. 打开 `设置 → 智能 → 语音识别设置`，选择 **阿里千问（Alibaba Qianwen）**
 2. 填入 API Key 并保存
-3. 根据需要选择模型：
-   - 流式：`Qwen-Audio-3.0-ASR-Flash-Streaming`（默认）、`Fun-ASR-Realtime`、`Qwen3-ASR-Flash-Realtime`
-   - 非流式：`Qwen-Audio-3.0-ASR-Flash`（默认）、`Fun-ASR-Flash`、`Qwen3-ASR-Flash`、`Qwen3.8-Omni-Flash`、`Qwen3.5-Omni-Flash`、`Qwen3.5-Omni-Plus`
+3. 在「请求端点」中选择区域：中国大陆（`maas.qianwenaiapi.com`，默认）或国际（`maas.qwencloudapi.com`）
+4. 根据需要选择模型：
+   - 流式：`Qwen-Audio-3.0-ASR-Flash-Streaming`（默认）、`Qwen-Audio-3.1-ASR-Flash-Streaming`、`Qwen-Audio-3.1-ASR-Flash-Message`、`Fun-ASR-Realtime`、`Qwen3-ASR-Flash-Realtime`
+   - 非流式：`Qwen-Audio-3.0-ASR-Flash`（默认）、`Qwen-Audio-3.1-ASR-Flash`、`Fun-ASR-Flash`、`Qwen3-ASR-Flash`、`Qwen3.8-Omni-Flash`、`Qwen3.5-Omni-Flash`、`Qwen3.5-Omni-Plus`
 
 ## Gemini
 

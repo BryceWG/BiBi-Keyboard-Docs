@@ -30,7 +30,7 @@ flowchart TD
 如果您是第一次使用，建议先选择**硅基流动**，应用默认启用其内置免费 ASR/LLM 服务，无需额外注册或配置即可体验。
 :::
 
-如需配置其他供应商（火山引擎、阿里云百炼、Soniox、Gemini、ElevenLabs、OpenAI、StepAudio、智谱等），请参阅 [ASR 供应商配置教程](/getting-started/asr-providers)。
+如需配置其他供应商（火山引擎、阿里千问、Soniox、Gemini、ElevenLabs、OpenAI、StepAudio、智谱等），请参阅 [ASR 供应商配置教程](/getting-started/asr-providers)。
 
 ::: tip 供应商分组
 在 ASR 与 AI 后处理设置中，供应商列表会按“已配置 / 未配置”分组显示。已填好密钥或已安装模型的供应商会排在前面，方便日常切换。

@@ -89,6 +89,7 @@ flowchart TD
   llmNormal --> ok
   ok -->|是| finalOut[提交润色结果]
   ok -->|否| simpleOut
+```
 
 图中「深度思考阈值允许」一步由「深度思考字数阈值」滑条控制，详见下文[深度思考与推理参数](#深度思考与推理参数)。
 
@@ -152,6 +153,18 @@ AI 润色有多种触发方式：
    - 默认「跟随默认润色模型」
    - 也可以单独指定轻量、快速的分类模型（支持各大供应商已配置的模型，或 TypeSafe Jev 专用决策分类器），实现“轻量模型做路由，主模型做润色”
 
+### TypeSafe Jev 决策分类器
+
+Jev（模型 `jev-latest`）是只做决策的分类模型：仅用于「自动选择润色预设」时的预设匹配，**不能用于对话或文本润色**。它适合配合“轻量模型做路由，主模型做润色”的使用方式，将预设分类与润色耗时分离开。
+
+1. 在「AI选择润色预设 → 选择模型」中选择 **TypeSafe Jev 专用决策分类器**
+2. 在出现的「Jev 分类器凭证」区域选择**请求渠道**：
+   - **TypeSafe**：Jev 官方渠道，填写 TypeSafe API Key
+   - **OpenRouter**：通过 OpenRouter 调用 Jev，填写 OpenRouter API Key
+   - **Cloudflare**：经 Cloudflare 渠道调用 Jev，填写 Cloudflare API Key 与 Cloudflare Account ID
+   - **自定义（TypeSafe 兼容端点）**：填写兼容 TypeSafe 协议的端点地址与模型 ID
+3. 保存后可在「AI 选择润色预设 → 效果预览」中验证分类效果
+
 ### 预设 Skill 描述
 
 在 `设置 → 智能 → AI 功能设置 → 润色 Prompt 预设` 中编辑任意预设时，除「Prompt 内容」外，还可以填写「Skill 描述」。
@@ -171,6 +184,7 @@ AI 润色有多种触发方式：
 1. 页面会载入近期的识别历史记录
 2. 勾选若干条真实历史文本，点击「开始分类」
 3. 即可批量直观查看当前配置的分类匹配结果、分类耗时（毫秒）以及命中的预设或跳过润色判定，便于在正式输入前调整 Skill 描述与候选组合
+4. 当选择模型为 TypeSafe Jev 时，每条结果还会显示匹配置信度（百分比），方便评估本次分类判定的可靠程度
 
 ### 历史记录追溯
 
@@ -261,7 +275,7 @@ AI 编辑面板使用独立的系统提示词来理解“按指令修改当前�
 | **ZHIPU**<br>智谱               | [注册](https://bigmodel.cn/usercenter/proj-mgmt/apikeys) |
 | **MOONSHOT**<br>月之暗面        | [注册](https://platform.moonshot.cn/console/api-keys)    |
 | **VOLCENGINE**<br>火山引擎      | [注册](https://console.volcengine.com/ark)               |
-| **DASHSCOPE**<br>阿里云百炼     | [注册](https://dashscope.aliyun.com/)                    |
+| **DASHSCOPE**<br>阿里千问（原阿里云百炼） | [注册](https://platform.qianwenai.com/home/api-keys)     |
 | **OPENAI**                      | [注册](https://platform.openai.com/signup)               |
 | **GEMINI**<br>Google            | [注册](https://aistudio.google.com/apikey)               |
 | **GROQ**                        | [注册](https://console.groq.com/keys)                    |

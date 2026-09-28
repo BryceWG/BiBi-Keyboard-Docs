@@ -37,10 +37,6 @@ Records created by earlier versions show a note that stage timings were not save
 
 Records that failed, timed out, or were canceled are kept as well, with the failure reason shown (such as invalid credentials, microphone in use, network unavailable, or recognition timeout). Records that still have their recording audio can be retried via re-recognition.
 
-### Automatic selection snapshot
-
-If "AI polishing preset selection" was active during a voice input, the history record includes a selection snapshot: recording which preset was chosen, whether polish was automatically skipped, or why classification failed.
-
 ## API Log
 
 API Log stores recent ASR / LLM call summaries. It is useful for checking whether a failure comes from credentials, endpoint configuration, model name, network issues, or a provider-side error.
