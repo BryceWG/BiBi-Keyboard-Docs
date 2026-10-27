@@ -33,7 +33,7 @@ mindmap
 
 ## Supported ASR Providers
 
-BiBi Keyboard supports **18** ASR providers, grouped into cloud and local:
+BiBi Keyboard supports **19** ASR providers, grouped into cloud and local:
 
 ### Cloud ASR
 
@@ -44,6 +44,7 @@ BiBi Keyboard supports **18** ASR providers, grouped into cloud and local:
 | **ElevenLabs**                    | ✅        | 20 min                         | High-accuracy English; supports both file and streaming                                               |
 | **OpenAI**                        | ✅        | 20 min                         | Default `gpt-4o-mini-transcribe`; supports multiple channels and Realtime streaming                    |
 | **Alibaba Qianwen** (formerly DashScope) | ✅ | 5 min | Qwen-Audio-3.0 / Qwen-Audio-3.1 / Fun-ASR / Qwen3-ASR / Qwen3.5-Omni; streaming and non-streaming |
+| **Tencent Cloud ASR**             | ✅        | —                              | Streaming and file ASR (Flash); Chinese/English, multilingual, domain engines    |
 | **Gemini (Google)**               | ❌        | 4 hours                        | File-based multimodal speech understanding                                                            |
 | **Soniox**                        | ✅        | 1 hour                         | Supports multi-language prompts; both streaming and file modes                                         |
 | **StepAudio**                     | ❌        | 20 min                         | StepAudio 2.5 online ASR with Chinese/English and ITN                                                  |

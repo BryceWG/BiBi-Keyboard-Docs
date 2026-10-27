@@ -22,6 +22,7 @@ API keys and access tokens are sensitive. Do not share them publicly. If you sus
 | **OpenAI** (compatible)                                                                    | Cloud | ✅/❌      | OpenAI/compatible file or Realtime transcription     |
 | **OpenRouter**                                                                             | Cloud | ❌         | Use an OpenRouter API key with compatible ASR models |
 | **Alibaba Qianwen** (formerly DashScope)                                                    | Cloud | ✅/❌      | Balanced accuracy and cost                           |
+| **Tencent Cloud ASR**                                                                      | Cloud | ✅/❌      | Real-time streaming plus file ASR (Flash)            |
 | **Gemini**                                                                                 | Cloud | ❌         | Small usage / file-based recognition                 |
 | **MiMo (Xiaomi)**                                                                          | Cloud | ❌         | MiMo v2.5 ASR / audio-understanding models           |
 | **Soniox**                                                                                 | Cloud | ✅/❌      | Stable streaming, international usage                |
@@ -136,7 +137,7 @@ OpenRouter lets BiBi Keyboard call compatible ASR / multimodal transcription mod
 
 ## Alibaba Qianwen (formerly DashScope)
 
-Alibaba Qianwen offers good accuracy and cost efficiency, with partial streaming support. In the app, this provider was renamed from "DashScope" to **Alibaba Qianwen**, and the request endpoints moved to Qianwen domains.
+Alibaba Qianwen offers good accuracy and cost efficiency, with partial streaming support. In the app, this provider was renamed from "DashScope" to **Alibaba Qianwen**, and you can now choose between Mainland China, International, and a custom endpoint.
 
 ### 1. Create an API key
 
@@ -147,10 +148,34 @@ Alibaba Qianwen offers good accuracy and cost efficiency, with partial streaming
 
 1. Open `Settings → Smart → Speech Recognition Settings` and select **Alibaba Qianwen**
 2. Paste the API key and save
-3. Pick a **Request endpoint** region: Mainland China (`maas.qianwenaiapi.com`, default) or International (`maas.qwencloudapi.com`)
-4. Choose a model:
+3. Under **Request endpoint**, choose Mainland China (`maas.qianwenaiapi.com`, default), International (`maas.qwencloudapi.com`), or **Custom**
+4. With **Custom**, fill in **Custom endpoint** with your self-hosted service or proxy address. The API key uses the same input for all endpoints and is kept when you switch, so replace it if your custom service needs a different key
+5. Choose a model:
    - Streaming: `Qwen-Audio-3.0-ASR-Flash-Streaming` (default), `Qwen-Audio-3.1-ASR-Flash-Streaming`, `Qwen-Audio-3.1-ASR-Flash-Message`, `Fun-ASR-Realtime`, or `Qwen3-ASR-Flash-Realtime`
    - Non-streaming: `Qwen-Audio-3.0-ASR-Flash` (default), `Qwen-Audio-3.1-ASR-Flash`, `Fun-ASR-Flash`, `Qwen3-ASR-Flash`, `Qwen3.8-Omni-Flash`, `Qwen3.5-Omni-Flash`, or `Qwen3.5-Omni-Plus`
+
+## Tencent Cloud ASR
+
+Tencent Cloud Speech Recognition supports **real-time streaming** and **file-based recognition (Flash)**, selectable through **Recognition engine**: streaming shows results as you speak, while the file path uploads the recording once you stop. 
+
+### 1. Enable the service and create credentials
+
+1. Open the Speech Recognition console and enable the service: https://console.cloud.tencent.com/asr
+2. Open the CAM API keys page: https://console.cloud.tencent.com/cam/capi
+3. Create a key and copy `SecretId` and `SecretKey`
+4. Enter the [Tencent Cloud account center](https://console.cloud.tencent.com/developer) to view your `AppId` and copy it
+
+### 2. Configure in BiBi Keyboard
+
+1. Open `Settings → Smart → Speech Recognition Settings` and select **Tencent Cloud ASR**
+2. Enter `AppId`, `SecretId`, and `SecretKey`
+3. Choose a **Recognition engine**:
+   - Streaming: `Large model streaming ASR 2.0`, `Large model streaming ASR 1.0`, `Standard streaming ASR` (default)
+   - File: `Large model file ASR (Flash)`, `Standard file ASR (Flash)`
+4. Choose a **Language**. 
+5. With a streaming engine, you can toggle **Auto sentence break** (independent of [auto-stop on silence](/en/features/vad)):
+   - **On**: the server splits on silence; each pause triggers a sentence break
+   - **Off**: the server does not split on silence, and audio longer than 60 seconds is force-split
 
 ## Gemini
 

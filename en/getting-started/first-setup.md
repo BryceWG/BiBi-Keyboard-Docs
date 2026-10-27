@@ -14,9 +14,13 @@ flowchart TD
   optional --> test[Open a text field and try a short recording]
 ```
 
+## Progress on the Settings Home
+
+On the settings home, the **One-click Setup** row's subtitle shows basic-setup progress and the next action, e.g. `Progress 2/6 · Next: grant microphone permission`. The checklist covers enabling the IME, switching to it, granting microphone permission, granting overlay permission, allowing notifications, and enabling the accessibility service. Work through the prompt step by step.
+
 ## Choose an ASR Provider
 
-BiBi Keyboard supports 18 ASR providers, including cloud services and local models. For the first setup, these are recommended:
+BiBi Keyboard supports 19 ASR providers, including cloud services and local models. For the first setup, these are recommended:
 
 ### Recommended Options
 
@@ -75,7 +79,7 @@ API keys are sensitive. Do not share them. If leaked, delete the key immediately
 SiliconFlow also provides LLM services for AI post-processing:
 
 1. Go to "AI Feature Settings"
-2. Enable "AI post-processing"
+2. Enable "AI polish"
 3. Choose "SiliconFlow" as the LLM provider
 4. Use the same API key (shared with ASR)
 5. Choose a model or input a custom model ID

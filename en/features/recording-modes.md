@@ -104,6 +104,10 @@ Press-and-hold on the keyboard suppresses auto-stop on silence until you release
 
 ## Working with Other Features
 
+### Shared recording settings
+
+Floating-ball, volume-key, and shake recording share the same "Shared recording settings": stop recording when the keyboard disappears, recording status reminder, show screen animation while recording, and feedback when recording starts or stops. See [Floating Ball → Shared recording settings](./floating-ball.md#shared-recording-settings) for details.
+
 ### Recording auto-stop mode
 
 Under `Settings → Smart → Speech Recognition Settings → Auto-stop on Silence → Recording auto-stop mode`, choose when recording should end automatically:

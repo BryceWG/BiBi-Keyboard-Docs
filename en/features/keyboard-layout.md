@@ -74,6 +74,7 @@ When trying it for the first time, change only a few blocks before doing a full 
 | Auto-stop on silence | quickly enable/disable "stop when speech ends" |
 | Keep screen on while recording | toggle "Keep screen on while recording" to prevent the screen from sleeping during recording |
 | Recording mode | quickly switch between press-and-hold and tap-to-toggle recording |
+| Audio ducking | quickly enable/disable "Audio ducking during recording"; a toast confirms the new state (see [Recording Modes](./recording-modes.md#audio-ducking-during-recording)) |
 | Floating keyboard | toggle the floating keyboard window |
 | Auto enter after input | toggle automatic sending; when on, every recognition (and optional AI post-processing) finishes with an automatic Enter/send action. You can also enable it under `Settings → Input → Input Settings → Input Behavior → Auto enter after input`; to send only one result, leave it off and swipe right on the microphone while recording |
 | Move Left / Right | move by one character; long-press to repeat |

@@ -141,6 +141,7 @@ Convenience:
 | Gemini       | ✅      | almost unlimited                                       |
 | GLM ASR      | ✅      | 100                                                    |
 | MiMo         | ✅      | supports context injection                             |
+| Tencent Cloud ASR | ✅ | 1000  |
 | ElevenLabs   | ❌      | -                                                      |
 | Qwen3-ASR    | ✅      | suggested limit: 100                                   |
 | FunASR Nano  | ✅      | suggested limit: 100                                   |

@@ -22,6 +22,7 @@ API Key / Access Token 属于敏感信息，请勿截图公开或分享给他人
 | **OpenAI**（兼容接口）                                                                       | 云端 | ✅/❌    | 使用 OpenAI/兼容端点，支持文件识别与 Realtime 流式 |
 | **OpenRouter**                                                                               | 云端 | ❌       | 使用 OpenRouter API Key 调用兼容 ASR 模型          |
 | **Alibaba Qianwen**<br>阿里千问（原 DashScope）                                                            | 云端 | ✅/❌      | 性价比与识别效果均衡                               |
+| **Tencent Cloud ASR**<br>腾讯云 ASR                                                          | 云端 | ✅/❌      | 实时流式与录音文件识别极速版，引擎与语言可选       |
 | **Gemini**                                                                                   | 云端 | ❌       | 小用量体验 / 文件识别                              |
 | **MiMo**<br>小米                                                                             | 云端 | ❌       | MiMo v2.5 ASR / 音频理解模型                       |
 | **Soniox**                                                                                   | 云端 | ✅/❌      | 海外服务、流式稳定性较好                           |
@@ -136,7 +137,7 @@ OpenRouter 供应商用于通过 OpenRouter 调用兼容的 ASR / 多模态转�
 
 ## 阿里千问（Alibaba Qianwen，原 DashScope）
 
-识别精度不错、性价比高；支持非流式，流式部分支持。应用内该供应商名称已由「DashScope（阿里云百炼）」更名为**阿里千问（Alibaba Qianwen）**，请求端点也切换为千问域名。
+识别精度不错、性价比高；支持非流式，流式部分支持。应用内该供应商名称已由「DashScope（阿里云百炼）」更名为**阿里千问（Alibaba Qianwen）**，提供中国大陆、国际与自定义三种选择。
 
 ### 1. 创建并复制 API Key
 
@@ -147,10 +148,34 @@ OpenRouter 供应商用于通过 OpenRouter 调用兼容的 ASR / 多模态转�
 
 1. 打开 `设置 → 智能 → 语音识别设置`，选择 **阿里千问（Alibaba Qianwen）**
 2. 填入 API Key 并保存
-3. 在「请求端点」中选择区域：中国大陆（`maas.qianwenaiapi.com`，默认）或国际（`maas.qwencloudapi.com`）
-4. 根据需要选择模型：
+3. 在「请求端点」中选择区域：中国大陆（`maas.qianwenaiapi.com`，默认）、国际（`maas.qwencloudapi.com`），或选择「自定义」
+4. 选择「自定义」后，在「自定义端点」中填写自建服务或代理地址。API Key 与其它端点共用同一输入框，切换端点时会保留已填写的 Key
+5. 根据需要选择模型：
    - 流式：`Qwen-Audio-3.0-ASR-Flash-Streaming`（默认）、`Qwen-Audio-3.1-ASR-Flash-Streaming`、`Qwen-Audio-3.1-ASR-Flash-Message`、`Fun-ASR-Realtime`、`Qwen3-ASR-Flash-Realtime`
    - 非流式：`Qwen-Audio-3.0-ASR-Flash`（默认）、`Qwen-Audio-3.1-ASR-Flash`、`Fun-ASR-Flash`、`Qwen3-ASR-Flash`、`Qwen3.8-Omni-Flash`、`Qwen3.5-Omni-Flash`、`Qwen3.5-Omni-Plus`
+
+## 腾讯云 ASR（Tencent Cloud ASR）
+
+腾讯云语音识别支持**实时流式识别**与**录音文件识别（极速版）**两条路径，通过「识别引擎」切换：前者边说边出字，后者在录音结束后一次性上传识别。
+
+### 1. 开通服务并创建密钥
+
+1. 进入语音识别控制台并开通后付费服务：[腾讯云语音识别控制台](https://console.cloud.tencent.com/asr)
+2. 进入访问管理 CAM 的 API 密钥页面：[API 密钥管理](https://console.cloud.tencent.com/cam/capi)
+3. 新建密钥并复制 `SecretId` 与 `SecretKey`
+4. 进入[腾讯云账号中心](https://console.cloud.tencent.com/developer)查看当前用户的 `AppId`，并复制
+
+### 2. 在说点啥中配置
+
+1. 打开 `设置 → 智能 → 语音识别设置`，选择 **腾讯云 ASR**
+2. 填入 `AppId`、`SecretId`、`SecretKey`
+3. 在「识别引擎」中选择类型：
+   - 流式：`大模型流式语音识别 2.0`、`大模型流式语音识别 1.0`、`普通流式语音识别`（默认）
+   - 非流式：`大模型录音文件识别极速版`、`普通录音文件识别极速版`
+4. 在「识别语言」中选择语言。
+5. 使用流式引擎时，可按需设置「自动断句」（与[录音判停](/features/vad)相互独立）：
+   - **开启**：服务端按静音断句，每次停顿触发一次断句
+   - **关闭**：服务端不按静音断句，超过 60 秒的音频会被强制切分
 
 ## Gemini
 

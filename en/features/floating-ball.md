@@ -32,9 +32,28 @@ flowchart TD
   doneNode --> idle
 ```
 
+### Recording screen animation
+
+When "Show screen animation while recording" is on in [Shared recording settings](#shared-recording-settings) (default), floating-ball, volume-key, and shake recording show a color ribbon at the bottom of the screen that reacts to volume. After you stop recording, it changes to a loading animation until recognition finishes. The animation area does not intercept touches, so interaction passes through to the app behind it.
+
+::: warning Overlay permission required
+The screen animation requires the "Display over other apps" permission. Without it, the app prompts you to grant it and the animation is not shown.
+:::
+
 ## Setup & Configuration
 
-Floating-ball settings live under `Settings → Input → More Input Methods`, which is divided into four sections: "Floating Ball Settings", "Volume Key Recording Mode", "Shake Recording", and "Advanced".
+Floating-ball settings live under `Settings → Input → More Input Methods`, divided into five sections: "Shared recording settings", "Floating Ball Recording Mode", "Volume Key Recording Mode", "Shake Recording Mode", and "Advanced".
+
+### Shared recording settings
+
+These settings are shared by floating-ball, volume-key, and shake recording; they do not apply to microphone recording inside the BiBi Keyboard panel.
+
+| Setting | Default | Description |
+| ------- | ------- | ----------- |
+| Stop recording when keyboard disappears | On | Stops these three recording modes when the keyboard disappears; other auto-stop rules still apply |
+| Recording status reminder | On | Shows a short toast when recording starts or stops; error prompts are unaffected |
+| Show screen animation while recording | On | Shows a volume-reactive animation at the bottom of the screen; see [Recording screen animation](#recording-screen-animation) |
+| Feedback when recording starts or stops | Off | Off / Sound / Vibration / Sound + vibration |
 
 ### Floating Ball Settings
 
@@ -90,7 +109,7 @@ If you prefer physical buttons, you can use volume keys to start or stop voice r
    - Volume- starts / stops recording
    - Volume+ starts, Volume- stops
    - Volume- starts, Volume+ stops
-4. Optionally enable "Recording status reminder" and "Stop recording when keyboard disappears"
+4. Adjust options such as "Recording status reminder" and "Stop recording when keyboard disappears" in [Shared recording settings](#shared-recording-settings)
 
 ::: warning Permission note
 Volume key recording uses the Accessibility Service to detect keyboard visibility and volume-key clicks.
@@ -102,10 +121,8 @@ If you'd rather not tap the floating ball, enable Shake Recording: shake the pho
 
 1. Open `Settings → Input → More Input Methods → Shake Recording`
 2. Enable "Shake to start or stop recording"
-3. Adjust the other options as needed:
-   - **Shake sensitivity**: Very sensitive / Sensitive / Default / Conservative / Very conservative. Move toward "Conservative" if it triggers too often, or toward "Sensitive" if it is hard to trigger
-   - **Feedback when recording starts or stops**: plays a sound and/or vibration on start and stop
-   - **Stop recording when keyboard disappears**: on by default; recording stops automatically when the keyboard is hidden
+3. Adjust **Shake sensitivity**: Very sensitive / Sensitive / Default / Conservative / Very conservative. Move toward "Conservative" if it triggers too often, or toward "Sensitive" if it is hard to trigger
+4. Adjust options such as "Feedback when recording starts or stops", "Recording status reminder", and "Stop recording when keyboard disappears" in [Shared recording settings](#shared-recording-settings)
 
 Like volume key recording, enabling Shake Recording requires the Accessibility Service permission.
 

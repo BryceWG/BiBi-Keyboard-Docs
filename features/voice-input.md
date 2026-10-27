@@ -33,7 +33,7 @@ mindmap
 
 ## 支持的 ASR 供应商
 
-说点啥支持 **18 个** ASR 供应商，分为云端和本地两大类：
+说点啥支持 **19 个** ASR 供应商，分为云端和本地两大类：
 
 ### 云端识别引擎
 
@@ -44,6 +44,7 @@ mindmap
 | **ElevenLabs**              | ✅       | 20 分钟            | 高精度英文识别，支持文件与流式                                                                 |
 | **OpenAI**                  | ✅       | 20 分钟            | 默认 `gpt-4o-mini-transcribe`，支持多渠道配置与 Realtime 流式识别                              |
 | **Alibaba Qianwen**<br>阿里千问（原 DashScope） | ✅       | 5 分钟             | Qwen-Audio-3.0 / Qwen-Audio-3.1 / Fun-ASR / Qwen3-ASR / Qwen3.5-Omni，支持流式与非流式                          |
+| **Tencent Cloud ASR**<br>腾讯云 ASR | ✅       | —                  | 实时流式与录音文件识别，支持中英/多语言/专业领域引擎    |
 | **Gemini**<br>Google        | ❌       | 4 小时             | 基于文件的多模态语音理解                                                                       |
 | **Soniox**                  | ✅       | 1 小时             | 支持多语言提示，流式与文件双模式                                                               |
 | **StepAudio**               | ❌       | 20 分钟            | StepAudio 2.5 在线 ASR，支持中文、英文与 ITN                                                    |

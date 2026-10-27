@@ -13,7 +13,7 @@ Since v4.4.2, the settings entry is `Settings → Intelligence → AI Feature Se
 BiBi Keyboard ships with **SiliconFlow free service**. No API key is required:
 
 1. Open `Settings → Intelligence → AI Feature Settings`
-2. Enable "AI post-processing"
+2. Enable "AI polish"
 3. Ensure vendor is **SF_FREE** (default)
 4. Pick a prompt preset (recommended: "General post-process")
 5. Tap the magic wand button on the keyboard to enable AI post-processing mode
@@ -113,10 +113,22 @@ AI polish can be triggered in several ways:
 
 | Trigger               | Description                                                       | Best for                      |
 | --------------------- | ----------------------------------------------------------------- | ----------------------------- |
-| **Automatic polish**  | runs automatically after each voice input when "Enable AI post-processing" is on | daily use; output is final    |
+| **Automatic polish**  | runs automatically after each voice input when "Enable AI polish" is on | daily use; output is final    |
 | **Keyboard "AI polish" button** | tap the "AI polish" button on the keyboard to polish the current transcript manually | one-off polish |
 | **AI Edit**           | select text and open AI Edit; choose a prompt preset for the edit | iterative edits / retrying    |
 | **History re-polish** | re-polish a past transcript from recognition history              | retry with a different prompt |
+
+### Polishing status in the keyboard info bar
+
+While polishing runs, the info bar at the top of the keyboard shows the current stage, so you can tell which preset this run is using:
+
+| Info bar text | Meaning |
+| ------------- | ------- |
+| `AI polishing…` | polishing is running and no specific preset has been resolved yet |
+| `Basic Text Polish…` | a preset has been decided; the bar shows its name directly (example: "Basic Text Polish") |
+| `Selecting prompt…` | "Automatic polishing preset selection" is on and the classifier is picking a preset |
+
+Seeing `Selecting prompt…` means automatic selection is in progress; when the bar switches to a preset name, that preset is the one used for this run.
 
 ## When to use it
 
@@ -140,6 +152,8 @@ AI polish can be triggered in several ways:
 Voice input scenarios and intents can differ widely from moment to moment: casual thoughts may need "General post-process", foreign conversations may need "Translate to English", and meetings may require "Extract to-dos" or "Extract key points". Furthermore, when the speech recognition result is already clean and clear, skipping polish entirely produces the best output without extra wait time.
 
 BiBi Keyboard provides **AI Polishing Preset Selection**: before polishing runs, a classification model automatically matches the most suitable prompt preset based on the transcript and each preset's scenario description (Skill). When the content is already clear and accurate, it can also automatically skip polishing.
+
+While the classifier runs, the keyboard info bar shows "Selecting prompt…"; once a preset is chosen, it switches to that preset's name. See [Status in the keyboard info bar](#status-in-the-keyboard-info-bar).
 
 ### Configuration
 
@@ -333,7 +347,7 @@ Example: target word `音素` can have aliases `因素` and `严肃`; if the tra
 
 Checklist:
 
-1. ✅ the master switch is on (`Settings → Intelligence → AI Feature Settings → Enable AI post-processing`)
+1. ✅ the master switch is on (`Settings → Intelligence → AI Feature Settings → Enable AI polish`)
 2. ✅ input length reaches the "Skip AI post-processing if shorter than" threshold
 3. ✅ provider config is valid (API key works if needed)
 4. ✅ network works

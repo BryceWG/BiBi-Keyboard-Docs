@@ -4,7 +4,7 @@ layout: home
 hero:
   name: BiBi Keyboard
   text: 说点啥
-  tagline: 18 ASR providers, local offline recognition, AI post-processing
+  tagline: 19 ASR providers, local offline recognition, AI post-processing
   actions:
     - theme: brand
       text: Get Started
@@ -25,7 +25,7 @@ hero:
 features:
   - icon: 🎤
     title: Multiple ASR Providers
-    details: Supports 18 ASR providers like Volcengine, SiliconFlow, OpenAI, OpenRouter, MiMo, Cohere, Gemini and more. Switch anytime and choose what works best.
+    details: Supports 19 ASR providers like Volcengine, SiliconFlow, Tencent Cloud, OpenAI, OpenRouter, MiMo, Cohere, Gemini and more. Switch anytime and choose what works best.
 
   - icon: 🤖
     title: AI Post-processing

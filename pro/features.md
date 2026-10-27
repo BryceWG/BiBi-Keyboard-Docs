@@ -142,6 +142,7 @@ LLM 不可用时自动退回本地规则；
 | Gemini      | ✅       | 几乎无限                                    |
 | GLM ASR     | ✅       | 100 个                                      |
 | MiMo        | ✅       | 支持上下文注入                              |
+| 腾讯云 ASR  | ✅       | 1000 个                       |
 | ElevenLabs  | ❌       | -                                           |
 | Qwen3-ASR   | ✅       | 建议 100 个以内                             |
 | FunASR Nano | ✅       | 建议 100 个以内                             |
